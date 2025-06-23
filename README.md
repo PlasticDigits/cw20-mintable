@@ -81,3 +81,8 @@ as it, but it is likely you will want to change it. And it is rather simple.
 
 Look at [`cw20-staking`](https://github.com/CosmWasm/cw-tokens/tree/main/contracts/cw20-staking) for an example of how to "inherit"
 all this token functionality and combine it with custom logic.
+
+## Code coverage
+
+Recommended: `cargo install cargo-tarpaulin`
+You can then run `cargo tarpaulin -o html`

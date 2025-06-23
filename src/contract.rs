@@ -1505,6 +1505,44 @@ mod tests {
     }
 
     #[test]
+    fn test_add_minter_when_no_minter_configured() {
+        let mut deps = mock_dependencies();
+
+        let genesis = deps.api.addr_make("genesis").to_string();
+        let new_minter = deps.api.addr_make("new_minter").to_string();
+
+        // Instantiate without any minter configured
+        do_instantiate(deps.as_mut(), &genesis, Uint128::new(1234));
+
+        // Try to add a minter when no minter is configured - should fail with Unauthorized
+        let msg = ExecuteMsg::AddMinter {
+            minter: new_minter.clone(),
+        };
+        let info = mock_info(&genesis, &[]);
+        let err = execute(deps.as_mut(), mock_env(), info, msg).unwrap_err();
+        assert_eq!(err, ContractError::Unauthorized {});
+    }
+
+    #[test]
+    fn test_remove_minter_when_no_minter_configured() {
+        let mut deps = mock_dependencies();
+
+        let genesis = deps.api.addr_make("genesis").to_string();
+        let target_minter = deps.api.addr_make("target_minter").to_string();
+
+        // Instantiate without any minter configured
+        do_instantiate(deps.as_mut(), &genesis, Uint128::new(1234));
+
+        // Try to remove a minter when no minter is configured - should fail with Unauthorized
+        let msg = ExecuteMsg::RemoveMinter {
+            minter: target_minter.clone(),
+        };
+        let info = mock_info(&genesis, &[]);
+        let err = execute(deps.as_mut(), mock_env(), info, msg).unwrap_err();
+        assert_eq!(err, ContractError::Unauthorized {});
+    }
+
+    #[test]
     fn no_one_mints_if_minter_unset() {
         let mut deps = mock_dependencies();
 

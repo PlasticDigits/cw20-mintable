@@ -1,2 +1,5 @@
 # Generated files
 /target/
+
+# Coverage
+tarpaulin*
