@@ -13,7 +13,6 @@
       }
     }
   },
-  "additionalProperties": false,
   "definitions": {
     "AllowanceInfo": {
       "type": "object",

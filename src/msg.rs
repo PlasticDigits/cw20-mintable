@@ -1,10 +1,10 @@
-use cosmwasm_schema::{cw_serde, QueryResponses};
+use cosmwasm_schema::QueryResponses;
 use cosmwasm_std::{StdError, StdResult, Uint128, Binary};
 use cw20::{Cw20Coin, Logo, MinterResponse, Expiration};
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 
-#[cw_serde]
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 pub enum ExecuteMsg {
     /// Transfer is a base message to move tokens to another account without triggering actions
     Transfer { recipient: String, amount: Uint128 },
@@ -77,7 +77,7 @@ pub enum ExecuteMsg {
     RemoveMinter { minter: String },
 }
 
-#[cw_serde]
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 pub struct InstantiateMarketingInfo {
     pub project: Option<String>,
     pub description: Option<String>,
@@ -85,7 +85,7 @@ pub struct InstantiateMarketingInfo {
     pub logo: Option<Logo>,
 }
 
-#[cw_serde]
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[cfg_attr(test, derive(Default))]
 pub struct InstantiateMsg {
     pub name: String,
@@ -141,8 +141,7 @@ impl InstantiateMsg {
     }
 }
 
-#[cw_serde]
-#[derive(QueryResponses)]
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema, QueryResponses)]
 pub enum QueryMsg {
     /// Returns the current balance of the given address, 0 if unset.
     #[returns(cw20::BalanceResponse)]
@@ -199,10 +198,10 @@ pub enum QueryMsg {
     },
 }
 
-#[derive(Serialize, Deserialize, JsonSchema)]
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 pub struct MigrateMsg {}
 
-#[cw_serde]
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 pub struct MintersResponse {
     pub minters: Vec<String>,
 }

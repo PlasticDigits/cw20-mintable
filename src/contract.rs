@@ -2,7 +2,7 @@
 use cosmwasm_std::entry_point;
 use cosmwasm_std::Order::Ascending;
 use cosmwasm_std::{
-    to_json_binary, Binary, Deps, DepsMut, Env, MessageInfo, Response, StdError, StdResult, Uint128, Empty,
+    to_binary, Binary, Deps, DepsMut, Env, MessageInfo, Response, StdError, StdResult, Uint128, Empty,
 };
 use cw_storage_plus::Bound;
 
@@ -512,34 +512,34 @@ pub fn execute_upload_logo(
 #[cfg_attr(not(feature = "library"), entry_point)]
 pub fn query(deps: Deps, _env: Env, msg: QueryMsg) -> StdResult<Binary> {
     match msg {
-        QueryMsg::Balance { address } => to_json_binary(&query_balance(deps, address)?),
-        QueryMsg::TokenInfo {} => to_json_binary(&query_token_info(deps)?),
-        QueryMsg::Minter {} => to_json_binary(&query_minter(deps)?),
+        QueryMsg::Balance { address } => to_binary(&query_balance(deps, address)?),
+        QueryMsg::TokenInfo {} => to_binary(&query_token_info(deps)?),
+        QueryMsg::Minter {} => to_binary(&query_minter(deps)?),
         QueryMsg::Allowance { owner, spender } => {
-            to_json_binary(&query_allowance(deps, owner, spender)?)
+            to_binary(&query_allowance(deps, owner, spender)?)
         }
         QueryMsg::AllAllowances {
             owner,
             start_after,
             limit,
-        } => to_json_binary(&query_owner_allowances(deps, owner, start_after, limit)?),
+        } => to_binary(&query_owner_allowances(deps, owner, start_after, limit)?),
         QueryMsg::AllSpenderAllowances {
             spender,
             start_after,
             limit,
-        } => to_json_binary(&query_spender_allowances(
+        } => to_binary(&query_spender_allowances(
             deps,
             spender,
             start_after,
             limit,
         )?),
         QueryMsg::AllAccounts { start_after, limit } => {
-            to_json_binary(&query_all_accounts(deps, start_after, limit)?)
+            to_binary(&query_all_accounts(deps, start_after, limit)?)
         }
-        QueryMsg::MarketingInfo {} => to_json_binary(&query_marketing_info(deps)?),
-        QueryMsg::DownloadLogo {} => to_json_binary(&query_download_logo(deps)?),
+        QueryMsg::MarketingInfo {} => to_binary(&query_marketing_info(deps)?),
+        QueryMsg::DownloadLogo {} => to_binary(&query_download_logo(deps)?),
         QueryMsg::Minters { start_after, limit } => {
-            to_json_binary(&query_minters(deps, start_after, limit)?)
+            to_binary(&query_minters(deps, start_after, limit)?)
         }
     }
 }
@@ -1817,7 +1817,7 @@ mod tests {
             amount: transfer,
             msg: send_msg,
         }
-        .into_json_binary()
+        .into_binary()
         .unwrap();
         // and this is how it must be wrapped for the vm to process it
         assert_eq!(
@@ -1905,7 +1905,7 @@ mod tests {
             let expires = Expiration::AtHeight(123_456);
             let msg = CosmosMsg::Wasm(WasmMsg::Execute {
                 contract_addr: cw20_addr.to_string(),
-                msg: to_json_binary(&ExecuteMsg::IncreaseAllowance {
+                msg: to_binary(&ExecuteMsg::IncreaseAllowance {
                     spender: spender.clone(),
                     amount: allow1,
                     expires: Some(expires),
@@ -1921,7 +1921,7 @@ mod tests {
                 CosmosMsg::Wasm(WasmMsg::Migrate {
                     contract_addr: cw20_addr.to_string(),
                     new_code_id: cw20_id,
-                    msg: to_json_binary(&MigrateMsg {}).unwrap(),
+                    msg: to_binary(&MigrateMsg {}).unwrap(),
                 }),
             )
             .unwrap();

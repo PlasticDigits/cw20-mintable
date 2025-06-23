@@ -1,10 +1,11 @@
-use cosmwasm_schema::cw_serde;
+use schemars::JsonSchema;
+use serde::{Deserialize, Serialize};
 use cosmwasm_std::{Addr, Uint128, Empty};
 use cw_storage_plus::{Item, Map};
 
 use cw20::{AllowanceResponse, Logo, MarketingInfoResponse};
 
-#[cw_serde]
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 pub struct TokenInfo {
     pub name: String,
     pub symbol: String,
@@ -13,7 +14,7 @@ pub struct TokenInfo {
     pub mint: Option<MinterData>,
 }
 
-#[cw_serde]
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 pub struct MinterData {
     pub minter: Addr,
     /// cap is how many more tokens can be issued by the minter
