@@ -6,22 +6,45 @@ the [CW20 spec](../../packages/cw20/README.md) with a focus on flexible minting 
 ## Key Features
 
 - **Clean CW20 Basic Implementation**: Core CW20 token functionality
-- **Enhanced Minter Extension**: Owner can add and remove minters
+- **Minters List Management**: Maintain a list of authorized minter addresses
 - **Flexible Minting**: Authorized minters can mint new tokens
 - **Allowances Support**: Standard CW20 allowance functionality
+- **Marketing Extension**: Logo and marketing metadata support
 
 ## Minter Management
 
-- Contract owner has full control over minter permissions
-- Owner can add new minters to the authorized list
-- Owner can remove existing minters from the authorized list
-- Only authorized minters can mint new tokens
+The contract includes a comprehensive minters list management system:
+
+- **Minters List**: Maintain a list of addresses authorized to mint tokens
+- **Add Minters**: Current minter can add new addresses to the minters list
+- **Remove Minters**: Current minter can remove addresses from the minters list
+- **Query Minters**: Paginated query to retrieve all addresses in the minters list
+- **Authorization**: Both primary and additional minters are subject to the same minting cap restrictions
+
+### Available Messages
+
+**Execute Messages:**
+
+- `AddMinter { minter: String }` - Add an address to the minters list
+- `RemoveMinter { minter: String }` - Remove an address from the minters list
+
+**Query Messages:**
+
+- `Minters { start_after: Option<String>, limit: Option<u32> }` - Get all minters with pagination
+
+The minting system works as follows:
+
+- **Primary Minter**: The original minter specified during contract instantiation can always mint tokens
+- **Additional Minters**: Any address in the minters list can also mint tokens
+- **Authorization**: Both primary and additional minters are subject to the same minting cap restrictions
 
 Implements:
 
 - [x] CW20 Base
-- [x] Enhanced Mintable extension with minter management
+- [x] Minters list management (add, remove, query)
+- [x] Flexible minting using minters list
 - [x] Allowances extension
+- [x] Marketing extension
 
 ## Running this contract
 

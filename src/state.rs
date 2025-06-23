@@ -1,5 +1,5 @@
 use cosmwasm_schema::cw_serde;
-use cosmwasm_std::{Addr, Uint128};
+use cosmwasm_std::{Addr, Uint128, Empty};
 use cw_storage_plus::{Item, Map};
 
 use cw20::{AllowanceResponse, Logo, MarketingInfoResponse};
@@ -34,3 +34,4 @@ pub const ALLOWANCES: Map<(&Addr, &Addr), AllowanceResponse> = Map::new("allowan
 // TODO: After https://github.com/CosmWasm/cw-plus/issues/670 is implemented, replace this with a `MultiIndex` over `ALLOWANCES`
 pub const ALLOWANCES_SPENDER: Map<(&Addr, &Addr), AllowanceResponse> =
     Map::new("allowance_spender");
+pub const MINTERS: Map<&Addr, Empty> = Map::new("minters");

@@ -2,8 +2,9 @@
 use cosmwasm_std::entry_point;
 use cosmwasm_std::Order::Ascending;
 use cosmwasm_std::{
-    to_json_binary, Binary, Deps, DepsMut, Env, MessageInfo, Response, StdError, StdResult, Uint128,
+    to_json_binary, Binary, Deps, DepsMut, Env, MessageInfo, Response, StdError, StdResult, Uint128, Empty,
 };
+use cw_storage_plus::Bound;
 
 use cw2::{ensure_from_older_version, set_contract_version};
 use cw20::{
@@ -17,10 +18,10 @@ use crate::allowances::{
 };
 use crate::enumerable::{query_all_accounts, query_owner_allowances, query_spender_allowances};
 use crate::error::ContractError;
-use crate::msg::{ExecuteMsg, InstantiateMsg, MigrateMsg, QueryMsg};
+use crate::msg::{ExecuteMsg, InstantiateMsg, MigrateMsg, QueryMsg, MintersResponse};
 use crate::state::{
     MinterData, TokenInfo, ALLOWANCES, ALLOWANCES_SPENDER, BALANCES, LOGO, MARKETING_INFO,
-    TOKEN_INFO,
+    TOKEN_INFO, MINTERS,
 };
 
 // version info for migration info
@@ -232,6 +233,8 @@ pub fn execute(
         ExecuteMsg::UpdateMinter { new_minter } => {
             execute_update_minter(deps, env, info, new_minter)
         }
+        ExecuteMsg::AddMinter { minter } => execute_add_minter(deps, env, info, minter),
+        ExecuteMsg::RemoveMinter { minter } => execute_remove_minter(deps, env, info, minter),
     }
 }
 
@@ -303,13 +306,16 @@ pub fn execute_mint(
         .may_load(deps.storage)?
         .ok_or(ContractError::Unauthorized {})?;
 
-    if config
+    // Check if sender is authorized to mint
+    let is_primary_minter = config
         .mint
         .as_ref()
-        .ok_or(ContractError::Unauthorized {})?
-        .minter
-        != info.sender
-    {
+        .map(|mint_info| mint_info.minter == info.sender)
+        .unwrap_or(false);
+    
+    let is_additional_minter = MINTERS.has(deps.storage, &info.sender);
+    
+    if !is_primary_minter && !is_additional_minter {
         return Err(ContractError::Unauthorized {});
     }
 
@@ -532,6 +538,9 @@ pub fn query(deps: Deps, _env: Env, msg: QueryMsg) -> StdResult<Binary> {
         }
         QueryMsg::MarketingInfo {} => to_json_binary(&query_marketing_info(deps)?),
         QueryMsg::DownloadLogo {} => to_json_binary(&query_download_logo(deps)?),
+        QueryMsg::Minters { start_after, limit } => {
+            to_json_binary(&query_minters(deps, start_after, limit)?)
+        }
     }
 }
 
@@ -583,6 +592,79 @@ pub fn query_download_logo(deps: Deps) -> StdResult<DownloadLogoResponse> {
         }),
         Logo::Url(_) => Err(StdError::not_found("logo")),
     }
+}
+
+pub fn execute_add_minter(
+    deps: DepsMut,
+    _env: Env,
+    info: MessageInfo,
+    minter: String,
+) -> Result<Response, ContractError> {
+    let config = TOKEN_INFO
+        .may_load(deps.storage)?
+        .ok_or(ContractError::Unauthorized {})?;
+
+    // Check if sender is authorized (must be current minter)
+    if let Some(mint_info) = config.mint.as_ref() {
+        if mint_info.minter != info.sender {
+            return Err(ContractError::Unauthorized {});
+        }
+    } else {
+        return Err(ContractError::Unauthorized {});
+    }
+
+    let minter_addr = deps.api.addr_validate(&minter)?;
+    MINTERS.save(deps.storage, &minter_addr, &Empty {})?;
+
+    let res = Response::new()
+        .add_attribute("action", "add_minter")
+        .add_attribute("minter", minter_addr);
+    Ok(res)
+}
+
+pub fn execute_remove_minter(
+    deps: DepsMut,
+    _env: Env,
+    info: MessageInfo,
+    minter: String,
+) -> Result<Response, ContractError> {
+    let config = TOKEN_INFO
+        .may_load(deps.storage)?
+        .ok_or(ContractError::Unauthorized {})?;
+
+    // Check if sender is authorized (must be current minter)
+    if let Some(mint_info) = config.mint.as_ref() {
+        if mint_info.minter != info.sender {
+            return Err(ContractError::Unauthorized {});
+        }
+    } else {
+        return Err(ContractError::Unauthorized {});
+    }
+
+    let minter_addr = deps.api.addr_validate(&minter)?;
+    MINTERS.remove(deps.storage, &minter_addr);
+
+    let res = Response::new()
+        .add_attribute("action", "remove_minter")
+        .add_attribute("minter", minter_addr);
+    Ok(res)
+}
+
+pub fn query_minters(
+    deps: Deps,
+    start_after: Option<String>,
+    limit: Option<u32>,
+) -> StdResult<MintersResponse> {
+    let limit = limit.unwrap_or(30).min(30) as usize;
+    let start = start_after.map(|s| Bound::ExclusiveRaw(s.into_bytes()));
+
+    let minters = MINTERS
+        .keys(deps.storage, start, None, cosmwasm_std::Order::Ascending)
+        .take(limit)
+        .map(|item| item.map(Into::into))
+        .collect::<StdResult<_>>()?;
+
+    Ok(MintersResponse { minters })
 }
 
 #[cfg_attr(not(feature = "library"), entry_point)]
@@ -978,6 +1060,413 @@ mod tests {
         let env = mock_env();
         let err = execute(deps.as_mut(), env, info, msg).unwrap_err();
         assert_eq!(err, ContractError::Unauthorized {});
+    }
+
+    #[test]
+    fn test_add_remove_minters() {
+        let mut deps = mock_dependencies();
+
+        let genesis = deps.api.addr_make("genesis").to_string();
+        let minter = deps.api.addr_make("minter").to_string();
+        let new_minter1 = deps.api.addr_make("new_minter1").to_string();
+        let new_minter2 = deps.api.addr_make("new_minter2").to_string();
+
+        do_instantiate_with_minter(deps.as_mut(), &genesis, Uint128::new(1234), &minter, None);
+
+        // Initially, minters list should be empty
+        let query_msg = QueryMsg::Minters {
+            start_after: None,
+            limit: None,
+        };
+        let res = query(deps.as_ref(), mock_env(), query_msg).unwrap();
+        let minters_response: MintersResponse = from_json(res).unwrap();
+        assert_eq!(minters_response.minters, Vec::<String>::new());
+
+        // Add first minter
+        let msg = ExecuteMsg::AddMinter {
+            minter: new_minter1.clone(),
+        };
+        let info = mock_info(&minter, &[]);
+        let res = execute(deps.as_mut(), mock_env(), info, msg).unwrap();
+        assert_eq!(
+            res.attributes,
+            vec![
+                ("action".to_string(), "add_minter".to_string()),
+                ("minter".to_string(), new_minter1.clone()),
+            ]
+        );
+
+        // Add second minter
+        let msg = ExecuteMsg::AddMinter {
+            minter: new_minter2.clone(),
+        };
+        let info = mock_info(&minter, &[]);
+        execute(deps.as_mut(), mock_env(), info, msg).unwrap();
+
+        // Query minters list - should have both
+        let query_msg = QueryMsg::Minters {
+            start_after: None,
+            limit: None,
+        };
+        let res = query(deps.as_ref(), mock_env(), query_msg).unwrap();
+        let minters_response: MintersResponse = from_json(res).unwrap();
+        assert_eq!(minters_response.minters.len(), 2);
+        assert!(minters_response.minters.contains(&new_minter1));
+        assert!(minters_response.minters.contains(&new_minter2));
+
+        // Remove one minter
+        let msg = ExecuteMsg::RemoveMinter {
+            minter: new_minter1.clone(),
+        };
+        let info = mock_info(&minter, &[]);
+        let res = execute(deps.as_mut(), mock_env(), info, msg).unwrap();
+        assert_eq!(
+            res.attributes,
+            vec![
+                ("action".to_string(), "remove_minter".to_string()),
+                ("minter".to_string(), new_minter1.clone()),
+            ]
+        );
+
+        // Query minters list - should have only one
+        let query_msg = QueryMsg::Minters {
+            start_after: None,
+            limit: None,
+        };
+        let res = query(deps.as_ref(), mock_env(), query_msg).unwrap();
+        let minters_response: MintersResponse = from_json(res).unwrap();
+        assert_eq!(minters_response.minters, vec![new_minter2]);
+    }
+
+    #[test]
+    fn test_unauthorized_minter_operations() {
+        let mut deps = mock_dependencies();
+
+        let genesis = deps.api.addr_make("genesis").to_string();
+        let minter = deps.api.addr_make("minter").to_string();
+        let unauthorized = deps.api.addr_make("unauthorized").to_string();
+        let new_minter = deps.api.addr_make("new_minter").to_string();
+
+        do_instantiate_with_minter(deps.as_mut(), &genesis, Uint128::new(1234), &minter, None);
+
+        // Try to add minter with unauthorized user
+        let msg = ExecuteMsg::AddMinter {
+            minter: new_minter.clone(),
+        };
+        let info = mock_info(&unauthorized, &[]);
+        let err = execute(deps.as_mut(), mock_env(), info, msg).unwrap_err();
+        assert_eq!(err, ContractError::Unauthorized {});
+
+        // Try to remove minter with unauthorized user
+        let msg = ExecuteMsg::RemoveMinter {
+            minter: new_minter,
+        };
+        let info = mock_info(&unauthorized, &[]);
+        let err = execute(deps.as_mut(), mock_env(), info, msg).unwrap_err();
+        assert_eq!(err, ContractError::Unauthorized {});
+    }
+
+    #[test]
+    fn test_mint_by_additional_minters() {
+        let mut deps = mock_dependencies();
+
+        let genesis = deps.api.addr_make("genesis").to_string();
+        let primary_minter = deps.api.addr_make("primary_minter").to_string();
+        let additional_minter = deps.api.addr_make("additional_minter").to_string();
+        let recipient = deps.api.addr_make("recipient").to_string();
+
+        // Setup with primary minter
+        do_instantiate_with_minter(deps.as_mut(), &genesis, Uint128::new(1000), &primary_minter, None);
+
+        // Add additional minter
+        let msg = ExecuteMsg::AddMinter {
+            minter: additional_minter.clone(),
+        };
+        let info = mock_info(&primary_minter, &[]);
+        execute(deps.as_mut(), mock_env(), info, msg).unwrap();
+
+        // Test that additional minter can mint
+        let mint_amount = Uint128::new(500);
+        let msg = ExecuteMsg::Mint {
+            recipient: recipient.clone(),
+            amount: mint_amount,
+        };
+        let info = mock_info(&additional_minter, &[]);
+        let res = execute(deps.as_mut(), mock_env(), info, msg).unwrap();
+        
+        assert_eq!(res.messages.len(), 0);
+        assert_eq!(get_balance(deps.as_ref(), recipient), mint_amount);
+        assert_eq!(
+            query_token_info(deps.as_ref()).unwrap().total_supply,
+            Uint128::new(1500) // 1000 initial + 500 minted
+        );
+    }
+
+    #[test]
+    fn test_mint_by_primary_and_additional_minters() {
+        let mut deps = mock_dependencies();
+
+        let genesis = deps.api.addr_make("genesis").to_string();
+        let primary_minter = deps.api.addr_make("primary_minter").to_string();
+        let additional_minter1 = deps.api.addr_make("additional_minter1").to_string();
+        let additional_minter2 = deps.api.addr_make("additional_minter2").to_string();
+        let recipient1 = deps.api.addr_make("recipient1").to_string();
+        let recipient2 = deps.api.addr_make("recipient2").to_string();
+        let recipient3 = deps.api.addr_make("recipient3").to_string();
+
+        // Setup with primary minter and cap
+        let cap = Some(Uint128::new(10000));
+        do_instantiate_with_minter(deps.as_mut(), &genesis, Uint128::new(1000), &primary_minter, cap);
+
+        // Add additional minters
+        let msg = ExecuteMsg::AddMinter {
+            minter: additional_minter1.clone(),
+        };
+        let info = mock_info(&primary_minter, &[]);
+        execute(deps.as_mut(), mock_env(), info, msg).unwrap();
+
+        let msg = ExecuteMsg::AddMinter {
+            minter: additional_minter2.clone(),
+        };
+        let info = mock_info(&primary_minter, &[]);
+        execute(deps.as_mut(), mock_env(), info, msg).unwrap();
+
+        // Test primary minter can mint
+        let msg = ExecuteMsg::Mint {
+            recipient: recipient1.clone(),
+            amount: Uint128::new(1000),
+        };
+        let info = mock_info(&primary_minter, &[]);
+        execute(deps.as_mut(), mock_env(), info, msg).unwrap();
+
+        // Test first additional minter can mint
+        let msg = ExecuteMsg::Mint {
+            recipient: recipient2.clone(),
+            amount: Uint128::new(2000),
+        };
+        let info = mock_info(&additional_minter1, &[]);
+        execute(deps.as_mut(), mock_env(), info, msg).unwrap();
+
+        // Test second additional minter can mint
+        let msg = ExecuteMsg::Mint {
+            recipient: recipient3.clone(),
+            amount: Uint128::new(3000),
+        };
+        let info = mock_info(&additional_minter2, &[]);
+        execute(deps.as_mut(), mock_env(), info, msg).unwrap();
+
+        // Verify balances
+        assert_eq!(get_balance(deps.as_ref(), recipient1), Uint128::new(1000));
+        assert_eq!(get_balance(deps.as_ref(), recipient2), Uint128::new(2000));
+        assert_eq!(get_balance(deps.as_ref(), recipient3), Uint128::new(3000));
+        assert_eq!(
+            query_token_info(deps.as_ref()).unwrap().total_supply,
+            Uint128::new(7000) // 1000 initial + 1000 + 2000 + 3000 minted
+        );
+    }
+
+    #[test]
+    fn test_additional_minter_respects_cap() {
+        let mut deps = mock_dependencies();
+
+        let genesis = deps.api.addr_make("genesis").to_string();
+        let primary_minter = deps.api.addr_make("primary_minter").to_string();
+        let additional_minter = deps.api.addr_make("additional_minter").to_string();
+        let recipient = deps.api.addr_make("recipient").to_string();
+
+        // Setup with cap
+        let cap = Some(Uint128::new(2000));
+        do_instantiate_with_minter(deps.as_mut(), &genesis, Uint128::new(1000), &primary_minter, cap);
+
+        // Add additional minter
+        let msg = ExecuteMsg::AddMinter {
+            minter: additional_minter.clone(),
+        };
+        let info = mock_info(&primary_minter, &[]);
+        execute(deps.as_mut(), mock_env(), info, msg).unwrap();
+
+        // Try to mint beyond cap with additional minter
+        let msg = ExecuteMsg::Mint {
+            recipient: recipient.clone(),
+            amount: Uint128::new(1500), // Would exceed cap of 2000 (1000 + 1500 = 2500)
+        };
+        let info = mock_info(&additional_minter, &[]);
+        let err = execute(deps.as_mut(), mock_env(), info, msg).unwrap_err();
+        assert_eq!(err, ContractError::CannotExceedCap {});
+
+        // Mint up to cap should work
+        let msg = ExecuteMsg::Mint {
+            recipient: recipient.clone(),
+            amount: Uint128::new(1000), // Total will be exactly 2000
+        };
+        let info = mock_info(&additional_minter, &[]);
+        let res = execute(deps.as_mut(), mock_env(), info, msg).unwrap();
+        assert_eq!(res.messages.len(), 0);
+        assert_eq!(get_balance(deps.as_ref(), recipient), Uint128::new(1000));
+        assert_eq!(
+            query_token_info(deps.as_ref()).unwrap().total_supply,
+            Uint128::new(2000)
+        );
+    }
+
+    #[test]
+    fn test_removed_minter_cannot_mint() {
+        let mut deps = mock_dependencies();
+
+        let genesis = deps.api.addr_make("genesis").to_string();
+        let primary_minter = deps.api.addr_make("primary_minter").to_string();
+        let additional_minter = deps.api.addr_make("additional_minter").to_string();
+        let recipient = deps.api.addr_make("recipient").to_string();
+
+        // Setup with primary minter
+        do_instantiate_with_minter(deps.as_mut(), &genesis, Uint128::new(1000), &primary_minter, None);
+
+        // Add additional minter
+        let msg = ExecuteMsg::AddMinter {
+            minter: additional_minter.clone(),
+        };
+        let info = mock_info(&primary_minter, &[]);
+        execute(deps.as_mut(), mock_env(), info, msg).unwrap();
+
+        // Verify additional minter can mint
+        let msg = ExecuteMsg::Mint {
+            recipient: recipient.clone(),
+            amount: Uint128::new(100),
+        };
+        let info = mock_info(&additional_minter, &[]);
+        execute(deps.as_mut(), mock_env(), info, msg).unwrap();
+
+        // Remove the additional minter
+        let msg = ExecuteMsg::RemoveMinter {
+            minter: additional_minter.clone(),
+        };
+        let info = mock_info(&primary_minter, &[]);
+        execute(deps.as_mut(), mock_env(), info, msg).unwrap();
+
+        // Try to mint with removed minter - should fail
+        let msg = ExecuteMsg::Mint {
+            recipient: recipient.clone(),
+            amount: Uint128::new(100),
+        };
+        let info = mock_info(&additional_minter, &[]);
+        let err = execute(deps.as_mut(), mock_env(), info, msg).unwrap_err();
+        assert_eq!(err, ContractError::Unauthorized {});
+    }
+
+    #[test]
+    fn test_mint_with_no_primary_minter_but_additional_minters() {
+        let mut deps = mock_dependencies();
+
+        let genesis = deps.api.addr_make("genesis").to_string();
+        let primary_minter = deps.api.addr_make("primary_minter").to_string();
+        let additional_minter = deps.api.addr_make("additional_minter").to_string();
+        let recipient = deps.api.addr_make("recipient").to_string();
+
+        // Setup with primary minter
+        do_instantiate_with_minter(deps.as_mut(), &genesis, Uint128::new(1000), &primary_minter, None);
+
+        // Add additional minter
+        let msg = ExecuteMsg::AddMinter {
+            minter: additional_minter.clone(),
+        };
+        let info = mock_info(&primary_minter, &[]);
+        execute(deps.as_mut(), mock_env(), info, msg).unwrap();
+
+        // Remove primary minter (set to None)
+        let msg = ExecuteMsg::UpdateMinter { new_minter: None };
+        let info = mock_info(&primary_minter, &[]);
+        execute(deps.as_mut(), mock_env(), info, msg).unwrap();
+
+        // Additional minter should still be able to mint
+        let msg = ExecuteMsg::Mint {
+            recipient: recipient.clone(),
+            amount: Uint128::new(500),
+        };
+        let info = mock_info(&additional_minter, &[]);
+        let res = execute(deps.as_mut(), mock_env(), info, msg).unwrap();
+        
+        assert_eq!(res.messages.len(), 0);
+        assert_eq!(get_balance(deps.as_ref(), &recipient), Uint128::new(500));
+        assert_eq!(
+            query_token_info(deps.as_ref()).unwrap().total_supply,
+            Uint128::new(1500)
+        );
+
+        // But original primary minter should no longer be able to mint
+        let msg = ExecuteMsg::Mint {
+            recipient: recipient.clone(),
+            amount: Uint128::new(100),
+        };
+        let info = mock_info(&primary_minter, &[]);
+        let err = execute(deps.as_mut(), mock_env(), info, msg).unwrap_err();
+        assert_eq!(err, ContractError::Unauthorized {});
+    }
+
+    #[test]
+    fn test_unauthorized_accounts_cannot_mint_with_multi_minter_system() {
+        let mut deps = mock_dependencies();
+
+        let genesis = deps.api.addr_make("genesis").to_string();
+        let primary_minter = deps.api.addr_make("primary_minter").to_string();
+        let additional_minter = deps.api.addr_make("additional_minter").to_string();
+        let unauthorized1 = deps.api.addr_make("unauthorized1").to_string();
+        let unauthorized2 = deps.api.addr_make("unauthorized2").to_string();
+        let recipient = deps.api.addr_make("recipient").to_string();
+
+        // Setup with primary minter
+        do_instantiate_with_minter(deps.as_mut(), &genesis, Uint128::new(1000), &primary_minter, None);
+
+        // Add one additional minter
+        let msg = ExecuteMsg::AddMinter {
+            minter: additional_minter.clone(),
+        };
+        let info = mock_info(&primary_minter, &[]);
+        execute(deps.as_mut(), mock_env(), info, msg).unwrap();
+
+        // Test that completely unauthorized account cannot mint
+        let msg = ExecuteMsg::Mint {
+            recipient: recipient.clone(),
+            amount: Uint128::new(100),
+        };
+        let info = mock_info(&unauthorized1, &[]);
+        let err = execute(deps.as_mut(), mock_env(), info, msg).unwrap_err();
+        assert_eq!(err, ContractError::Unauthorized {});
+
+        // Test that genesis account (token holder but not minter) cannot mint
+        let msg = ExecuteMsg::Mint {
+            recipient: recipient.clone(),
+            amount: Uint128::new(100),
+        };
+        let info = mock_info(&genesis, &[]);
+        let err = execute(deps.as_mut(), mock_env(), info, msg).unwrap_err();
+        assert_eq!(err, ContractError::Unauthorized {});
+
+        // Test that another random account cannot mint
+        let msg = ExecuteMsg::Mint {
+            recipient: recipient.clone(),
+            amount: Uint128::new(100),
+        };
+        let info = mock_info(&unauthorized2, &[]);
+        let err = execute(deps.as_mut(), mock_env(), info, msg).unwrap_err();
+        assert_eq!(err, ContractError::Unauthorized {});
+
+        // Ensure authorized minters still work
+        let msg = ExecuteMsg::Mint {
+            recipient: recipient.clone(),
+            amount: Uint128::new(100),
+        };
+        let info = mock_info(&primary_minter, &[]);
+        execute(deps.as_mut(), mock_env(), info, msg).unwrap();
+
+        let msg = ExecuteMsg::Mint {
+            recipient: recipient.clone(),
+            amount: Uint128::new(100),
+        };
+        let info = mock_info(&additional_minter, &[]);
+        execute(deps.as_mut(), mock_env(), info, msg).unwrap();
+
+        // Verify final balance
+        assert_eq!(get_balance(deps.as_ref(), &recipient), Uint128::new(200));
     }
 
     #[test]
