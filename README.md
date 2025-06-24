@@ -46,9 +46,21 @@ Implements:
 - [x] Allowances extension
 - [x] Marketing extension
 
-## Running this contract
+## Building this contract
 
 You will need Rust 1.44.1+ with `wasm32-unknown-unknown` target installed.
+
+### Using Docker (Recommended):
+
+```
+docker run --rm -v "$(pwd)":/code \
+  --mount type=volume,source="$(basename "$(pwd)")_cache",target=/code/target \
+  --mount type=volume,source=registry_cache,target=/usr/local/cargo/registry \
+  cosmwasm/rust-optimizer:0.16.1
+```
+
+### Without Docker:
+
 For optimization (without docker) you will need `wasm-opt` installed.
 
 You can run unit tests on this via:
@@ -67,13 +79,52 @@ sha256sum cw20_mintable.wasm
 For optimization, then use:
 `wasm-opt -Oz -o cw20_mintable_optimized.wasm cw20_mintable.wasm`
 
-Or for a production-ready (optimized) build, run a build command in the
-the repository root: https://github.com/CosmWasm/cw-plus#compiling.
+## Deploying to chain
+
+### Store the contract
+
+```
+wasmd tx wasm store artifacts/cw20_base.wasm \
+  --from wallet-name \
+  --gas auto --gas-adjustment 1.3 \
+  --fees 5000stake \
+  --broadcast-mode block \
+  --chain-id [your-chain-id]
+```
+
+### Instantiate contract
+
+First, create an init.json file
+
+```
+{
+  "name": "My Token",
+  "symbol": "MTK",
+  "decimals": 18,
+  "initial_balances": [
+    {
+      "address": "your_wallet_address",
+      "amount": "1000000000"
+    }
+  ],
+  "mint": {
+    "minter": "your_wallet_address"
+  },
+  "marketing": {
+    "project": "https://my-project.com",
+    "description": "A detailed description of My Token and its utility",
+    "marketing": "your_marketing_wallet_address",
+    "logo": {
+      "url": "https://my-project.com/logo.png"
+    }
+  }
+}
+```
 
 ## Importing this contract
 
 You can also import much of the logic of this contract to build another
-ERC20-contract, such as a bonding curve, overiding or extending what you
+CW20-contract, such as a bonding curve, overiding or extending what you
 need.
 
 Basically, you just need to write your handle function and import
