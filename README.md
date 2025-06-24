@@ -49,6 +49,7 @@ Implements:
 ## Running this contract
 
 You will need Rust 1.44.1+ with `wasm32-unknown-unknown` target installed.
+For optimization (without docker) you will need `wasm-opt` installed.
 
 You can run unit tests on this via:
 
@@ -62,6 +63,9 @@ cp ./target/wasm32-unknown-unknown/release/cw20_mintable.wasm .
 ls -l cw20_mintable.wasm
 sha256sum cw20_mintable.wasm
 ```
+
+For optimization, then use:
+`wasm-opt -Oz -o cw20_mintable_optimized.wasm cw20_mintable.wasm`
 
 Or for a production-ready (optimized) build, run a build command in the
 the repository root: https://github.com/CosmWasm/cw-plus#compiling.
