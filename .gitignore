@@ -1,5 +1,9 @@
 # Generated files
 /target/
+/artifacts/
+/cw20_mintable.wasm
+/cw20_mintable_optimized.wasm
+/l.wasm
 
 # Coverage
 tarpaulin*
