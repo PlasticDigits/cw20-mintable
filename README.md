@@ -3,6 +3,12 @@
 This is a clean fork of the CW20 Basic contract with enhanced minter extension capabilities. It implements
 the [CW20 spec](../../packages/cw20/README.md) with a focus on flexible minting functionality.
 
+## Deployed addresses (make a pr to add yours)
+
+### TerraClassic Testnet (rebel-2)
+
+CLAYT: terra1fuq9372rlyj0qz9yh2ulgrgu72gffj5qc3p54g0sz6n362fyxh7sqqmv9f
+
 ## Key Features
 
 - **Clean CW20 Basic Implementation**: Core CW20 token functionality
@@ -81,22 +87,40 @@ For optimization, then use:
 
 ## Deploying to chain
 
-### Store the contract
+### Prerequisites
 
+Before deploying, ensure you have:
+
+- Built the optimized contract (see building instructions above)
+- A funded wallet with sufficient tokens for gas fees
+- Access to a CosmWasm-enabled blockchain node
+- The appropriate CLI tool for your target chain (`wasmd`, `terrad`, etc.)
+
+### Step 1: Store the contract
+
+You can skip this step if the contract is already stored on your chain; use the codeid below. If you stored it on a chain thats not listed, please make a pull request and add it!
+TerraClassic Testnet (rebel-2): 1641
+
+Store the compiled contract on-chain to get a code ID. Use the optimized version from Docker build:
+
+```bash
+# For TerraClassic (set chain-id to rebel-2 for testnet)
+terrad tx wasm store artifacts/cw20_mintable.wasm \
+  --from your-wallet-name \
+  --gas auto --gas-adjustment 1.4 \
+  --fees 500000000uluna \
+  --broadcast-mode sync \
+  --chain-id columbus-5 \
+  --node https://rpc.luncblaze.com:443
 ```
-wasmd tx wasm store artifacts/cw20_base.wasm \
-  --from wallet-name \
-  --gas auto --gas-adjustment 1.3 \
-  --fees 5000stake \
-  --broadcast-mode block \
-  --chain-id [your-chain-id]
-```
 
-### Instantiate contract
+After successful execution, note the `code_id` from the transaction result.
 
-First, create an init.json file
+### Step 2: Instantiate contract
 
-```
+First, create an `init.json` file with your token parameters:
+
+```json
 {
   "name": "My Token",
   "symbol": "MTK",
@@ -104,7 +128,7 @@ First, create an init.json file
   "initial_balances": [
     {
       "address": "your_wallet_address",
-      "amount": "1000000000"
+      "amount": "1000000000000000000000"
     }
   ],
   "mint": {
@@ -120,6 +144,48 @@ First, create an init.json file
   }
 }
 ```
+
+Then instantiate the contract:
+
+```bash
+# Replace CODE_ID with the code ID from the store transaction
+CODE_ID=123
+
+# For TerraClassic (set chain-id to rebel-2 for testnet)
+terrad tx wasm instantiate $CODE_ID "$(cat init.json)" \
+  --from your-wallet-name \
+  --admin your-admin-wallet-address \
+  --label "My CW20 Mintable Token" \
+  --gas auto --gas-adjustment 1.4 \
+  --fees 500000000uluna \
+  --broadcast-mode sync \
+  --chain-id colombus-5 \
+  --node https://rpc.luncblaze.com:443
+```
+
+After successful instantiation, note the contract address from the transaction result.
+
+### Step 3: Verify deployment
+
+Query the token info to verify the deployment:
+
+```bash
+# Replace CONTRACT_ADDRESS with your contract address
+CONTRACT_ADDRESS="terra1..."
+
+terrad query wasm contract-state smart $CONTRACT_ADDRESS '{"TokenInfo":{}}' \
+  --chain-id colombus-5 \
+  --node https://rpc.luncblaze.com:443
+```
+
+### Important Notes
+
+- **Gas Fees**: Adjust `--fees` according to current network conditions
+- **Node URLs**: Use reliable RPC endpoints for your target network
+- **Wallet Setup**: Ensure your wallet is properly configured and funded
+- **Initial Supply**: The `amount` field uses the token's base units (considering decimals)
+- **Minter Address**: The initial minter can add/remove additional minters later
+- **Marketing Info**: All marketing fields are optional but help with token discoverability
 
 ## Importing this contract
 
