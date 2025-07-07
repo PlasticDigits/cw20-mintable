@@ -5,9 +5,13 @@ the [CW20 spec](../../packages/cw20/README.md) with a focus on flexible minting 
 
 ## Deployed addresses (make a pr to add yours)
 
+### TerraClassic Mainnet (colombus-5)
+
+Code ID: `10181`
+
 ### TerraClassic Testnet (rebel-2)
 
-CLAYT: terra1fuq9372rlyj0qz9yh2ulgrgu72gffj5qc3p54g0sz6n362fyxh7sqqmv9f
+Code ID: `1641`
 
 ## Key Features
 
