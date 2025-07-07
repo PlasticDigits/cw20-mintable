@@ -110,7 +110,7 @@ impl InstantiateMsg {
         }
         if !self.has_valid_symbol() {
             return Err(StdError::generic_err(
-                "Ticker symbol is not in expected format [a-zA-Z\\-]{3,12}",
+                "Ticker symbol is not in expected format [a-zA-Z0-9\\-]{3,12}",
             ));
         }
         if self.decimals > 18 {
@@ -133,7 +133,7 @@ impl InstantiateMsg {
             return false;
         }
         for byte in bytes.iter() {
-            if (*byte != 45) && (*byte < 65 || *byte > 90) && (*byte < 97 || *byte > 122) {
+            if (*byte != 45) && (*byte < 48 || *byte > 57) && (*byte < 65 || *byte > 90) && (*byte < 97 || *byte > 122) {
                 return false;
             }
         }
@@ -244,6 +244,18 @@ mod tests {
         // Too long
         msg.symbol = str::repeat("a", 13);
         assert!(!msg.has_valid_symbol());
+
+        // Test with digits (should be valid)
+        msg.symbol = "ABC123".to_string();
+        assert!(msg.has_valid_symbol());
+
+        // Test with only digits (should be valid)
+        msg.symbol = "123".to_string();
+        assert!(msg.has_valid_symbol());
+
+        // Test with dash and digits (should be valid)
+        msg.symbol = "A1-B2".to_string();
+        assert!(msg.has_valid_symbol());
 
         // Has illegal char
         let illegal_chars = [[64u8], [91u8], [123u8]];
