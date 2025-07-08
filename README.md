@@ -115,7 +115,7 @@ terrad tx wasm store artifacts/cw20_mintable.wasm \
   --fees 500000000uluna \
   --broadcast-mode sync \
   --chain-id columbus-5 \
-  --node https://rpc.luncblaze.com:443
+  --node https://terra-classic-rpc.publicnode.com:443
 ```
 
 After successful execution, note the `code_id` from the transaction result.
@@ -153,7 +153,7 @@ Then instantiate the contract:
 
 ```bash
 # Replace CODE_ID with the code ID from the store transaction
-CODE_ID=123
+CODE_ID=10181
 
 # For TerraClassic (set chain-id to rebel-2 for testnet)
 terrad tx wasm instantiate $CODE_ID "$(cat init.json)" \
@@ -163,8 +163,8 @@ terrad tx wasm instantiate $CODE_ID "$(cat init.json)" \
   --gas auto --gas-adjustment 1.4 \
   --fees 500000000uluna \
   --broadcast-mode sync \
-  --chain-id colombus-5 \
-  --node https://rpc.luncblaze.com:443
+  --chain-id columbus-5 \
+  --node https://terra-classic-rpc.publicnode.com:443
 ```
 
 After successful instantiation, note the contract address from the transaction result.
@@ -178,8 +178,8 @@ Query the token info to verify the deployment:
 CONTRACT_ADDRESS="terra1..."
 
 terrad query wasm contract-state smart $CONTRACT_ADDRESS '{"TokenInfo":{}}' \
-  --chain-id colombus-5 \
-  --node https://rpc.luncblaze.com:443
+  --chain-id columbus-5 \
+  --node https://terra-classic-rpc.publicnode.com:443
 ```
 
 ### Important Notes
