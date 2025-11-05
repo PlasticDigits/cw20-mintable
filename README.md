@@ -7,7 +7,7 @@ the [CW20 spec](../../packages/cw20/README.md) with a focus on flexible minting 
 
 ### TerraClassic Mainnet (colombus-5)
 
-Code ID: `10181`
+Code ID: `10184`
 
 ### TerraClassic Testnet (rebel-2)
 
@@ -112,7 +112,7 @@ Store the compiled contract on-chain to get a code ID. Use the optimized version
 terrad tx wasm store artifacts/cw20_mintable.wasm \
   --from your-wallet-name \
   --gas auto --gas-adjustment 1.4 \
-  --fees 500000000uluna \
+  --fees 100000000uluna \
   --broadcast-mode sync \
   --chain-id columbus-5 \
   --node https://terra-classic-rpc.publicnode.com:443

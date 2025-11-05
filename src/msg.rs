@@ -7,11 +7,14 @@ use serde::{Deserialize, Serialize};
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 pub enum ExecuteMsg {
     /// Transfer is a base message to move tokens to another account without triggering actions
+    #[serde(alias = "transfer")]
     Transfer { recipient: String, amount: Uint128 },
     /// Burn is a base message to destroy tokens forever
+    #[serde(alias = "burn")]
     Burn { amount: Uint128 },
     /// Send is a base message to transfer tokens to a contract and trigger an action
     /// on the receiving contract.
+    #[serde(alias = "send")]
     Send {
         contract: String,
         amount: Uint128,
@@ -19,10 +22,12 @@ pub enum ExecuteMsg {
     },
     /// Only with "mintable" extension. If authorized, creates amount new tokens
     /// and adds to the recipient balance.
+    #[serde(alias = "mint")]
     Mint { recipient: String, amount: Uint128 },
     /// Only with "allowance" extension. Allows spender to access an additional amount tokens
     /// from the owner's (env.sender) account. If expires is Some(), overwrites current allowance
     /// expiration with this one.
+    #[serde(alias = "increase_allowance")]
     IncreaseAllowance {
         spender: String,
         amount: Uint128,
@@ -31,6 +36,7 @@ pub enum ExecuteMsg {
     /// Only with "allowance" extension. Lowers the spender's access of tokens
     /// from the owner's (env.sender) account by amount. If expires is Some(), overwrites current
     /// allowance expiration with this one.
+    #[serde(alias = "decrease_allowance")]
     DecreaseAllowance {
         spender: String,
         amount: Uint128,
@@ -38,6 +44,7 @@ pub enum ExecuteMsg {
     },
     /// Only with "allowance" extension. Transfers amount tokens from owner -> recipient
     /// if `env.sender` has sufficient pre-approval.
+    #[serde(alias = "transfer_from")]
     TransferFrom {
         owner: String,
         recipient: String,
@@ -45,9 +52,11 @@ pub enum ExecuteMsg {
     },
     /// Only with "allowance" extension. Burns amount tokens from owner
     /// if `env.sender` has sufficient pre-approval.
+    #[serde(alias = "burn_from")]
     BurnFrom { owner: String, amount: Uint128 },
     /// Only with "allowance" extension. Sends amount tokens from owner -> contract
     /// if `env.sender` has sufficient pre-approval.
+    #[serde(alias = "send_from")]
     SendFrom {
         owner: String,
         contract: String,
@@ -57,6 +66,7 @@ pub enum ExecuteMsg {
     /// Only with "marketing" extension. If authorized, updates marketing metadata.
     /// Setting None/null for any of these will leave it unchanged.
     /// Setting Some("") will clear this field on the contract storage
+    #[serde(alias = "update_marketing")]
     UpdateMarketing {
         /// A URL pointing to the project behind this token.
         project: Option<String>,
@@ -66,14 +76,18 @@ pub enum ExecuteMsg {
         marketing: Option<String>,
     },
     /// If set as the "marketing" role on the contract, upload a new URL, SVG, or PNG for the token
+    #[serde(alias = "upload_logo")]
     UploadLogo(Logo),
     /// Only with "mintable" extension. The current minter may set
     /// a new minter. Setting the minter to None will remove the
     /// token's minter forever.
+    #[serde(alias = "update_minter")]
     UpdateMinter { new_minter: Option<String> },
     /// Add a new minter to the minters list. Only the current minter can add new minters.
+    #[serde(alias = "add_minter")]
     AddMinter { minter: String },
     /// Remove a minter from the minters list. Only the current minter can remove minters.
+    #[serde(alias = "remove_minter")]
     RemoveMinter { minter: String },
 }
 
@@ -145,21 +159,26 @@ impl InstantiateMsg {
 pub enum QueryMsg {
     /// Returns the current balance of the given address, 0 if unset.
     #[returns(cw20::BalanceResponse)]
+    #[serde(alias = "balance")]
     Balance { address: String },
     /// Returns metadata on the contract - name, decimals, supply, etc.
     #[returns(cw20::TokenInfoResponse)]
+    #[serde(alias = "token_info")]
     TokenInfo {},
     /// Only with "mintable" extension.
     /// Returns who can mint and the hard cap on maximum tokens after minting.
     #[returns(cw20::MinterResponse)]
+    #[serde(alias = "minter")]
     Minter {},
     /// Only with "allowance" extension.
     /// Returns how much spender can use from owner account, 0 if unset.
     #[returns(cw20::AllowanceResponse)]
+    #[serde(alias = "allowance")]
     Allowance { owner: String, spender: String },
     /// Only with "enumerable" extension (and "allowances")
     /// Returns all allowances this owner has approved. Supports pagination.
     #[returns(cw20::AllAllowancesResponse)]
+    #[serde(alias = "all_allowances")]
     AllAllowances {
         owner: String,
         start_after: Option<String>,
@@ -168,6 +187,7 @@ pub enum QueryMsg {
     /// Only with "enumerable" extension (and "allowances")
     /// Returns all allowances this spender has been granted. Supports pagination.
     #[returns(cw20::AllSpenderAllowancesResponse)]
+    #[serde(alias = "all_spender_allowances")]
     AllSpenderAllowances {
         spender: String,
         start_after: Option<String>,
@@ -176,6 +196,7 @@ pub enum QueryMsg {
     /// Only with "enumerable" extension
     /// Returns all accounts that have balances. Supports pagination.
     #[returns(cw20::AllAccountsResponse)]
+    #[serde(alias = "all_accounts")]
     AllAccounts {
         start_after: Option<String>,
         limit: Option<u32>,
@@ -184,14 +205,17 @@ pub enum QueryMsg {
     /// Returns more metadata on the contract to display in the client:
     /// - description, logo, project url, etc.
     #[returns(cw20::MarketingInfoResponse)]
+    #[serde(alias = "marketing_info")]
     MarketingInfo {},
     /// Only with "marketing" extension
     /// Downloads the embedded logo data (if stored on chain). Errors if no logo data is stored for this
     /// contract.
     #[returns(cw20::DownloadLogoResponse)]
+    #[serde(alias = "download_logo")]
     DownloadLogo {},
     /// Returns all addresses in the minters list. Supports pagination.
     #[returns(MintersResponse)]
+    #[serde(alias = "minters")]
     Minters {
         start_after: Option<String>,
         limit: Option<u32>,
