@@ -398,6 +398,9 @@ pub fn execute_update_minter(
         return Err(ContractError::Unauthorized {});
     }
 
+    // Capture old primary before mutation so we can clear stale MINTERS metadata.
+    let old_primary = mint.minter.clone();
+
     let minter_data = new_minter
         .map(|new_minter| deps.api.addr_validate(&new_minter))
         .transpose()?
@@ -409,6 +412,12 @@ pub fn execute_update_minter(
     config.mint = minter_data;
 
     TOKEN_INFO.save(deps.storage, &config)?;
+
+    // INV-MINTER-001: UpdateMinter must not leave the old primary in the additional
+    // MINTERS map. Upstream-style delete-on-None (and on transfer): if governance was
+    // dual-listed via AddMinter, clearing/rotating primary must drop that map entry so
+    // "drop self-mint after bootstrap" cannot resurrect via stale metadata.
+    MINTERS.remove(deps.storage, &old_primary);
 
     Ok(Response::default()
         .add_attribute("action", "update_minter")
@@ -1502,6 +1511,175 @@ mod tests {
         let env = mock_env();
         let err = execute(deps.as_mut(), env, info, msg).unwrap_err();
         assert_eq!(err, ContractError::Unauthorized {});
+    }
+
+    /// INV-MINTER-001: UpdateMinter(None) deletes a dual-listed primary from MINTERS.
+    #[test]
+    fn update_minter_none_removes_primary_from_minters_map() {
+        let mut deps = mock_dependencies();
+
+        let genesis = deps.api.addr_make("genesis").to_string();
+        let primary = deps.api.addr_make("primary_minter").to_string();
+        let extra = deps.api.addr_make("extra_minter").to_string();
+        let recipient = deps.api.addr_make("recipient").to_string();
+
+        do_instantiate_with_minter(deps.as_mut(), &genesis, Uint128::new(1000), &primary, None);
+
+        // Dual-list primary in the additional minters map (bootstrap anti-pattern / ops mistake).
+        let info = mock_info(&primary, &[]);
+        execute(
+            deps.as_mut(),
+            mock_env(),
+            info.clone(),
+            ExecuteMsg::AddMinter {
+                minter: primary.clone(),
+            },
+        )
+        .unwrap();
+        execute(
+            deps.as_mut(),
+            mock_env(),
+            info,
+            ExecuteMsg::AddMinter {
+                minter: extra.clone(),
+            },
+        )
+        .unwrap();
+
+        // Drop primary self-mint after bootstrap.
+        let info = mock_info(&primary, &[]);
+        execute(
+            deps.as_mut(),
+            mock_env(),
+            info,
+            ExecuteMsg::UpdateMinter { new_minter: None },
+        )
+        .unwrap();
+
+        let minters: MintersResponse = from_json(
+            query(
+                deps.as_ref(),
+                mock_env(),
+                QueryMsg::Minters {
+                    start_after: None,
+                    limit: None,
+                },
+            )
+            .unwrap(),
+        )
+        .unwrap();
+        assert!(
+            !minters.minters.contains(&primary),
+            "primary must be removed from MINTERS on UpdateMinter(None): {:?}",
+            minters.minters
+        );
+        assert!(
+            minters.minters.contains(&extra),
+            "unrelated additional minters must remain: {:?}",
+            minters.minters
+        );
+
+        // Primary cannot mint via stale MINTERS entry.
+        let err = execute(
+            deps.as_mut(),
+            mock_env(),
+            mock_info(&primary, &[]),
+            ExecuteMsg::Mint {
+                recipient: recipient.clone(),
+                amount: Uint128::new(1),
+            },
+        )
+        .unwrap_err();
+        assert_eq!(err, ContractError::Unauthorized {});
+
+        // Extra additional minter still works; re-adding a primary later still works via AddMinter
+        // only after a new primary is set — here mint via extra succeeds.
+        execute(
+            deps.as_mut(),
+            mock_env(),
+            mock_info(&extra, &[]),
+            ExecuteMsg::Mint {
+                recipient,
+                amount: Uint128::new(1),
+            },
+        )
+        .unwrap();
+    }
+
+    /// INV-MINTER-001: rotating primary also clears the old primary from MINTERS.
+    #[test]
+    fn update_minter_transfer_removes_old_primary_from_minters_map() {
+        let mut deps = mock_dependencies();
+
+        let genesis = deps.api.addr_make("genesis").to_string();
+        let old_primary = deps.api.addr_make("old_primary").to_string();
+        let new_primary = deps.api.addr_make("new_primary").to_string();
+        let recipient = deps.api.addr_make("recipient").to_string();
+
+        do_instantiate_with_minter(
+            deps.as_mut(),
+            &genesis,
+            Uint128::new(1000),
+            &old_primary,
+            None,
+        );
+
+        execute(
+            deps.as_mut(),
+            mock_env(),
+            mock_info(&old_primary, &[]),
+            ExecuteMsg::AddMinter {
+                minter: old_primary.clone(),
+            },
+        )
+        .unwrap();
+
+        execute(
+            deps.as_mut(),
+            mock_env(),
+            mock_info(&old_primary, &[]),
+            ExecuteMsg::UpdateMinter {
+                new_minter: Some(new_primary.clone()),
+            },
+        )
+        .unwrap();
+
+        let minters: MintersResponse = from_json(
+            query(
+                deps.as_ref(),
+                mock_env(),
+                QueryMsg::Minters {
+                    start_after: None,
+                    limit: None,
+                },
+            )
+            .unwrap(),
+        )
+        .unwrap();
+        assert!(!minters.minters.contains(&old_primary));
+
+        let err = execute(
+            deps.as_mut(),
+            mock_env(),
+            mock_info(&old_primary, &[]),
+            ExecuteMsg::Mint {
+                recipient: recipient.clone(),
+                amount: Uint128::new(1),
+            },
+        )
+        .unwrap_err();
+        assert_eq!(err, ContractError::Unauthorized {});
+
+        execute(
+            deps.as_mut(),
+            mock_env(),
+            mock_info(&new_primary, &[]),
+            ExecuteMsg::Mint {
+                recipient,
+                amount: Uint128::new(1),
+            },
+        )
+        .unwrap();
     }
 
     #[test]
