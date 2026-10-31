@@ -1,7 +1,7 @@
+use cosmwasm_std::{Addr, Empty, Uint128};
+use cw_storage_plus::{Item, Map};
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
-use cosmwasm_std::{Addr, Uint128, Empty};
-use cw_storage_plus::{Item, Map};
 
 use cw20::{AllowanceResponse, Logo, MarketingInfoResponse};
 

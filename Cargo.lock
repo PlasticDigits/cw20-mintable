@@ -285,7 +285,7 @@ dependencies = [
 
 [[package]]
 name = "cw20-mintable"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "base64ct",
  "cosmwasm-schema",
@@ -295,10 +295,32 @@ dependencies = [
  "cw-utils",
  "cw2",
  "cw20",
+ "cw20-security-controller",
+ "cw20-security-interface",
  "schemars",
  "semver",
  "serde",
  "thiserror",
+]
+
+[[package]]
+name = "cw20-security-controller"
+version = "1.0.0"
+dependencies = [
+ "cosmwasm-schema",
+ "cosmwasm-std",
+ "cw-storage-plus",
+ "cw2",
+ "cw20-security-interface",
+ "thiserror",
+]
+
+[[package]]
+name = "cw20-security-interface"
+version = "1.0.0"
+dependencies = [
+ "cosmwasm-schema",
+ "cosmwasm-std",
 ]
 
 [[package]]

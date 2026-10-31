@@ -1,0 +1,178 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ConfigResponse",
+  "type": "object",
+  "required": [
+    "authority_epoch",
+    "epoch",
+    "interface_version",
+    "paused",
+    "roles",
+    "rotation_delay"
+  ],
+  "properties": {
+    "authority_epoch": {
+      "type": "integer",
+      "format": "uint64",
+      "minimum": 0.0
+    },
+    "epoch": {
+      "type": "integer",
+      "format": "uint64",
+      "minimum": 0.0
+    },
+    "interface_version": {
+      "type": "integer",
+      "format": "uint32",
+      "minimum": 0.0
+    },
+    "paused": {
+      "type": "boolean"
+    },
+    "pending_delay": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/PendingDelay"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "pending_role": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/PendingRole"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "roles": {
+      "$ref": "#/definitions/Roles"
+    },
+    "rotation_delay": {
+      "type": "integer",
+      "format": "uint64",
+      "minimum": 0.0
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "PendingDelay": {
+      "type": "object",
+      "required": [
+        "executable_at",
+        "initiator",
+        "nonce",
+        "proposed_at",
+        "seconds"
+      ],
+      "properties": {
+        "executable_at": {
+          "type": "integer",
+          "format": "uint64",
+          "minimum": 0.0
+        },
+        "initiator": {
+          "type": "string"
+        },
+        "nonce": {
+          "type": "integer",
+          "format": "uint64",
+          "minimum": 0.0
+        },
+        "proposed_at": {
+          "type": "integer",
+          "format": "uint64",
+          "minimum": 0.0
+        },
+        "seconds": {
+          "type": "integer",
+          "format": "uint64",
+          "minimum": 0.0
+        }
+      },
+      "additionalProperties": false
+    },
+    "PendingRole": {
+      "type": "object",
+      "required": [
+        "candidate",
+        "executable_at",
+        "initiator",
+        "nonce",
+        "proposed_at",
+        "role"
+      ],
+      "properties": {
+        "candidate": {
+          "type": "string"
+        },
+        "executable_at": {
+          "type": "integer",
+          "format": "uint64",
+          "minimum": 0.0
+        },
+        "initiator": {
+          "type": "string"
+        },
+        "nonce": {
+          "type": "integer",
+          "format": "uint64",
+          "minimum": 0.0
+        },
+        "proposed_at": {
+          "type": "integer",
+          "format": "uint64",
+          "minimum": 0.0
+        },
+        "role": {
+          "$ref": "#/definitions/Role"
+        }
+      },
+      "additionalProperties": false
+    },
+    "Role": {
+      "type": "string",
+      "enum": [
+        "governance",
+        "responder",
+        "blacklist",
+        "recovery",
+        "dispute"
+      ]
+    },
+    "Roles": {
+      "type": "object",
+      "required": [
+        "blacklist",
+        "dispute",
+        "governance",
+        "recovery"
+      ],
+      "properties": {
+        "blacklist": {
+          "type": "string"
+        },
+        "dispute": {
+          "type": "string"
+        },
+        "governance": {
+          "type": "string"
+        },
+        "recovery": {
+          "type": "string"
+        },
+        "responder": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

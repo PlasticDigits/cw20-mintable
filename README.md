@@ -1,5 +1,11 @@
 # CW20 Mintable
 
+Security v1 adds a shared controller, wallet outgoing limits, delayed settings and reserved governance recovery. See [policy and ABI](docs/token-security-v1.md), [controller interface](docs/controller-abi-v1.md) and [rollout evidence](docs/rollout/README.md). Source and local verification do not establish live deployment coverage.
+
+New instantiations require an explicit `security` object with verified controller and separate governance addresses. Governance follows the shared controller and must be separate from the minter. Legacy migration is limited to this fork's recorded version 0.1.0 and retains existing economic storage.
+
+Library consumers must dispatch through `contract::execute` to enforce security guards. Individual legacy `execute_*` functions are unguarded implementation helpers; importing them directly does not enforce this program.
+
 This is a clean fork of the CW20 Basic contract with enhanced minter extension capabilities. It implements
 the [CW20 spec](../../packages/cw20/README.md) with a focus on flexible minting functionality.
 

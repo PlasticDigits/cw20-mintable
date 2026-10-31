@@ -3,13 +3,371 @@
   "title": "ExecuteMsg",
   "oneOf": [
     {
+      "type": "object",
+      "required": [
+        "propose_recovery"
+      ],
+      "properties": {
+        "propose_recovery": {
+          "type": "object",
+          "required": [
+            "amount",
+            "destination",
+            "evidence_hash",
+            "source"
+          ],
+          "properties": {
+            "amount": {
+              "$ref": "#/definitions/Uint128"
+            },
+            "destination": {
+              "type": "string"
+            },
+            "evidence_hash": {
+              "type": "string"
+            },
+            "replace": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "format": "uint64",
+              "minimum": 0.0
+            },
+            "source": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "accept_recovery"
+      ],
+      "properties": {
+        "accept_recovery": {
+          "type": "object",
+          "required": [
+            "nonce"
+          ],
+          "properties": {
+            "nonce": {
+              "type": "integer",
+              "format": "uint64",
+              "minimum": 0.0
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "revoke_recovery_acceptance"
+      ],
+      "properties": {
+        "revoke_recovery_acceptance": {
+          "type": "object",
+          "required": [
+            "nonce"
+          ],
+          "properties": {
+            "nonce": {
+              "type": "integer",
+              "format": "uint64",
+              "minimum": 0.0
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "object_recovery"
+      ],
+      "properties": {
+        "object_recovery": {
+          "type": "object",
+          "required": [
+            "nonce"
+          ],
+          "properties": {
+            "nonce": {
+              "type": "integer",
+              "format": "uint64",
+              "minimum": 0.0
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "resolve_recovery_objection"
+      ],
+      "properties": {
+        "resolve_recovery_objection": {
+          "type": "object",
+          "required": [
+            "evidence_hash",
+            "nonce"
+          ],
+          "properties": {
+            "evidence_hash": {
+              "type": "string"
+            },
+            "nonce": {
+              "type": "integer",
+              "format": "uint64",
+              "minimum": 0.0
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "veto_recovery"
+      ],
+      "properties": {
+        "veto_recovery": {
+          "type": "object",
+          "required": [
+            "nonce"
+          ],
+          "properties": {
+            "nonce": {
+              "type": "integer",
+              "format": "uint64",
+              "minimum": 0.0
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "cancel_recovery"
+      ],
+      "properties": {
+        "cancel_recovery": {
+          "type": "object",
+          "required": [
+            "nonce"
+          ],
+          "properties": {
+            "nonce": {
+              "type": "integer",
+              "format": "uint64",
+              "minimum": 0.0
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "execute_recovery"
+      ],
+      "properties": {
+        "execute_recovery": {
+          "type": "object",
+          "required": [
+            "nonce"
+          ],
+          "properties": {
+            "nonce": {
+              "type": "integer",
+              "format": "uint64",
+              "minimum": 0.0
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "set_wallet_policy"
+      ],
+      "properties": {
+        "set_wallet_policy": {
+          "type": "object",
+          "required": [
+            "policy"
+          ],
+          "properties": {
+            "policy": {
+              "$ref": "#/definitions/WalletPolicy"
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "rebase_protection"
+      ],
+      "properties": {
+        "rebase_protection": {
+          "type": "object"
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "lock_wallet"
+      ],
+      "properties": {
+        "lock_wallet": {
+          "type": "object"
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "request_unlock"
+      ],
+      "properties": {
+        "request_unlock": {
+          "type": "object"
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "execute_wallet_change"
+      ],
+      "properties": {
+        "execute_wallet_change": {
+          "type": "object",
+          "required": [
+            "nonce"
+          ],
+          "properties": {
+            "nonce": {
+              "type": "integer",
+              "format": "uint64",
+              "minimum": 0.0
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "cancel_wallet_change"
+      ],
+      "properties": {
+        "cancel_wallet_change": {
+          "type": "object"
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "set_assignment"
+      ],
+      "properties": {
+        "set_assignment": {
+          "type": "object",
+          "required": [
+            "address",
+            "assignment"
+          ],
+          "properties": {
+            "address": {
+              "type": "string"
+            },
+            "assignment": {
+              "$ref": "#/definitions/Assignment"
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "execute_assignment"
+      ],
+      "properties": {
+        "execute_assignment": {
+          "type": "object",
+          "required": [
+            "address",
+            "nonce"
+          ],
+          "properties": {
+            "address": {
+              "type": "string"
+            },
+            "nonce": {
+              "type": "integer",
+              "format": "uint64",
+              "minimum": 0.0
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "cancel_assignment"
+      ],
+      "properties": {
+        "cancel_assignment": {
+          "type": "object",
+          "required": [
+            "address"
+          ],
+          "properties": {
+            "address": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    {
       "description": "Transfer is a base message to move tokens to another account without triggering actions",
       "type": "object",
       "required": [
-        "transfer"
+        "Transfer"
       ],
       "properties": {
-        "transfer": {
+        "Transfer": {
           "type": "object",
           "required": [
             "amount",
@@ -22,8 +380,7 @@
             "recipient": {
               "type": "string"
             }
-          },
-          "additionalProperties": false
+          }
         }
       },
       "additionalProperties": false
@@ -32,10 +389,10 @@
       "description": "Burn is a base message to destroy tokens forever",
       "type": "object",
       "required": [
-        "burn"
+        "Burn"
       ],
       "properties": {
-        "burn": {
+        "Burn": {
           "type": "object",
           "required": [
             "amount"
@@ -44,8 +401,7 @@
             "amount": {
               "$ref": "#/definitions/Uint128"
             }
-          },
-          "additionalProperties": false
+          }
         }
       },
       "additionalProperties": false
@@ -54,10 +410,10 @@
       "description": "Send is a base message to transfer tokens to a contract and trigger an action on the receiving contract.",
       "type": "object",
       "required": [
-        "send"
+        "Send"
       ],
       "properties": {
-        "send": {
+        "Send": {
           "type": "object",
           "required": [
             "amount",
@@ -74,8 +430,7 @@
             "msg": {
               "$ref": "#/definitions/Binary"
             }
-          },
-          "additionalProperties": false
+          }
         }
       },
       "additionalProperties": false
@@ -84,10 +439,10 @@
       "description": "Only with \"mintable\" extension. If authorized, creates amount new tokens and adds to the recipient balance.",
       "type": "object",
       "required": [
-        "mint"
+        "Mint"
       ],
       "properties": {
-        "mint": {
+        "Mint": {
           "type": "object",
           "required": [
             "amount",
@@ -100,8 +455,7 @@
             "recipient": {
               "type": "string"
             }
-          },
-          "additionalProperties": false
+          }
         }
       },
       "additionalProperties": false
@@ -110,10 +464,10 @@
       "description": "Only with \"allowance\" extension. Allows spender to access an additional amount tokens from the owner's (env.sender) account. If expires is Some(), overwrites current allowance expiration with this one.",
       "type": "object",
       "required": [
-        "increase_allowance"
+        "IncreaseAllowance"
       ],
       "properties": {
-        "increase_allowance": {
+        "IncreaseAllowance": {
           "type": "object",
           "required": [
             "amount",
@@ -136,8 +490,7 @@
             "spender": {
               "type": "string"
             }
-          },
-          "additionalProperties": false
+          }
         }
       },
       "additionalProperties": false
@@ -146,10 +499,10 @@
       "description": "Only with \"allowance\" extension. Lowers the spender's access of tokens from the owner's (env.sender) account by amount. If expires is Some(), overwrites current allowance expiration with this one.",
       "type": "object",
       "required": [
-        "decrease_allowance"
+        "DecreaseAllowance"
       ],
       "properties": {
-        "decrease_allowance": {
+        "DecreaseAllowance": {
           "type": "object",
           "required": [
             "amount",
@@ -172,8 +525,7 @@
             "spender": {
               "type": "string"
             }
-          },
-          "additionalProperties": false
+          }
         }
       },
       "additionalProperties": false
@@ -182,10 +534,10 @@
       "description": "Only with \"allowance\" extension. Transfers amount tokens from owner -> recipient if `env.sender` has sufficient pre-approval.",
       "type": "object",
       "required": [
-        "transfer_from"
+        "TransferFrom"
       ],
       "properties": {
-        "transfer_from": {
+        "TransferFrom": {
           "type": "object",
           "required": [
             "amount",
@@ -202,8 +554,7 @@
             "recipient": {
               "type": "string"
             }
-          },
-          "additionalProperties": false
+          }
         }
       },
       "additionalProperties": false
@@ -212,10 +563,10 @@
       "description": "Only with \"allowance\" extension. Burns amount tokens from owner if `env.sender` has sufficient pre-approval.",
       "type": "object",
       "required": [
-        "burn_from"
+        "BurnFrom"
       ],
       "properties": {
-        "burn_from": {
+        "BurnFrom": {
           "type": "object",
           "required": [
             "amount",
@@ -228,8 +579,7 @@
             "owner": {
               "type": "string"
             }
-          },
-          "additionalProperties": false
+          }
         }
       },
       "additionalProperties": false
@@ -238,10 +588,10 @@
       "description": "Only with \"allowance\" extension. Sends amount tokens from owner -> contract if `env.sender` has sufficient pre-approval.",
       "type": "object",
       "required": [
-        "send_from"
+        "SendFrom"
       ],
       "properties": {
-        "send_from": {
+        "SendFrom": {
           "type": "object",
           "required": [
             "amount",
@@ -262,8 +612,7 @@
             "owner": {
               "type": "string"
             }
-          },
-          "additionalProperties": false
+          }
         }
       },
       "additionalProperties": false
@@ -272,10 +621,10 @@
       "description": "Only with \"marketing\" extension. If authorized, updates marketing metadata. Setting None/null for any of these will leave it unchanged. Setting Some(\"\") will clear this field on the contract storage",
       "type": "object",
       "required": [
-        "update_marketing"
+        "UpdateMarketing"
       ],
       "properties": {
-        "update_marketing": {
+        "UpdateMarketing": {
           "type": "object",
           "properties": {
             "description": {
@@ -299,8 +648,7 @@
                 "null"
               ]
             }
-          },
-          "additionalProperties": false
+          }
         }
       },
       "additionalProperties": false
@@ -309,10 +657,10 @@
       "description": "If set as the \"marketing\" role on the contract, upload a new URL, SVG, or PNG for the token",
       "type": "object",
       "required": [
-        "upload_logo"
+        "UploadLogo"
       ],
       "properties": {
-        "upload_logo": {
+        "UploadLogo": {
           "$ref": "#/definitions/Logo"
         }
       },
@@ -322,10 +670,10 @@
       "description": "Only with \"mintable\" extension. The current minter may set a new minter. Setting the minter to None will remove the token's minter forever.",
       "type": "object",
       "required": [
-        "update_minter"
+        "UpdateMinter"
       ],
       "properties": {
-        "update_minter": {
+        "UpdateMinter": {
           "type": "object",
           "properties": {
             "new_minter": {
@@ -334,8 +682,7 @@
                 "null"
               ]
             }
-          },
-          "additionalProperties": false
+          }
         }
       },
       "additionalProperties": false
@@ -344,10 +691,10 @@
       "description": "Add a new minter to the minters list. Only the current minter can add new minters.",
       "type": "object",
       "required": [
-        "add_minter"
+        "AddMinter"
       ],
       "properties": {
-        "add_minter": {
+        "AddMinter": {
           "type": "object",
           "required": [
             "minter"
@@ -356,8 +703,7 @@
             "minter": {
               "type": "string"
             }
-          },
-          "additionalProperties": false
+          }
         }
       },
       "additionalProperties": false
@@ -366,10 +712,10 @@
       "description": "Remove a minter from the minters list. Only the current minter can remove minters.",
       "type": "object",
       "required": [
-        "remove_minter"
+        "RemoveMinter"
       ],
       "properties": {
-        "remove_minter": {
+        "RemoveMinter": {
           "type": "object",
           "required": [
             "minter"
@@ -378,14 +724,37 @@
             "minter": {
               "type": "string"
             }
-          },
-          "additionalProperties": false
+          }
         }
       },
       "additionalProperties": false
     }
   ],
   "definitions": {
+    "Assignment": {
+      "type": "object",
+      "required": [
+        "allow_lock",
+        "evidence_hash",
+        "exempt",
+        "protocol"
+      ],
+      "properties": {
+        "allow_lock": {
+          "type": "boolean"
+        },
+        "evidence_hash": {
+          "type": "string"
+        },
+        "exempt": {
+          "type": "boolean"
+        },
+        "protocol": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
     "Binary": {
       "description": "Binary is a wrapper around Vec<u8> to add base64 de/serialization with serde. It also adds some helper methods to help encode inline.\n\nThis is only needed as serde-json-{core,wasm} has a horrible encoding for Vec<u8>. See also <https://github.com/CosmWasm/cosmwasm/blob/main/docs/MESSAGE_TYPES.md>.",
       "type": "string"
@@ -514,6 +883,36 @@
     "Uint64": {
       "description": "A thin wrapper around u64 that is using strings for JSON encoding/decoding, such that the full u64 range can be used for clients that convert JSON numbers to floats, like JavaScript and jq.\n\n# Examples\n\nUse `from` to create instances of this and `u64` to get the value out:\n\n``` # use cosmwasm_std::Uint64; let a = Uint64::from(42u64); assert_eq!(a.u64(), 42);\n\nlet b = Uint64::from(70u32); assert_eq!(b.u64(), 70); ```",
       "type": "string"
+    },
+    "WalletPolicy": {
+      "type": "object",
+      "required": [
+        "enabled",
+        "limit_bps",
+        "relaxation_delay",
+        "unlock_delay"
+      ],
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "limit_bps": {
+          "type": "integer",
+          "format": "uint16",
+          "minimum": 0.0
+        },
+        "relaxation_delay": {
+          "type": "integer",
+          "format": "uint64",
+          "minimum": 0.0
+        },
+        "unlock_delay": {
+          "type": "integer",
+          "format": "uint64",
+          "minimum": 0.0
+        }
+      },
+      "additionalProperties": false
     }
   }
 }

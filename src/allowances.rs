@@ -74,6 +74,13 @@ pub fn execute_decrease_allowance(
             if exp.is_expired(&env.block) {
                 return Err(ContractError::InvalidExpiration {});
             }
+            if !exp
+                .partial_cmp(&allowance.expires)
+                .map(|o| o.is_le())
+                .unwrap_or(false)
+            {
+                return Err(ContractError::InvalidExpiration {});
+            }
             allowance.expires = exp;
         }
         ALLOWANCES.save(deps.storage, key, &allowance)?;
@@ -256,7 +263,8 @@ pub fn query_allowance(deps: Deps, owner: String, spender: String) -> StdResult<
 mod tests {
     use super::*;
 
-    use cosmwasm_std::testing::{mock_dependencies_with_balance, mock_env, mock_info};
+    use crate::test_support::mock_dependencies_with_balance;
+    use cosmwasm_std::testing::{mock_env, mock_info};
     use cosmwasm_std::{coins, CosmosMsg, SubMsg, Timestamp, WasmMsg};
     use cw20::{Cw20Coin, TokenInfoResponse};
 
@@ -274,6 +282,10 @@ mod tests {
         amount: Uint128,
     ) -> TokenInfoResponse {
         let instantiate_msg = InstantiateMsg {
+            security: Some(crate::security::SecurityInit {
+                controller: "controller".into(),
+                governance: "governance".into(),
+            }),
             name: "Auto Gen".to_string(),
             symbol: "AUTO".to_string(),
             decimals: 3,
@@ -855,8 +867,8 @@ mod tests {
             execute(deps.as_mut(), env.clone(), info.clone(), msg)
         );
 
-        // decrease with height expiration at next block height
-        let expires = Expiration::AtHeight(env.block.height + 1);
+        // Decrease may shorten, but cannot switch incomparable clock domains.
+        let expires = Expiration::AtTime(env.block.time.plus_seconds(5));
         let allow = Uint128::new(7777);
         let msg = ExecuteMsg::DecreaseAllowance {
             spender: spender.clone(),

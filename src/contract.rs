@@ -1,12 +1,12 @@
 #[cfg(not(feature = "library"))]
 use cosmwasm_std::entry_point;
-use cosmwasm_std::Order::Ascending;
 use cosmwasm_std::{
-    to_binary, Binary, Deps, DepsMut, Env, MessageInfo, Response, StdError, StdResult, Uint128, Empty,
+    to_json_binary, Binary, Deps, DepsMut, Empty, Env, MessageInfo, Response, StdError, StdResult,
+    Uint128,
 };
 use cw_storage_plus::Bound;
 
-use cw2::{ensure_from_older_version, set_contract_version};
+use cw2::set_contract_version;
 use cw20::{
     BalanceResponse, Cw20Coin, Cw20ReceiveMsg, DownloadLogoResponse, EmbeddedLogo, Logo, LogoInfo,
     MarketingInfoResponse, MinterResponse, TokenInfoResponse,
@@ -18,11 +18,8 @@ use crate::allowances::{
 };
 use crate::enumerable::{query_all_accounts, query_owner_allowances, query_spender_allowances};
 use crate::error::ContractError;
-use crate::msg::{ExecuteMsg, InstantiateMsg, MigrateMsg, QueryMsg, MintersResponse};
-use crate::state::{
-    MinterData, TokenInfo, ALLOWANCES, ALLOWANCES_SPENDER, BALANCES, LOGO, MARKETING_INFO,
-    TOKEN_INFO, MINTERS,
-};
+use crate::msg::{ExecuteMsg, InstantiateMsg, MigrateMsg, MintersResponse, QueryMsg};
+use crate::state::{MinterData, TokenInfo, BALANCES, LOGO, MARKETING_INFO, MINTERS, TOKEN_INFO};
 
 // version info for migration info
 const CONTRACT_NAME: &str = "crates.io:cw20-base";
@@ -94,13 +91,24 @@ fn verify_logo(logo: &Logo) -> Result<(), ContractError> {
 #[cfg_attr(not(feature = "library"), entry_point)]
 pub fn instantiate(
     mut deps: DepsMut,
-    _env: Env,
+    env: Env,
     _info: MessageInfo,
     msg: InstantiateMsg,
 ) -> Result<Response, ContractError> {
     set_contract_version(deps.storage, CONTRACT_NAME, CONTRACT_VERSION)?;
     // check valid token info
     msg.validate()?;
+    validate_accounts(&msg.initial_balances)?;
+    let security = msg
+        .security
+        .clone()
+        .ok_or_else(|| crate::security::error("security configuration required"))?;
+    if msg.mint.as_ref().map(|m| m.minter.as_str()) == Some(security.governance.as_str()) {
+        return Err(crate::security::error(
+            "governance must be separate from minter",
+        ));
+    }
+    crate::security::init(deps.branch(), &env, security)?;
     // create initial accounts
     let total_supply = create_accounts(&mut deps, &msg.initial_balances)?;
 
@@ -186,12 +194,61 @@ pub fn validate_accounts(accounts: &[Cw20Coin]) -> Result<(), ContractError> {
 
 #[cfg_attr(not(feature = "library"), entry_point)]
 pub fn execute(
-    deps: DepsMut,
+    mut deps: DepsMut,
     env: Env,
     info: MessageInfo,
     msg: ExecuteMsg,
 ) -> Result<Response, ContractError> {
+    crate::security::guard(deps.branch(), &env, &info, &msg)?;
     match msg {
+        ExecuteMsg::ProposeRecovery {
+            source,
+            destination,
+            amount,
+            evidence_hash,
+            replace,
+        } => crate::recovery::propose(
+            deps,
+            env,
+            info,
+            source,
+            destination,
+            amount,
+            evidence_hash,
+            replace,
+        ),
+        ExecuteMsg::AcceptRecovery { nonce } => {
+            crate::recovery::accept(deps, env, info, nonce, false)
+        }
+        ExecuteMsg::RevokeRecoveryAcceptance { nonce } => {
+            crate::recovery::accept(deps, env, info, nonce, true)
+        }
+        ExecuteMsg::ObjectRecovery { nonce } => crate::recovery::object(deps, info, nonce),
+        ExecuteMsg::ResolveRecoveryObjection {
+            nonce,
+            evidence_hash,
+        } => crate::recovery::resolve(deps, env, info, nonce, evidence_hash),
+        ExecuteMsg::VetoRecovery { nonce } => crate::recovery::veto(deps, env, info, nonce),
+        ExecuteMsg::CancelRecovery { nonce } => crate::recovery::cancel(deps, env, info, nonce),
+        ExecuteMsg::ExecuteRecovery { nonce } => crate::recovery::execute(deps, env, info, nonce),
+        ExecuteMsg::SetWalletPolicy { policy } => {
+            crate::security::settings(deps, env, info, policy)
+        }
+        ExecuteMsg::RebaseProtection {} => crate::security::rebase(deps, env, info),
+        ExecuteMsg::LockWallet {} => crate::security::lock(deps, info),
+        ExecuteMsg::RequestUnlock {} => crate::security::unlock(deps, env, info),
+        ExecuteMsg::ExecuteWalletChange { nonce } => crate::security::apply(deps, env, info, nonce),
+        ExecuteMsg::CancelWalletChange {} => crate::security::cancel(deps, info),
+        ExecuteMsg::SetAssignment {
+            address,
+            assignment,
+        } => crate::security::assignment(deps, env, info, address, assignment),
+        ExecuteMsg::ExecuteAssignment { address, nonce } => {
+            crate::security::apply_assignment(deps, env, info, address, nonce)
+        }
+        ExecuteMsg::CancelAssignment { address } => {
+            crate::security::cancel_assignment(deps, env, info, address)
+        }
         ExecuteMsg::Transfer { recipient, amount } => {
             execute_transfer(deps, env, info, recipient, amount)
         }
@@ -312,9 +369,9 @@ pub fn execute_mint(
         .as_ref()
         .map(|mint_info| mint_info.minter == info.sender)
         .unwrap_or(false);
-    
+
     let is_additional_minter = MINTERS.has(deps.storage, &info.sender);
-    
+
     if !is_primary_minter && !is_additional_minter {
         return Err(ContractError::Unauthorized {});
     }
@@ -398,6 +455,9 @@ pub fn execute_update_minter(
         return Err(ContractError::Unauthorized {});
     }
 
+    // Capture old primary before mutation so we can clear stale MINTERS metadata.
+    let old_primary = mint.minter.clone();
+
     let minter_data = new_minter
         .map(|new_minter| deps.api.addr_validate(&new_minter))
         .transpose()?
@@ -409,6 +469,12 @@ pub fn execute_update_minter(
     config.mint = minter_data;
 
     TOKEN_INFO.save(deps.storage, &config)?;
+
+    // INV-MINTER-001: UpdateMinter must not leave the old primary in the additional
+    // MINTERS map. Upstream-style delete-on-None (and on transfer): if governance was
+    // dual-listed via AddMinter, clearing/rotating primary must drop that map entry so
+    // "drop self-mint after bootstrap" cannot resurrect via stale metadata.
+    MINTERS.remove(deps.storage, &old_primary);
 
     Ok(Response::default()
         .add_attribute("action", "update_minter")
@@ -510,36 +576,41 @@ pub fn execute_upload_logo(
 }
 
 #[cfg_attr(not(feature = "library"), entry_point)]
-pub fn query(deps: Deps, _env: Env, msg: QueryMsg) -> StdResult<Binary> {
+pub fn query(deps: Deps, env: Env, msg: QueryMsg) -> StdResult<Binary> {
     match msg {
-        QueryMsg::Balance { address } => to_binary(&query_balance(deps, address)?),
-        QueryMsg::TokenInfo {} => to_binary(&query_token_info(deps)?),
-        QueryMsg::Minter {} => to_binary(&query_minter(deps)?),
+        QueryMsg::Recovery { nonce } => to_json_binary(&crate::recovery::query(deps, nonce)?),
+        QueryMsg::WalletSecurity { address } => {
+            to_json_binary(&crate::security::query_wallet(deps, env, address)?)
+        }
+        QueryMsg::SecurityConfig {} => to_json_binary(&crate::security::CONFIG.load(deps.storage)?),
+        QueryMsg::Balance { address } => to_json_binary(&query_balance(deps, address)?),
+        QueryMsg::TokenInfo {} => to_json_binary(&query_token_info(deps)?),
+        QueryMsg::Minter {} => to_json_binary(&query_minter(deps)?),
         QueryMsg::Allowance { owner, spender } => {
-            to_binary(&query_allowance(deps, owner, spender)?)
+            to_json_binary(&query_allowance(deps, owner, spender)?)
         }
         QueryMsg::AllAllowances {
             owner,
             start_after,
             limit,
-        } => to_binary(&query_owner_allowances(deps, owner, start_after, limit)?),
+        } => to_json_binary(&query_owner_allowances(deps, owner, start_after, limit)?),
         QueryMsg::AllSpenderAllowances {
             spender,
             start_after,
             limit,
-        } => to_binary(&query_spender_allowances(
+        } => to_json_binary(&query_spender_allowances(
             deps,
             spender,
             start_after,
             limit,
         )?),
         QueryMsg::AllAccounts { start_after, limit } => {
-            to_binary(&query_all_accounts(deps, start_after, limit)?)
+            to_json_binary(&query_all_accounts(deps, start_after, limit)?)
         }
-        QueryMsg::MarketingInfo {} => to_binary(&query_marketing_info(deps)?),
-        QueryMsg::DownloadLogo {} => to_binary(&query_download_logo(deps)?),
+        QueryMsg::MarketingInfo {} => to_json_binary(&query_marketing_info(deps)?),
+        QueryMsg::DownloadLogo {} => to_json_binary(&query_download_logo(deps)?),
         QueryMsg::Minters { start_after, limit } => {
-            to_binary(&query_minters(deps, start_after, limit)?)
+            to_json_binary(&query_minters(deps, start_after, limit)?)
         }
     }
 }
@@ -668,32 +739,45 @@ pub fn query_minters(
 }
 
 #[cfg_attr(not(feature = "library"), entry_point)]
-pub fn migrate(deps: DepsMut, _env: Env, _msg: MigrateMsg) -> Result<Response, ContractError> {
-    let original_version =
-        ensure_from_older_version(deps.storage, CONTRACT_NAME, CONTRACT_VERSION)?;
-
-    if original_version < "0.14.0".parse::<semver::Version>().unwrap() {
-        // Build reverse map of allowances per spender
-        let data = ALLOWANCES
-            .range(deps.storage, None, None, Ascending)
-            .collect::<StdResult<Vec<_>>>()?;
-        for ((owner, spender), allowance) in data {
-            ALLOWANCES_SPENDER.save(deps.storage, (&spender, &owner), &allowance)?;
-        }
+pub fn migrate(mut deps: DepsMut, env: Env, msg: MigrateMsg) -> Result<Response, ContractError> {
+    // Exact legacy fork only; never iterate holder/allowance maps during migration.
+    let old = cw2::get_contract_version(deps.storage)?;
+    if old.contract != CONTRACT_NAME || old.version != "0.1.0" {
+        return Err(crate::security::error("unsupported migration source"));
     }
-    Ok(Response::default())
+    if MINTERS.has(
+        deps.storage,
+        &deps.api.addr_validate(&msg.security.governance)?,
+    ) || TOKEN_INFO
+        .load(deps.storage)?
+        .mint
+        .map(|m| m.minter.to_string())
+        == Some(msg.security.governance.clone())
+    {
+        return Err(crate::security::error(
+            "governance must be separate from minter",
+        ));
+    }
+    crate::security::init(deps.branch(), &env, msg.security)?;
+    set_contract_version(deps.storage, CONTRACT_NAME, CONTRACT_VERSION)?;
+    Ok(Response::new()
+        .add_attribute("action", "migrate_security_v1")
+        .add_attribute(
+            "controller",
+            crate::security::CONFIG.load(deps.storage)?.controller,
+        ))
 }
 
 #[cfg(test)]
 mod tests {
-    use cosmwasm_std::testing::{
-        mock_dependencies, mock_dependencies_with_balance, mock_env, mock_info,
-    };
+    use cosmwasm_std::testing::{mock_env, mock_info};
     use cosmwasm_std::{coins, from_json, Addr, CosmosMsg, StdError, SubMsg, WasmMsg};
 
     use super::*;
     use crate::msg::InstantiateMarketingInfo;
+    use crate::state::{ALLOWANCES, ALLOWANCES_SPENDER};
 
+    use crate::test_support::{mock_dependencies, mock_dependencies_with_balance};
     fn get_balance<T: Into<String>>(deps: Deps, address: T) -> Uint128 {
         query_balance(deps, address.into()).unwrap().balance
     }
@@ -730,6 +814,10 @@ mod tests {
         mint: Option<MinterResponse>,
     ) -> TokenInfoResponse {
         let instantiate_msg = InstantiateMsg {
+            security: Some(crate::security::SecurityInit {
+                controller: "controller".into(),
+                governance: "governance".into(),
+            }),
             name: "Auto Gen".to_string(),
             symbol: "AUTO".to_string(),
             decimals: 3,
@@ -771,6 +859,10 @@ mod tests {
             let addr = deps.api.addr_make("addr0000");
             let amount = Uint128::from(11223344u128);
             let instantiate_msg = InstantiateMsg {
+                security: Some(crate::security::SecurityInit {
+                    controller: "controller".into(),
+                    governance: "governance".into(),
+                }),
                 name: "Cash Token".to_string(),
                 symbol: "CASH".to_string(),
                 decimals: 9,
@@ -806,6 +898,10 @@ mod tests {
             let minter = deps.api.addr_make("asmodat").to_string();
             let limit = Uint128::new(511223344);
             let instantiate_msg = InstantiateMsg {
+                security: Some(crate::security::SecurityInit {
+                    controller: "controller".into(),
+                    governance: "governance".into(),
+                }),
                 name: "Cash Token".to_string(),
                 symbol: "CASH".to_string(),
                 decimals: 9,
@@ -851,6 +947,10 @@ mod tests {
             let addr = deps.api.addr_make("addr0000");
             let limit = Uint128::new(11223300);
             let instantiate_msg = InstantiateMsg {
+                security: Some(crate::security::SecurityInit {
+                    controller: "controller".into(),
+                    governance: "governance".into(),
+                }),
                 name: "Cash Token".to_string(),
                 symbol: "CASH".to_string(),
                 decimals: 9,
@@ -883,6 +983,10 @@ mod tests {
                 let marketing = deps.api.addr_make("marketing");
 
                 let instantiate_msg = InstantiateMsg {
+                    security: Some(crate::security::SecurityInit {
+                        controller: "controller".into(),
+                        governance: "governance".into(),
+                    }),
                     name: "Cash Token".to_string(),
                     symbol: "CASH".to_string(),
                     decimals: 9,
@@ -922,6 +1026,10 @@ mod tests {
             fn invalid_marketing() {
                 let mut deps = mock_dependencies();
                 let instantiate_msg = InstantiateMsg {
+                    security: Some(crate::security::SecurityInit {
+                        controller: "controller".into(),
+                        governance: "governance".into(),
+                    }),
                     name: "Cash Token".to_string(),
                     symbol: "CASH".to_string(),
                     decimals: 9,
@@ -1158,9 +1266,7 @@ mod tests {
         assert_eq!(err, ContractError::Unauthorized {});
 
         // Try to remove minter with unauthorized user
-        let msg = ExecuteMsg::RemoveMinter {
-            minter: new_minter,
-        };
+        let msg = ExecuteMsg::RemoveMinter { minter: new_minter };
         let info = mock_info(&unauthorized, &[]);
         let err = execute(deps.as_mut(), mock_env(), info, msg).unwrap_err();
         assert_eq!(err, ContractError::Unauthorized {});
@@ -1176,7 +1282,13 @@ mod tests {
         let recipient = deps.api.addr_make("recipient").to_string();
 
         // Setup with primary minter
-        do_instantiate_with_minter(deps.as_mut(), &genesis, Uint128::new(1000), &primary_minter, None);
+        do_instantiate_with_minter(
+            deps.as_mut(),
+            &genesis,
+            Uint128::new(1000),
+            &primary_minter,
+            None,
+        );
 
         // Add additional minter
         let msg = ExecuteMsg::AddMinter {
@@ -1193,7 +1305,7 @@ mod tests {
         };
         let info = mock_info(&additional_minter, &[]);
         let res = execute(deps.as_mut(), mock_env(), info, msg).unwrap();
-        
+
         assert_eq!(res.messages.len(), 0);
         assert_eq!(get_balance(deps.as_ref(), recipient), mint_amount);
         assert_eq!(
@@ -1216,7 +1328,13 @@ mod tests {
 
         // Setup with primary minter and cap
         let cap = Some(Uint128::new(10000));
-        do_instantiate_with_minter(deps.as_mut(), &genesis, Uint128::new(1000), &primary_minter, cap);
+        do_instantiate_with_minter(
+            deps.as_mut(),
+            &genesis,
+            Uint128::new(1000),
+            &primary_minter,
+            cap,
+        );
 
         // Add additional minters
         let msg = ExecuteMsg::AddMinter {
@@ -1276,7 +1394,13 @@ mod tests {
 
         // Setup with cap
         let cap = Some(Uint128::new(2000));
-        do_instantiate_with_minter(deps.as_mut(), &genesis, Uint128::new(1000), &primary_minter, cap);
+        do_instantiate_with_minter(
+            deps.as_mut(),
+            &genesis,
+            Uint128::new(1000),
+            &primary_minter,
+            cap,
+        );
 
         // Add additional minter
         let msg = ExecuteMsg::AddMinter {
@@ -1319,7 +1443,13 @@ mod tests {
         let recipient = deps.api.addr_make("recipient").to_string();
 
         // Setup with primary minter
-        do_instantiate_with_minter(deps.as_mut(), &genesis, Uint128::new(1000), &primary_minter, None);
+        do_instantiate_with_minter(
+            deps.as_mut(),
+            &genesis,
+            Uint128::new(1000),
+            &primary_minter,
+            None,
+        );
 
         // Add additional minter
         let msg = ExecuteMsg::AddMinter {
@@ -1363,7 +1493,13 @@ mod tests {
         let recipient = deps.api.addr_make("recipient").to_string();
 
         // Setup with primary minter
-        do_instantiate_with_minter(deps.as_mut(), &genesis, Uint128::new(1000), &primary_minter, None);
+        do_instantiate_with_minter(
+            deps.as_mut(),
+            &genesis,
+            Uint128::new(1000),
+            &primary_minter,
+            None,
+        );
 
         // Add additional minter
         let msg = ExecuteMsg::AddMinter {
@@ -1384,7 +1520,7 @@ mod tests {
         };
         let info = mock_info(&additional_minter, &[]);
         let res = execute(deps.as_mut(), mock_env(), info, msg).unwrap();
-        
+
         assert_eq!(res.messages.len(), 0);
         assert_eq!(get_balance(deps.as_ref(), &recipient), Uint128::new(500));
         assert_eq!(
@@ -1414,7 +1550,13 @@ mod tests {
         let recipient = deps.api.addr_make("recipient").to_string();
 
         // Setup with primary minter
-        do_instantiate_with_minter(deps.as_mut(), &genesis, Uint128::new(1000), &primary_minter, None);
+        do_instantiate_with_minter(
+            deps.as_mut(),
+            &genesis,
+            Uint128::new(1000),
+            &primary_minter,
+            None,
+        );
 
         // Add one additional minter
         let msg = ExecuteMsg::AddMinter {
@@ -1504,6 +1646,175 @@ mod tests {
         assert_eq!(err, ContractError::Unauthorized {});
     }
 
+    /// INV-MINTER-001: UpdateMinter(None) deletes a dual-listed primary from MINTERS.
+    #[test]
+    fn update_minter_none_removes_primary_from_minters_map() {
+        let mut deps = mock_dependencies();
+
+        let genesis = deps.api.addr_make("genesis").to_string();
+        let primary = deps.api.addr_make("primary_minter").to_string();
+        let extra = deps.api.addr_make("extra_minter").to_string();
+        let recipient = deps.api.addr_make("recipient").to_string();
+
+        do_instantiate_with_minter(deps.as_mut(), &genesis, Uint128::new(1000), &primary, None);
+
+        // Dual-list primary in the additional minters map (bootstrap anti-pattern / ops mistake).
+        let info = mock_info(&primary, &[]);
+        execute(
+            deps.as_mut(),
+            mock_env(),
+            info.clone(),
+            ExecuteMsg::AddMinter {
+                minter: primary.clone(),
+            },
+        )
+        .unwrap();
+        execute(
+            deps.as_mut(),
+            mock_env(),
+            info,
+            ExecuteMsg::AddMinter {
+                minter: extra.clone(),
+            },
+        )
+        .unwrap();
+
+        // Drop primary self-mint after bootstrap.
+        let info = mock_info(&primary, &[]);
+        execute(
+            deps.as_mut(),
+            mock_env(),
+            info,
+            ExecuteMsg::UpdateMinter { new_minter: None },
+        )
+        .unwrap();
+
+        let minters: MintersResponse = from_json(
+            query(
+                deps.as_ref(),
+                mock_env(),
+                QueryMsg::Minters {
+                    start_after: None,
+                    limit: None,
+                },
+            )
+            .unwrap(),
+        )
+        .unwrap();
+        assert!(
+            !minters.minters.contains(&primary),
+            "primary must be removed from MINTERS on UpdateMinter(None): {:?}",
+            minters.minters
+        );
+        assert!(
+            minters.minters.contains(&extra),
+            "unrelated additional minters must remain: {:?}",
+            minters.minters
+        );
+
+        // Primary cannot mint via stale MINTERS entry.
+        let err = execute(
+            deps.as_mut(),
+            mock_env(),
+            mock_info(&primary, &[]),
+            ExecuteMsg::Mint {
+                recipient: recipient.clone(),
+                amount: Uint128::new(1),
+            },
+        )
+        .unwrap_err();
+        assert_eq!(err, ContractError::Unauthorized {});
+
+        // Extra additional minter still works; re-adding a primary later still works via AddMinter
+        // only after a new primary is set — here mint via extra succeeds.
+        execute(
+            deps.as_mut(),
+            mock_env(),
+            mock_info(&extra, &[]),
+            ExecuteMsg::Mint {
+                recipient,
+                amount: Uint128::new(1),
+            },
+        )
+        .unwrap();
+    }
+
+    /// INV-MINTER-001: rotating primary also clears the old primary from MINTERS.
+    #[test]
+    fn update_minter_transfer_removes_old_primary_from_minters_map() {
+        let mut deps = mock_dependencies();
+
+        let genesis = deps.api.addr_make("genesis").to_string();
+        let old_primary = deps.api.addr_make("old_primary").to_string();
+        let new_primary = deps.api.addr_make("new_primary").to_string();
+        let recipient = deps.api.addr_make("recipient").to_string();
+
+        do_instantiate_with_minter(
+            deps.as_mut(),
+            &genesis,
+            Uint128::new(1000),
+            &old_primary,
+            None,
+        );
+
+        execute(
+            deps.as_mut(),
+            mock_env(),
+            mock_info(&old_primary, &[]),
+            ExecuteMsg::AddMinter {
+                minter: old_primary.clone(),
+            },
+        )
+        .unwrap();
+
+        execute(
+            deps.as_mut(),
+            mock_env(),
+            mock_info(&old_primary, &[]),
+            ExecuteMsg::UpdateMinter {
+                new_minter: Some(new_primary.clone()),
+            },
+        )
+        .unwrap();
+
+        let minters: MintersResponse = from_json(
+            query(
+                deps.as_ref(),
+                mock_env(),
+                QueryMsg::Minters {
+                    start_after: None,
+                    limit: None,
+                },
+            )
+            .unwrap(),
+        )
+        .unwrap();
+        assert!(!minters.minters.contains(&old_primary));
+
+        let err = execute(
+            deps.as_mut(),
+            mock_env(),
+            mock_info(&old_primary, &[]),
+            ExecuteMsg::Mint {
+                recipient: recipient.clone(),
+                amount: Uint128::new(1),
+            },
+        )
+        .unwrap_err();
+        assert_eq!(err, ContractError::Unauthorized {});
+
+        execute(
+            deps.as_mut(),
+            mock_env(),
+            mock_info(&new_primary, &[]),
+            ExecuteMsg::Mint {
+                recipient,
+                amount: Uint128::new(1),
+            },
+        )
+        .unwrap();
+    }
+
     #[test]
     fn test_add_minter_when_no_minter_configured() {
         let mut deps = mock_dependencies();
@@ -1573,6 +1884,10 @@ mod tests {
 
         // Fails with duplicate addresses
         let instantiate_msg = InstantiateMsg {
+            security: Some(crate::security::SecurityInit {
+                controller: "controller".into(),
+                governance: "governance".into(),
+            }),
             name: "Bash Shell".to_string(),
             symbol: "BASH".to_string(),
             decimals: 6,
@@ -1595,6 +1910,10 @@ mod tests {
 
         // Works with unique addresses
         let instantiate_msg = InstantiateMsg {
+            security: Some(crate::security::SecurityInit {
+                controller: "controller".into(),
+                governance: "governance".into(),
+            }),
             name: "Bash Shell".to_string(),
             symbol: "BASH".to_string(),
             decimals: 6,
@@ -1841,124 +2160,77 @@ mod tests {
 
     mod migration {
         use super::*;
-
-        use cosmwasm_std::Empty;
-        use cw20::{AllAllowancesResponse, AllSpenderAllowancesResponse, SpenderAllowanceInfo};
-        use cw_multi_test::{App, Contract, ContractWrapper, Executor};
-        use cw_utils::Expiration;
-
-        fn cw20_contract() -> Box<dyn Contract<Empty>> {
-            let contract = ContractWrapper::new(
-                crate::contract::execute,
-                crate::contract::instantiate,
-                crate::contract::query,
-            )
-            .with_migrate(crate::contract::migrate);
-            Box::new(contract)
-        }
-
         #[test]
-        fn test_migrate() {
-            let mut app = App::default();
-
-            let sender = app.api().addr_make("sender").to_string();
-            let spender = app.api().addr_make("spender").to_string();
-
-            let cw20_id = app.store_code(cw20_contract());
-            let cw20_addr = app
-                .instantiate_contract(
-                    cw20_id,
-                    Addr::unchecked("sender"),
-                    &InstantiateMsg {
-                        name: "Token".to_string(),
-                        symbol: "TOKEN".to_string(),
-                        decimals: 6,
-                        initial_balances: vec![Cw20Coin {
-                            address: sender.clone(),
-                            amount: Uint128::new(100),
-                        }],
-                        mint: None,
-                        marketing: None,
-                    },
-                    &[],
-                    "TOKEN",
-                    Some(sender.clone()),
-                )
-                .unwrap();
-
-            // no allowance to start
-            let allowance: AllAllowancesResponse = app
-                .wrap()
-                .query_wasm_smart(
-                    cw20_addr.to_string(),
-                    &QueryMsg::AllAllowances {
-                        owner: sender.clone(),
-                        start_after: None,
-                        limit: None,
-                    },
-                )
-                .unwrap();
-            assert_eq!(allowance, AllAllowancesResponse::default());
-
-            // Set allowance
-            let allow1 = Uint128::new(7777);
-            let expires = Expiration::AtHeight(123_456);
-            let msg = CosmosMsg::Wasm(WasmMsg::Execute {
-                contract_addr: cw20_addr.to_string(),
-                msg: to_binary(&ExecuteMsg::IncreaseAllowance {
-                    spender: spender.clone(),
-                    amount: allow1,
-                    expires: Some(expires),
-                })
-                .unwrap(),
-                funds: vec![],
-            });
-            app.execute(Addr::unchecked(&sender), msg).unwrap();
-
-            // Now migrate
-            app.execute(
-                Addr::unchecked(&sender),
-                CosmosMsg::Wasm(WasmMsg::Migrate {
-                    contract_addr: cw20_addr.to_string(),
-                    new_code_id: cw20_id,
-                    msg: to_binary(&MigrateMsg {}).unwrap(),
+        fn test_migrate_preserves_legacy_storage_and_rejects_reentry() {
+            let mut deps = mock_dependencies();
+            let owner = Addr::unchecked("holder");
+            let spender = Addr::unchecked("spender");
+            let minter = Addr::unchecked("issuer");
+            cw2::set_contract_version(deps.as_mut().storage, CONTRACT_NAME, "0.1.0").unwrap();
+            let token = TokenInfo {
+                name: "Token".into(),
+                symbol: "TOK".into(),
+                decimals: 6,
+                total_supply: Uint128::new(999),
+                mint: Some(MinterData {
+                    minter: minter.clone(),
+                    cap: None,
                 }),
-            )
-            .unwrap();
-
-            // Smoke check that the contract still works.
-            let balance: cw20::BalanceResponse = app
-                .wrap()
-                .query_wasm_smart(
-                    cw20_addr.clone(),
-                    &QueryMsg::Balance {
-                        address: sender.clone(),
-                    },
-                )
+            };
+            TOKEN_INFO.save(deps.as_mut().storage, &token).unwrap();
+            BALANCES
+                .save(deps.as_mut().storage, &owner, &Uint128::new(999))
                 .unwrap();
-
-            assert_eq!(balance.balance, Uint128::new(100));
-
-            // Confirm that the allowance per spender is there
-            let allowance: AllSpenderAllowancesResponse = app
-                .wrap()
-                .query_wasm_smart(
-                    cw20_addr,
-                    &QueryMsg::AllSpenderAllowances {
-                        spender,
-                        start_after: None,
-                        limit: None,
-                    },
-                )
+            MINTERS
+                .save(deps.as_mut().storage, &minter, &Empty {})
                 .unwrap();
+            let allowance = cw20::AllowanceResponse {
+                allowance: Uint128::new(321),
+                expires: cw20::Expiration::Never {},
+            };
+            ALLOWANCES
+                .save(deps.as_mut().storage, (&owner, &spender), &allowance)
+                .unwrap();
+            ALLOWANCES_SPENDER
+                .save(deps.as_mut().storage, (&spender, &owner), &allowance)
+                .unwrap();
+            let msg = MigrateMsg {
+                security: crate::security::SecurityInit {
+                    controller: "controller".into(),
+                    governance: "governance".into(),
+                },
+            };
+            migrate(deps.as_mut(), mock_env(), msg.clone()).unwrap();
+            assert_eq!(TOKEN_INFO.load(deps.as_ref().storage).unwrap(), token);
             assert_eq!(
-                allowance.allowances,
-                &[SpenderAllowanceInfo {
-                    owner: sender,
-                    allowance: allow1,
-                    expires
-                }]
+                BALANCES.load(deps.as_ref().storage, &owner).unwrap(),
+                Uint128::new(999)
             );
+            assert_eq!(
+                ALLOWANCES
+                    .load(deps.as_ref().storage, (&owner, &spender))
+                    .unwrap(),
+                allowance
+            );
+            assert_eq!(
+                ALLOWANCES_SPENDER
+                    .load(deps.as_ref().storage, (&spender, &owner))
+                    .unwrap(),
+                allowance
+            );
+            assert!(MINTERS.has(deps.as_ref().storage, &minter));
+            assert!(crate::security::WALLETS
+                .may_load(deps.as_ref().storage, &owner)
+                .unwrap()
+                .is_none());
+            assert_eq!(
+                crate::security::wallet(deps.as_ref(), &owner)
+                    .unwrap()
+                    .policy
+                    .limit_bps,
+                1000
+            );
+            assert!(migrate(deps.as_mut(), mock_env(), msg).is_err());
         }
     }
 
@@ -1973,6 +2245,10 @@ mod tests {
             let marketing = deps.api.addr_make("marketing");
 
             let instantiate_msg = InstantiateMsg {
+                security: Some(crate::security::SecurityInit {
+                    controller: "controller".into(),
+                    governance: "governance".into(),
+                }),
                 name: "Cash Token".to_string(),
                 symbol: "CASH".to_string(),
                 decimals: 9,
@@ -2029,6 +2305,10 @@ mod tests {
             let creator = deps.api.addr_make("creator");
 
             let instantiate_msg = InstantiateMsg {
+                security: Some(crate::security::SecurityInit {
+                    controller: "controller".into(),
+                    governance: "governance".into(),
+                }),
                 name: "Cash Token".to_string(),
                 symbol: "CASH".to_string(),
                 decimals: 9,
@@ -2084,6 +2364,10 @@ mod tests {
             let creator = deps.api.addr_make("creator");
 
             let instantiate_msg = InstantiateMsg {
+                security: Some(crate::security::SecurityInit {
+                    controller: "controller".into(),
+                    governance: "governance".into(),
+                }),
                 name: "Cash Token".to_string(),
                 symbol: "CASH".to_string(),
                 decimals: 9,
@@ -2139,6 +2423,10 @@ mod tests {
             let creator = deps.api.addr_make("creator");
 
             let instantiate_msg = InstantiateMsg {
+                security: Some(crate::security::SecurityInit {
+                    controller: "controller".into(),
+                    governance: "governance".into(),
+                }),
                 name: "Cash Token".to_string(),
                 symbol: "CASH".to_string(),
                 decimals: 9,
@@ -2194,6 +2482,10 @@ mod tests {
             let creator = deps.api.addr_make("creator");
 
             let instantiate_msg = InstantiateMsg {
+                security: Some(crate::security::SecurityInit {
+                    controller: "controller".into(),
+                    governance: "governance".into(),
+                }),
                 name: "Cash Token".to_string(),
                 symbol: "CASH".to_string(),
                 decimals: 9,
@@ -2250,6 +2542,10 @@ mod tests {
             let marketing = deps.api.addr_make("marketing");
 
             let instantiate_msg = InstantiateMsg {
+                security: Some(crate::security::SecurityInit {
+                    controller: "controller".into(),
+                    governance: "governance".into(),
+                }),
                 name: "Cash Token".to_string(),
                 symbol: "CASH".to_string(),
                 decimals: 9,
@@ -2305,6 +2601,10 @@ mod tests {
             let creator = deps.api.addr_make("creator");
 
             let instantiate_msg = InstantiateMsg {
+                security: Some(crate::security::SecurityInit {
+                    controller: "controller".into(),
+                    governance: "governance".into(),
+                }),
                 name: "Cash Token".to_string(),
                 symbol: "CASH".to_string(),
                 decimals: 9,
@@ -2363,6 +2663,10 @@ mod tests {
             let creator = deps.api.addr_make("creator");
 
             let instantiate_msg = InstantiateMsg {
+                security: Some(crate::security::SecurityInit {
+                    controller: "controller".into(),
+                    governance: "governance".into(),
+                }),
                 name: "Cash Token".to_string(),
                 symbol: "CASH".to_string(),
                 decimals: 9,
@@ -2418,6 +2722,10 @@ mod tests {
             let creator = deps.api.addr_make("creator");
 
             let instantiate_msg = InstantiateMsg {
+                security: Some(crate::security::SecurityInit {
+                    controller: "controller".into(),
+                    governance: "governance".into(),
+                }),
                 name: "Cash Token".to_string(),
                 symbol: "CASH".to_string(),
                 decimals: 9,
@@ -2469,6 +2777,10 @@ mod tests {
             let creator = deps.api.addr_make("creator");
 
             let instantiate_msg = InstantiateMsg {
+                security: Some(crate::security::SecurityInit {
+                    controller: "controller".into(),
+                    governance: "governance".into(),
+                }),
                 name: "Cash Token".to_string(),
                 symbol: "CASH".to_string(),
                 decimals: 9,
@@ -2522,6 +2834,10 @@ mod tests {
             let creator = deps.api.addr_make("creator");
 
             let instantiate_msg = InstantiateMsg {
+                security: Some(crate::security::SecurityInit {
+                    controller: "controller".into(),
+                    governance: "governance".into(),
+                }),
                 name: "Cash Token".to_string(),
                 symbol: "CASH".to_string(),
                 decimals: 9,
@@ -2576,6 +2892,10 @@ mod tests {
             let creator = deps.api.addr_make("creator");
 
             let instantiate_msg = InstantiateMsg {
+                security: Some(crate::security::SecurityInit {
+                    controller: "controller".into(),
+                    governance: "governance".into(),
+                }),
                 name: "Cash Token".to_string(),
                 symbol: "CASH".to_string(),
                 decimals: 9,
@@ -2628,6 +2948,10 @@ mod tests {
             let creator = deps.api.addr_make("creator");
 
             let instantiate_msg = InstantiateMsg {
+                security: Some(crate::security::SecurityInit {
+                    controller: "controller".into(),
+                    governance: "governance".into(),
+                }),
                 name: "Cash Token".to_string(),
                 symbol: "CASH".to_string(),
                 decimals: 9,
@@ -2687,6 +3011,10 @@ mod tests {
             let creator = deps.api.addr_make("creator");
 
             let instantiate_msg = InstantiateMsg {
+                security: Some(crate::security::SecurityInit {
+                    controller: "controller".into(),
+                    governance: "governance".into(),
+                }),
                 name: "Cash Token".to_string(),
                 symbol: "CASH".to_string(),
                 decimals: 9,
@@ -2739,6 +3067,10 @@ mod tests {
             let creator = deps.api.addr_make("creator");
 
             let instantiate_msg = InstantiateMsg {
+                security: Some(crate::security::SecurityInit {
+                    controller: "controller".into(),
+                    governance: "governance".into(),
+                }),
                 name: "Cash Token".to_string(),
                 symbol: "CASH".to_string(),
                 decimals: 9,
