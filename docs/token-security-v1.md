@@ -13,9 +13,9 @@ Controller address is immutable through execute APIs. Current governance follows
 controller roles; initial governance is a validation input, not a permanent pin.
 
 Default policy: enabled, 1000bps (10%), 86400s relaxation delay, 172800s unlock delay.
-The protected opening balance is lazily fixed at first successful debit or explicit
+The protected opening balance is lazily fixed at first successful nonzero debit or explicit
 owner security action. Incoming credits never initialize receiver state: dust before
-a meaningful first deposit cannot pin the receiver basis. Before first debit no budget
+a meaningful first deposit cannot pin the receiver basis. Before first nonzero debit no budget
 has been consumed; the full then-current principal sets the opening basis. Later
 top-ups never increase an established basis.
 `rebase_protection` snapshots current balance and schedules a new basis using the old
@@ -88,3 +88,6 @@ are uncovered. See issue #8 for adjudication procedure and incident distinctions
 Library consumers must route all exported contract execution through contract::execute.
 Individual legacy execute_* handlers are unguarded implementation helpers, retained
 for source compatibility; calling them from another contract bypasses this dispatcher.
+
+WalletResponse.initialized distinguishes a persisted opening basis from a lazy current
+balance snapshot. Zero-value delegated calls do not initialize this basis.
