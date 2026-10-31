@@ -1,0 +1,94 @@
+{
+  "review_date_utc": "2026-10-31",
+  "source_repository": "https://git.cl8y.com/code/cl8y-dex-terraclassic",
+  "source_commit": "38c154958c9eb27a683a27c8dbaa121ccdb83da6",
+  "scope": "Bounded offline document/ledger/selected-capture checks only. No fresh chain queries, consensus proof, archive-wide verifier, build or software tests. Does not establish current state or final victim delivery.",
+  "inputs": [
+    {
+      "path": "README.md",
+      "sha256": "d078fb1797ef3886a04911a682e5f3fc1fe1d8e2c689ba6a54f2e2979c54187f"
+    },
+    {
+      "path": "FINDINGS.md",
+      "sha256": "1abc94c3bd04945e38530e9c3dd3875211754290105598334d0a8ab445dd3994"
+    },
+    {
+      "path": "ACCOUNTING.md",
+      "sha256": "4a2891c545d5b478f1d9938b4fcd483f86c3de5a1d9f22a7db60de129d22a269"
+    },
+    {
+      "path": "BRIDGE_RECOVERY.md",
+      "sha256": "31165f22934c909f337da9f0cafd88ab5f049e7a5ed8a10bf3eac0df1c8a1829"
+    },
+    {
+      "path": "CL8Y_RECOVERY.md",
+      "sha256": "d66e1ae69bd6c37f64c990fbc9da4de9355ae2d363697888b89c8a034a6db018"
+    },
+    {
+      "path": "RECOVERY_UPDATE_20261018.md",
+      "sha256": "8a4247c31d1562a93b5c8eb8b5c1eedc5726da6079280c3375fac083e66351b1"
+    },
+    {
+      "path": "BNB_FOLLOWUP.md",
+      "sha256": "42598c42b9980ec0fd2c87734dddf475a8a5747e4931f10ab5f8be2af5a2226f"
+    },
+    {
+      "path": "ledgers/bridge-flow-ledger.csv",
+      "sha256": "cc27508318bf01515d1d693cf6c400435e92567126bdac5c8d235bde14cb0026"
+    },
+    {
+      "path": "ledgers/bridge-response-transactions.csv",
+      "sha256": "024c7f797d1c08a055e1b85a13679b7534a5b7d9e1ee00594f5bd26caee6e492"
+    },
+    {
+      "path": "evidence/recovery-20261018/bsc-custody-state.json",
+      "sha256": "ad205bdf4b6d045de7e28409434f0ee0cba7277c0828657d8f513359b9f00cf9"
+    },
+    {
+      "path": "evidence/recovery-20261018/cl8y-compensation-provider-1.json",
+      "sha256": "5ebfe471e1fc3d15f75d26125b9f02d7ae9db7c3d6de8352fe8b77076edd328e"
+    },
+    {
+      "path": "evidence/recovery-20261018/penguin-1509-transfer.json",
+      "sha256": "c2dcaf54a78b93622a74f6118e0ab1e7b78b776e5d01f50c4b8c3e5bdcc6e017"
+    },
+    {
+      "path": "evidence/recovery-20261018/penguin-1509-provider-2.json",
+      "sha256": "4aa6a6f349dfda22a14d4f01d17f9d9be025ab18f12520283778f7e3475e1e3f"
+    },
+    {
+      "path": "evidence/bridge-recovery-20261016/post-unpause-state.json",
+      "sha256": "37cc02fb632feb5d952f60446cf12b0cb7996c63cc2e35f52b36b1c4fc137988"
+    }
+  ],
+  "checks": {
+    "CL8Y_bridge_gross_fee_net": [
+      "32148.950800756371923197",
+      "96.446852402269115768",
+      "32052.503948354102807429"
+    ],
+    "USDT_bridge_gross_fee_net": [
+      "580.076585225842215326",
+      "1.740229755677526645",
+      "578.336355470164688681"
+    ],
+    "vFDUSD_bridge_gross_fee_net": [
+      "10.184892",
+      "0.030554",
+      "10.154338"
+    ],
+    "recovery_cl8y_raw": 25452503948354102807429,
+    "attacker_cl8y_raw": 25452503948354102807429,
+    "recovery_vfdusd_raw": 1015433800,
+    "attacker_sender_blacklisted_raw": 1,
+    "vfdusd_payout_raw": "1015433800",
+    "vfdusd_payout_decimals": "8",
+    "cl8y_receipt_status": "0x1",
+    "cl8y_receipt_hash": "0xafc19e32c247c95f018f52b6379470a9592fbdf11290af2ec8d78676a62fbf3f",
+    "penguin_transfer_hash": "8BAF1EBFEADE35117F21DD53610718A3BD8FB8B4B3D88E558D3F1BAE543C21C6",
+    "penguin_transfer_height": "30870523",
+    "nonce153_used": false,
+    "cl8y_transfer_from_reserve_to_designated_custody": true,
+    "penguin_owner_matches_designated_recovery": true
+  }
+}
