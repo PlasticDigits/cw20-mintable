@@ -8,7 +8,7 @@ if [[ "${CI_PIPELINE_EVENT:-}" == pull_request ]]; then
   if git merge-base FETCH_HEAD HEAD >/dev/null; then
     git diff --check FETCH_HEAD...HEAD
     changed=$(git diff --name-only --no-renames FETCH_HEAD...HEAD)
-    if ! printf '%s\n' "$changed" | grep -Eq '^(src/|tests/|contracts/|packages/|schema/|Cargo\.(toml|lock)$|\.cargo/|\.woodpecker|scripts/)'; then
+    if ! printf '%s\n' "$changed" | grep -Evq '^(docs/.*|[^/]+\.md|LICENSE)$'; then
       source_changes=false
     fi
   fi
