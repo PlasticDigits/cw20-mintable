@@ -217,7 +217,9 @@ pub fn execute(
                 response = response
                     .add_attribute("action", "propose_blacklist_clear")
                     .add_attribute("nonce", pending.nonce.to_string())
-                    .add_attribute("executable_at", pending.executable_at.to_string());
+                    .add_attribute("executable_at", pending.executable_at.to_string())
+                    .add_attribute("initiator", &pending.initiator)
+                    .add_attribute("proposed_at", pending.proposed_at.to_string());
             }
             response = response.add_attribute("address", address);
         }
@@ -317,7 +319,9 @@ pub fn execute(
                 .add_attribute("role", role_name(&pending.role))
                 .add_attribute("candidate", &pending.candidate)
                 .add_attribute("nonce", pending.nonce.to_string())
-                .add_attribute("executable_at", pending.executable_at.to_string());
+                .add_attribute("executable_at", pending.executable_at.to_string())
+                .add_attribute("initiator", &pending.initiator)
+                .add_attribute("proposed_at", pending.proposed_at.to_string());
             if let Some(previous) = state.pending_role.replace(pending) {
                 response = response.add_attribute("replaced_nonce", previous.nonce.to_string());
             }
@@ -387,7 +391,9 @@ pub fn execute(
                 response = response
                     .add_attribute("action", "propose_rotation_delay")
                     .add_attribute("nonce", pending.nonce.to_string())
-                    .add_attribute("executable_at", pending.executable_at.to_string());
+                    .add_attribute("executable_at", pending.executable_at.to_string())
+                    .add_attribute("initiator", &pending.initiator)
+                    .add_attribute("proposed_at", pending.proposed_at.to_string());
                 if let Some(previous) = state.pending_delay.replace(pending) {
                     response = response.add_attribute("replaced_nonce", previous.nonce.to_string());
                 }

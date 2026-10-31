@@ -1,13 +1,12 @@
 #[cfg(not(feature = "library"))]
 use cosmwasm_std::entry_point;
-use cosmwasm_std::Order::Ascending;
 use cosmwasm_std::{
-    to_binary, Binary, Deps, DepsMut, Empty, Env, MessageInfo, Response, StdError, StdResult,
+    to_json_binary, Binary, Deps, DepsMut, Empty, Env, MessageInfo, Response, StdError, StdResult,
     Uint128,
 };
 use cw_storage_plus::Bound;
 
-use cw2::{ensure_from_older_version, set_contract_version};
+use cw2::set_contract_version;
 use cw20::{
     BalanceResponse, Cw20Coin, Cw20ReceiveMsg, DownloadLogoResponse, EmbeddedLogo, Logo, LogoInfo,
     MarketingInfoResponse, MinterResponse, TokenInfoResponse,
@@ -20,10 +19,7 @@ use crate::allowances::{
 use crate::enumerable::{query_all_accounts, query_owner_allowances, query_spender_allowances};
 use crate::error::ContractError;
 use crate::msg::{ExecuteMsg, InstantiateMsg, MigrateMsg, MintersResponse, QueryMsg};
-use crate::state::{
-    MinterData, TokenInfo, ALLOWANCES, ALLOWANCES_SPENDER, BALANCES, LOGO, MARKETING_INFO, MINTERS,
-    TOKEN_INFO,
-};
+use crate::state::{MinterData, TokenInfo, BALANCES, LOGO, MARKETING_INFO, MINTERS, TOKEN_INFO};
 
 // version info for migration info
 const CONTRACT_NAME: &str = "crates.io:cw20-base";
@@ -582,39 +578,39 @@ pub fn execute_upload_logo(
 #[cfg_attr(not(feature = "library"), entry_point)]
 pub fn query(deps: Deps, env: Env, msg: QueryMsg) -> StdResult<Binary> {
     match msg {
-        QueryMsg::Recovery { nonce } => to_binary(&crate::recovery::query(deps, nonce)?),
+        QueryMsg::Recovery { nonce } => to_json_binary(&crate::recovery::query(deps, nonce)?),
         QueryMsg::WalletSecurity { address } => {
-            to_binary(&crate::security::query_wallet(deps, env, address)?)
+            to_json_binary(&crate::security::query_wallet(deps, env, address)?)
         }
-        QueryMsg::SecurityConfig {} => to_binary(&crate::security::CONFIG.load(deps.storage)?),
-        QueryMsg::Balance { address } => to_binary(&query_balance(deps, address)?),
-        QueryMsg::TokenInfo {} => to_binary(&query_token_info(deps)?),
-        QueryMsg::Minter {} => to_binary(&query_minter(deps)?),
+        QueryMsg::SecurityConfig {} => to_json_binary(&crate::security::CONFIG.load(deps.storage)?),
+        QueryMsg::Balance { address } => to_json_binary(&query_balance(deps, address)?),
+        QueryMsg::TokenInfo {} => to_json_binary(&query_token_info(deps)?),
+        QueryMsg::Minter {} => to_json_binary(&query_minter(deps)?),
         QueryMsg::Allowance { owner, spender } => {
-            to_binary(&query_allowance(deps, owner, spender)?)
+            to_json_binary(&query_allowance(deps, owner, spender)?)
         }
         QueryMsg::AllAllowances {
             owner,
             start_after,
             limit,
-        } => to_binary(&query_owner_allowances(deps, owner, start_after, limit)?),
+        } => to_json_binary(&query_owner_allowances(deps, owner, start_after, limit)?),
         QueryMsg::AllSpenderAllowances {
             spender,
             start_after,
             limit,
-        } => to_binary(&query_spender_allowances(
+        } => to_json_binary(&query_spender_allowances(
             deps,
             spender,
             start_after,
             limit,
         )?),
         QueryMsg::AllAccounts { start_after, limit } => {
-            to_binary(&query_all_accounts(deps, start_after, limit)?)
+            to_json_binary(&query_all_accounts(deps, start_after, limit)?)
         }
-        QueryMsg::MarketingInfo {} => to_binary(&query_marketing_info(deps)?),
-        QueryMsg::DownloadLogo {} => to_binary(&query_download_logo(deps)?),
+        QueryMsg::MarketingInfo {} => to_json_binary(&query_marketing_info(deps)?),
+        QueryMsg::DownloadLogo {} => to_json_binary(&query_download_logo(deps)?),
         QueryMsg::Minters { start_after, limit } => {
-            to_binary(&query_minters(deps, start_after, limit)?)
+            to_json_binary(&query_minters(deps, start_after, limit)?)
         }
     }
 }
@@ -779,6 +775,7 @@ mod tests {
 
     use super::*;
     use crate::msg::InstantiateMarketingInfo;
+    use crate::state::{ALLOWANCES, ALLOWANCES_SPENDER};
 
     use crate::test_support::{mock_dependencies, mock_dependencies_with_balance};
     fn get_balance<T: Into<String>>(deps: Deps, address: T) -> Uint128 {

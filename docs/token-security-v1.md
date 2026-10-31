@@ -13,9 +13,11 @@ Controller address is immutable through execute APIs. Current governance follows
 controller roles; initial governance is a validation input, not a permanent pin.
 
 Default policy: enabled, 1000bps (10%), 86400s relaxation delay, 172800s unlock delay.
-The protected opening balance is lazily fixed at first debit, setting change or
-inbound credit. Existing nonzero holders use their pre-credit balance; new zero
-holders use their first nonzero receipt. Top-ups never increase an established basis.
+The protected opening balance is lazily fixed at first successful debit or explicit
+owner security action. Incoming credits never initialize receiver state: dust before
+a meaningful first deposit cannot pin the receiver basis. Before first debit no budget
+has been consumed; the full then-current principal sets the opening basis. Later
+top-ups never increase an established basis.
 `rebase_protection` snapshots current balance and schedules a new basis using the old
 relaxation delay. Rebase/policy/exemption/lock changes never clear spending history.
 This conservative behavior is deliberate: large later deposits require delayed rebase
@@ -56,9 +58,10 @@ cases cannot over-reserve. Source key may object once; unresolved objection bloc
 execution until independent dispute role records resolution digest. Duplicate source
 objections after resolution do not restart or veto. Dispute role can veto irreversibly
 for a nonce; reservation remains. Governance can atomically replace same-source case
-with new exact payload, new acceptance and full 30d delay. Role epoch change invalidates
+with new exact payload, new acceptance and full 30d delay. Replacement cannot reduce
+the prior reserved amount; reducing/releasing needs two-role cancellation. Role epoch change invalidates
 execution but never frees reservation. Cancellation: governance requests, independent
-dispute role confirms; no source-key cancellation. A cancellation does not clear a
+dispute role confirms in the same current authority epoch; no source-key cancellation. A cancellation does not clear a
 controller blacklist. Only destination blacklist blocks this special movement path;
 pause, source blacklist and wallet lock do not. Supply/allowances stay unchanged.
 No automatic expiry releases funds; governance evidence is a trusted attestation,
@@ -81,3 +84,7 @@ assignments and delayed exemptions are active. Exemption does not bypass shared 
 blacklist, opt-in lock or recovery reservation. Source policy tests are not evidence of
 live coverage. Unmigrated/immutable/third-party-admin tokens, BSC tokens and native coins
 are uncovered. See issue #8 for adjudication procedure and incident distinctions.
+
+Library consumers must route all exported contract execution through contract::execute.
+Individual legacy execute_* handlers are unguarded implementation helpers, retained
+for source compatibility; calling them from another contract bypasses this dispatcher.

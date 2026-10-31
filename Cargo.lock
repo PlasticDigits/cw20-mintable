@@ -295,6 +295,7 @@ dependencies = [
  "cw-utils",
  "cw2",
  "cw20",
+ "cw20-security-controller",
  "cw20-security-interface",
  "schemars",
  "semver",

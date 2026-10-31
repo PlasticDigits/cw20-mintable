@@ -74,11 +74,10 @@ pub fn execute_decrease_allowance(
             if exp.is_expired(&env.block) {
                 return Err(ContractError::InvalidExpiration {});
             }
-            if exp
+            if !exp
                 .partial_cmp(&allowance.expires)
                 .map(|o| o.is_le())
                 .unwrap_or(false)
-                == false
             {
                 return Err(ContractError::InvalidExpiration {});
             }

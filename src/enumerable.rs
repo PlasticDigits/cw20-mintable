@@ -92,9 +92,20 @@ mod tests {
 
     // this will set up the instantiation for other tests
     fn do_instantiate(mut deps: DepsMut, addr: &str, amount: Uint128) -> TokenInfoResponse {
-        if crate::security::CONFIG.may_load(deps.storage).unwrap().is_some() {
+        if crate::security::CONFIG
+            .may_load(deps.storage)
+            .unwrap()
+            .is_some()
+        {
             // Add another fixture holder without re-instantiating the protected token.
-            crate::contract::create_accounts(&mut deps, &[Cw20Coin{address:addr.into(),amount}]).unwrap();
+            crate::contract::create_accounts(
+                &mut deps,
+                &[Cw20Coin {
+                    address: addr.into(),
+                    amount,
+                }],
+            )
+            .unwrap();
             return query_token_info(deps.as_ref()).unwrap();
         }
         let instantiate_msg = InstantiateMsg {

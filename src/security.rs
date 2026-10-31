@@ -60,21 +60,12 @@ pub struct PendingChange {
     pub change: Change,
 }
 #[cw_serde]
+#[derive(Default)]
 pub struct Assignment {
     pub protocol: bool,
     pub exempt: bool,
     pub allow_lock: bool,
     pub evidence_hash: String,
-}
-impl Default for Assignment {
-    fn default() -> Self {
-        Self {
-            protocol: false,
-            exempt: false,
-            allow_lock: false,
-            evidence_hash: String::new(),
-        }
-    }
 }
 #[cw_serde]
 pub struct PendingAssignment {
@@ -105,6 +96,15 @@ pub const PENDING_ASSIGNMENTS: Map<&Addr, PendingAssignment> =
 pub const RESERVED: Map<&Addr, Uint128> = Map::new("security_v1_reserved");
 pub fn error(msg: &str) -> ContractError {
     StdError::generic_err(msg).into()
+}
+/// Whole-second deadlines round UP from fractional timestamps, never mature early.
+pub fn deadline(env: &Env, delay: u64) -> Result<u64, ContractError> {
+    env.block
+        .time
+        .seconds()
+        .checked_add(delay)
+        .and_then(|s| s.checked_add(u64::from(env.block.time.subsec_nanos() != 0)))
+        .ok_or_else(|| error("time overflow"))
 }
 pub fn next_nonce(storage: &mut dyn cosmwasm_std::Storage) -> StdResult<u64> {
     let n = NONCE
@@ -148,6 +148,14 @@ pub fn controller(
     if g.interface_version != INTERFACE_VERSION || !g.enrolled || g.blocked.len() != n {
         return Err(error("invalid controller response or unenrolled token"));
     }
+    if let Some(token) = crate::state::TOKEN_INFO.may_load(deps.storage)? {
+        let gov = deps.api.addr_validate(&g.roles.governance)?;
+        if token.mint.map(|m| m.minter == gov).unwrap_or(false)
+            || crate::state::MINTERS.has(deps.storage, &gov)
+        {
+            return Err(error("controller governance overlaps token minter"));
+        }
+    }
     Ok(g)
 }
 pub fn wallet(deps: Deps, owner: &Addr) -> StdResult<WalletState> {
@@ -171,18 +179,6 @@ pub fn spent(s: &WalletState, now: u64) -> StdResult<Uint128> {
         .try_fold(Uint128::zero(), |a, b| {
             a.checked_add(b.amount).map_err(StdError::overflow)
         })
-}
-pub(crate) fn credit_init(deps: DepsMut, address: &Addr, amount: Uint128) -> StdResult<()> {
-    if WALLETS.may_load(deps.storage, address)?.is_none() {
-        let mut s = wallet(deps.as_ref(), address)?;
-        if s.protected_balance.is_zero() {
-            s.protected_balance = amount;
-        }
-        if !s.protected_balance.is_zero() {
-            WALLETS.save(deps.storage, address, &s)?;
-        }
-    }
-    Ok(())
 }
 pub fn debit(deps: DepsMut, env: &Env, owner: &Addr, amount: Uint128) -> Result<(), ContractError> {
     let balance = BALANCES.may_load(deps.storage, owner)?.unwrap_or_default();
@@ -303,17 +299,20 @@ pub fn guard(
     {
         return Err(error("wallet locked"));
     }
-    if matches!(msg, ExecuteMsg::TransferFrom{..}|ExecuteMsg::BurnFrom{..}|ExecuteMsg::SendFrom{..}) {
-        if let Some(a)=crate::state::ALLOWANCES.may_load(deps.storage,(&owner,&info.sender))? {
-            if a.expires.is_expired(&env.block) {return Err(ContractError::Expired{});}
+    if matches!(
+        msg,
+        ExecuteMsg::TransferFrom { .. } | ExecuteMsg::BurnFrom { .. } | ExecuteMsg::SendFrom { .. }
+    ) {
+        if let Some(a) = crate::state::ALLOWANCES.may_load(deps.storage, (&owner, &info.sender))? {
+            if a.expires.is_expired(&env.block) {
+                return Err(ContractError::Expired {});
+            }
         }
     }
     if let Some(a) = debit_amount {
         debit(deps.branch(), env, &owner, a)?;
     }
-    if let (Some(r), Some(a)) = (recipient, credit_amount) {
-        credit_init(deps.branch(), &r, a)?;
-    }
+    let _ = (recipient, credit_amount); // Recipients stay lazy until their first owner action.
     Ok(())
 }
 fn validate_policy(p: &WalletPolicy) -> Result<(), ContractError> {
@@ -349,13 +348,17 @@ fn schedule(
         nonce: next_nonce(deps.storage)?,
         initiator: owner.to_string(),
         proposed_at: now,
-        executable_at: now
-            .checked_add(delay)
-            .ok_or_else(|| error("time overflow"))?,
+        executable_at: deadline(env, delay)?,
         change,
     };
+    let previous = PENDING.may_load(deps.storage, owner)?;
     PENDING.save(deps.storage, owner, &p)?;
-    Ok(timer(env, "schedule_wallet_change", owner, &p))
+    let response = timer(env, "schedule_wallet_change", owner, &p);
+    Ok(if let Some(old) = previous {
+        response.add_attribute("replaced_nonce", old.nonce.to_string())
+    } else {
+        response
+    })
 }
 pub fn settings(
     deps: DepsMut,
@@ -377,10 +380,16 @@ pub fn settings(
     s.policy = p;
     WALLETS.save(deps.storage, &info.sender, &s)?;
     // Any intervening tightening invalidates prior relaxation and unlock payloads.
+    let old = PENDING.may_load(deps.storage, &info.sender)?;
     PENDING.remove(deps.storage, &info.sender);
-    Ok(Response::new()
+    let response = Response::new()
         .add_attribute("action", "tighten_wallet_policy")
-        .add_attribute("wallet", info.sender))
+        .add_attribute("wallet", info.sender);
+    Ok(if let Some(old) = old {
+        response.add_attribute("cancelled_nonce", old.nonce.to_string())
+    } else {
+        response
+    })
 }
 pub fn rebase(deps: DepsMut, env: Env, info: MessageInfo) -> Result<Response, ContractError> {
     let s = wallet(deps.as_ref(), &info.sender)?;
@@ -406,10 +415,16 @@ pub fn lock(deps: DepsMut, info: MessageInfo) -> Result<Response, ContractError>
     let mut s = wallet(deps.as_ref(), &info.sender)?;
     s.locked = true;
     WALLETS.save(deps.storage, &info.sender, &s)?;
+    let old = PENDING.may_load(deps.storage, &info.sender)?;
     PENDING.remove(deps.storage, &info.sender);
-    Ok(Response::new()
+    let response = Response::new()
         .add_attribute("action", "lock_wallet")
-        .add_attribute("wallet", info.sender))
+        .add_attribute("wallet", info.sender);
+    Ok(if let Some(old) = old {
+        response.add_attribute("cancelled_nonce", old.nonce.to_string())
+    } else {
+        response
+    })
 }
 pub fn unlock(deps: DepsMut, env: Env, info: MessageInfo) -> Result<Response, ContractError> {
     let s = wallet(deps.as_ref(), &info.sender)?;
@@ -480,7 +495,7 @@ pub fn assignment(
             nonce: next_nonce(deps.storage)?,
             initiator: info.sender.to_string(),
             proposed_at: now,
-            executable_at: now + s.policy.relaxation_delay,
+            executable_at: deadline(&env, s.policy.relaxation_delay)?,
             authority_epoch: g.authority_epoch,
             assignment: a,
         };

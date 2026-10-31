@@ -78,6 +78,7 @@ pub(crate) mod test_support {
                     })
                     .unwrap()
                 }
+                _ => panic!("unexpected controller test query"),
             };
             SystemResult::Ok(ContractResult::Ok(result))
         });

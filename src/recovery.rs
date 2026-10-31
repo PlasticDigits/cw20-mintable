@@ -27,6 +27,7 @@ pub struct Recovery {
     pub objection_resolution_hash: Option<String>,
     pub vetoed: bool,
     pub cancellation_requested: bool,
+    pub cancellation_epoch: Option<u64>,
     pub completed: bool,
     pub cancelled: bool,
     pub replaced_by: Option<u64>,
@@ -60,8 +61,9 @@ fn release(storage: &mut dyn cosmwasm_std::Storage, r: &Recovery) -> StdResult<(
     )?;
     Ok(())
 }
+#[allow(clippy::too_many_arguments)] // Mirrors the immutable proposal ABI fields.
 pub fn propose(
-    mut deps: DepsMut,
+    deps: DepsMut,
     env: Env,
     info: MessageInfo,
     source: String,
@@ -93,6 +95,11 @@ pub fn propose(
         .unwrap_or_default();
     let prior = if let Some(r) = &old {
         active(r)?;
+        if amount < r.amount {
+            return Err(security::error(
+                "replacement cannot reduce reservation; use two-role cancellation",
+            ));
+        }
         if r.source != source {
             return Err(security::error("replacement must retain source"));
         }
@@ -122,9 +129,7 @@ pub fn propose(
         evidence_hash,
         initiator: info.sender.to_string(),
         proposed_at: now,
-        executable_at: now
-            .checked_add(MIN_RECOVERY_DELAY)
-            .ok_or_else(|| security::error("time overflow"))?,
+        executable_at: security::deadline(&env, MIN_RECOVERY_DELAY)?,
         authority_epoch: g.authority_epoch,
         accepted: false,
         revoked: false,
@@ -133,6 +138,7 @@ pub fn propose(
         objection_resolution_hash: None,
         vetoed: false,
         cancellation_requested: false,
+        cancellation_epoch: None,
         completed: false,
         cancelled: false,
         replaced_by: None,
@@ -156,7 +162,6 @@ pub fn propose(
                 .add_attribute("replacement_nonce", r.nonce.to_string()),
         );
     }
-    let _ = &mut deps;
     Ok(response)
 }
 pub fn accept(
@@ -254,10 +259,14 @@ pub fn cancel(
     active(&r)?;
     if info.sender == g.roles.governance {
         r.cancellation_requested = true;
+        r.cancellation_epoch = Some(g.authority_epoch);
         RECOVERIES.save(deps.storage, nonce, &r)?;
         return Ok(event("request_cancel_recovery", &r));
     }
-    if info.sender != g.roles.dispute || !r.cancellation_requested {
+    if info.sender != g.roles.dispute
+        || !r.cancellation_requested
+        || r.cancellation_epoch != Some(g.authority_epoch)
+    {
         return Err(ContractError::Unauthorized {});
     }
     release(deps.storage, &r)?;
@@ -266,7 +275,7 @@ pub fn cancel(
     Ok(event("cancel_recovery", &r))
 }
 pub fn execute(
-    mut deps: DepsMut,
+    deps: DepsMut,
     env: Env,
     info: MessageInfo,
     nonce: u64,
@@ -290,7 +299,7 @@ pub fn execute(
     {
         return Err(security::error("recovery not executable"));
     }
-    security::credit_init(deps.branch(), &r.destination, r.amount)?;
+    // Destination remains lazy until its first owner action; inbound dust cannot pin its basis.
     let source = BALANCES
         .load(deps.storage, &r.source)?
         .checked_sub(r.amount)
