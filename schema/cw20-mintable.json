@@ -2107,6 +2107,7 @@
       "type": "object",
       "required": [
         "assignment",
+        "initialized",
         "reserved",
         "rolling_spent",
         "state",
@@ -2115,6 +2116,9 @@
       "properties": {
         "assignment": {
           "$ref": "#/definitions/Assignment"
+        },
+        "initialized": {
+          "type": "boolean"
         },
         "pending": {
           "anyOf": [

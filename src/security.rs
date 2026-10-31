@@ -79,6 +79,7 @@ pub struct PendingAssignment {
 #[cw_serde]
 pub struct WalletResponse {
     pub wallet: String,
+    pub initialized: bool,
     pub state: WalletState,
     pub pending: Option<PendingChange>,
     pub assignment: Assignment,
@@ -585,6 +586,7 @@ pub fn query_wallet(deps: Deps, env: Env, address: String) -> StdResult<WalletRe
     let rolling_spent = spent(&state, env.block.time.seconds())?;
     Ok(WalletResponse {
         wallet: address,
+        initialized: WALLETS.has(deps.storage, &owner),
         state,
         pending: PENDING.may_load(deps.storage, &owner)?,
         assignment: ASSIGNMENTS
