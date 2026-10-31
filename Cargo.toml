@@ -1,6 +1,6 @@
 [package]
 name = "cw20-mintable"
-version =  "0.1.0"
+version = "0.2.0"
 authors = ["Plastic Digits <plasticdigits@users.noreply.github.com>"]
 edition = "2021"
 description = "Mintable fork of CW-20 base"
@@ -16,7 +16,11 @@ crate-type = ["cdylib", "rlib"]
 # use library feature to disable all instantiate/execute/query exports
 library = []
 
+[workspace]
+members = ["packages/security-interface"]
+
 [dependencies]
+cw20-security-interface = { path = "packages/security-interface" }
 cosmwasm-schema = "1.5.9"
 cw2 = "1.1.2"
 cw20 = "1.1.2"
