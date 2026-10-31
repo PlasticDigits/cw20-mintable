@@ -1108,3 +1108,40 @@ fn fractional_timer_starts_never_mature_before_full_minimum_duration() {
     f.advance(1);
     f.t("recovery", T::ExecuteRecovery { nonce: n });
 }
+#[test]
+fn zero_allowance_delegated_call_cannot_initialize_before_meaningful_funding() {
+    let mut f = F::new();
+    f.t(
+        "new_wallet",
+        T::IncreaseAllowance {
+            spender: "spender".into(),
+            amount: Uint128::zero(),
+            expires: None,
+        },
+    );
+    f.t(
+        "issuer",
+        T::Mint {
+            recipient: "new_wallet".into(),
+            amount: Uint128::new(1),
+        },
+    );
+    f.t(
+        "spender",
+        T::TransferFrom {
+            owner: "new_wallet".into(),
+            recipient: "bob".into(),
+            amount: Uint128::zero(),
+        },
+    );
+    f.t(
+        "issuer",
+        T::Mint {
+            recipient: "new_wallet".into(),
+            amount: Uint128::new(9999),
+        },
+    );
+    f.t("new_wallet", F::transfer(1000));
+    assert_eq!(f.w("new_wallet").state.protected_balance.u128(), 10000);
+    f.fail("new_wallet", F::transfer(1));
+}

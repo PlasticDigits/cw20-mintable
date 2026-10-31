@@ -190,6 +190,10 @@ pub fn debit(deps: DepsMut, env: &Env, owner: &Addr, amount: Uint128) -> Result<
     if s.locked {
         return Err(error("wallet locked"));
     }
+    // Zero delegated calls cannot establish someone else's opening basis.
+    if amount.is_zero() {
+        return Ok(());
+    }
     prune(&mut s, env.block.time.seconds());
     let assignment = ASSIGNMENTS
         .may_load(deps.storage, owner)?
