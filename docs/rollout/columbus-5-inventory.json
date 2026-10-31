@@ -1,0 +1,2495 @@
+{
+  "queried_at": "2026-10-31T02:15:22.576719+00:00",
+  "chain_id": "columbus-5",
+  "source": "DEX dated soft-launch trace plus current bounded code10184 LCD page",
+  "code_id": 10184,
+  "listing": {
+    "ok": true,
+    "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/code/10184/contracts?pagination.limit=100",
+    "height": null,
+    "data": {
+      "contracts": [
+        "terra16wtml2q66g82fdkx66tap0qjkahqwp4lwq3ngtygacg5q0kzycgqvhpax3",
+        "terra1vy3kc0swag2rhn7jz6n72jp0l2ns0p6r6ez5grxq5uhj2rvs97fqfsetxv",
+        "terra14esahmssytksgamxnqsna2gmc9s6hzxhazsvtxvpm3k0hqatu6kqkvu4wv",
+        "terra1cr32lfrc6xedzr6pzczcwgrucfuu55jgmtwl5lwfupau8pg0ut0qzp6a4a",
+        "terra1f0xcljcamzgqerw5rl2ag2wj42tm6d3u5dvtrjl8gychzd52c7sslhdmlt",
+        "terra1z5r33y2fv70vdvdww3uu05rakqxwxc68ua5n0wcadzk5u5kl44qs7clk85",
+        "terra1y8yggsu8gt7lrndtx7rf0ky3ya3vept059kz50rzz4r6s848wl2qw27y35",
+        "terra1dfmvdvcpwa2ycvy2zty8eh9q2q9xpkf7a9dqnyaa52fxxzlhqjnsfqkhku",
+        "terra16ahm9hn5teayt2as384zf3uudgqvmmwahqfh0v9e3kaslhu30l8q38ftvh",
+        "terra1vqfe2ake427depchntwwl6dvyfgxpu5qdlqzfjuznxvw6pqza0hqalc9g3",
+        "terra1pa7jxtjcu3clmv0v8n2tfrtlfepneyv8pxa7zmhz50kj8unuv0zq37apvv",
+        "terra1dmuruhht32x8f47nvm73pwp6q7uf2jtfhdt3nxcql4mmqkyfsraqn2dt94",
+        "terra1k6cqupylk0wp4pj273pntwhv9py0q5guyqye8ssvukn9xq7mes7sdlmena",
+        "terra1ejq3mjjgnklpa3pg4jterlfwsny055gpmcjf3fz0ev3ueajnzeysz6xxgr",
+        "terra178fgrfzv7njtmdp9vghyf2dx77sah8u8jluzs7ym562chaxnmj2s6mn6m9",
+        "terra1fga508hzx8dd7x8q4uhm6mdhkqv6fxrtsea3r27smdqmv5k2jgxq5zk9fc",
+        "terra12k67cvfs7y7g8lca3qr4g4py6s6j69fu24gze5pjfamfpckv8mps7cymme",
+        "terra1mnl9azefrqpmu888ar2u6zrcwr80hxlt3avf4300r576cw5ar7esvxsvj3",
+        "terra1f0eqgy9w7e5e7up97vjudqwx38tesf8ylx75x2lv3nwm0clry0pqmgfy72",
+        "terra1437qslye72t7qmmahn4t5chz50r8a62g45phwkquwpyu2l62u6ksqssgdg",
+        "terra1nap4dxh9tv35v0ynd9m4k6zt6c0dq6weszc4j5m564kjls56hu7qcr56ch",
+        "terra1jv6y058w6qx0xzcspcuv0du4qj95amwhvy4lftlf7mlyjj24v9ms8dzdgy",
+        "terra1ak8w9k34ex237h9pmquxqjevhzvflqaatuaj9pr8ym287n7atj6qw2ty4p",
+        "terra1mk3krh8pk9wslqhasessk8rydqs4y9krprfgtnssfxr3l23pvgqsp2cagk",
+        "terra13rfqc8qklg5whh33t55ceah8mwkl88c2tq5wjcvzkpr3jv65y5psz0jcwu",
+        "terra132uuzdnjce0c8g5dalyvdgl47ny697udesk972cg05e5y7gn485qz6tdch",
+        "terra1s3jk92zeslgxxaux5nj8gtcqxafwsufglw2rhkazv4rrt7sg3wfsqj7twz",
+        "terra1u277xxcknv2r37d7xa5mnyxu3q26fyu9e9uexmyu2u99g3qfx62q2jen2c",
+        "terra1vll5ekvxvxq092gv5fvq0vhk8vd3z5a7d57mjt4ksf9v2qk2k86s8snvwe",
+        "terra1hymuueuu43750rzut69hxmefl3m5gg27uxnu9fytcvlah27l5rtsrg87rc",
+        "terra12ff3nhu239y6a5lh0rs8nwlntc9wulkm3c4x598hp5gjfeqk87xszxkrmp",
+        "terra1z0xe7t5ymmltg4vju8tghkq0pewy4et548ta23nlu9zxtl950uyqkv8mv4",
+        "terra10ur635zd6fmt4fxveven8lcx8xkr55t6dxjxh5dctmcc5lrxjqqslq4l3s",
+        "terra17nny5femmkq2nfu7ne9nxw0zjnpgwxl0zvfzqwg88vgskhldztxqytjtus",
+        "terra1fcmvnf7rseg5jqq8774nwwwtzkre9nvu4dkqv9g0se9pmsdruyds7akmlz"
+      ],
+      "pagination": {
+        "next_key": null,
+        "total": "0"
+      }
+    }
+  },
+  "tokens": [
+    {
+      "address": "terra10ur635zd6fmt4fxveven8lcx8xkr55t6dxjxh5dctmcc5lrxjqqslq4l3s",
+      "known_symbol": null,
+      "contract": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra10ur635zd6fmt4fxveven8lcx8xkr55t6dxjxh5dctmcc5lrxjqqslq4l3s",
+        "height": null,
+        "data": {
+          "address": "terra10ur635zd6fmt4fxveven8lcx8xkr55t6dxjxh5dctmcc5lrxjqqslq4l3s",
+          "contract_info": {
+            "code_id": "10184",
+            "creator": "terra17l7eqc5j8vkm09up55etfggpr6y92ka6p03yc765mt3nerqcnhdsl6l7jq",
+            "admin": "terra17l7eqc5j8vkm09up55etfggpr6y92ka6p03yc765mt3nerqcnhdsl6l7jq",
+            "label": "CLUNC-USDT cl8ydex lp",
+            "created": {
+              "block_height": "30365247",
+              "tx_index": "0"
+            },
+            "ibc_port_id": "",
+            "extension": null,
+            "ibc2_port_id": "wasm210ur635zd6fmt4fxveven8lcx8xkr55t6dxjxh5dctmcc5lrxjqqslq4l3s"
+          }
+        }
+      },
+      "token_info": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra10ur635zd6fmt4fxveven8lcx8xkr55t6dxjxh5dctmcc5lrxjqqslq4l3s/smart/eyJ0b2tlbl9pbmZvIjp7fX0%3D",
+        "height": null,
+        "data": {
+          "data": {
+            "name": "CLUNC-USDT CL8YDEX LP",
+            "symbol": "CLUN-USDT-LP",
+            "decimals": 18,
+            "total_supply": "140331010250648873"
+          }
+        }
+      },
+      "minter": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra10ur635zd6fmt4fxveven8lcx8xkr55t6dxjxh5dctmcc5lrxjqqslq4l3s/smart/eyJtaW50ZXIiOnt9fQ%3D%3D",
+        "height": "31074526",
+        "data": {
+          "data": {
+            "minter": "terra17l7eqc5j8vkm09up55etfggpr6y92ka6p03yc765mt3nerqcnhdsl6l7jq",
+            "cap": null
+          }
+        }
+      },
+      "additional_minters": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra10ur635zd6fmt4fxveven8lcx8xkr55t6dxjxh5dctmcc5lrxjqqslq4l3s/smart/eyJtaW50ZXJzIjp7ImxpbWl0IjozMH19",
+        "height": null,
+        "data": {
+          "data": {
+            "minters": []
+          }
+        }
+      },
+      "cw2": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra10ur635zd6fmt4fxveven8lcx8xkr55t6dxjxh5dctmcc5lrxjqqslq4l3s/raw/Y29udHJhY3RfaW5mbw%3D%3D",
+        "height": "31074526",
+        "data": {
+          "data": "eyJjb250cmFjdCI6ImNyYXRlcy5pbzpjdzIwLWJhc2UiLCJ2ZXJzaW9uIjoiMC4xLjAifQ=="
+        }
+      }
+    },
+    {
+      "address": "terra12ff3nhu239y6a5lh0rs8nwlntc9wulkm3c4x598hp5gjfeqk87xszxkrmp",
+      "known_symbol": null,
+      "contract": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra12ff3nhu239y6a5lh0rs8nwlntc9wulkm3c4x598hp5gjfeqk87xszxkrmp",
+        "height": "31074526",
+        "data": {
+          "address": "terra12ff3nhu239y6a5lh0rs8nwlntc9wulkm3c4x598hp5gjfeqk87xszxkrmp",
+          "contract_info": {
+            "code_id": "10184",
+            "creator": "terra1rmdtckz5gd0usja36ydwat6prnmew639ry37yq72xh9ek4s3m83sehn5u6",
+            "admin": "terra1rmdtckz5gd0usja36ydwat6prnmew639ry37yq72xh9ek4s3m83sehn5u6",
+            "label": "UST1-ALPHA cl8ydex lp",
+            "created": {
+              "block_height": "30117302",
+              "tx_index": "0"
+            },
+            "ibc_port_id": "",
+            "extension": null,
+            "ibc2_port_id": "wasm212ff3nhu239y6a5lh0rs8nwlntc9wulkm3c4x598hp5gjfeqk87xszxkrmp"
+          }
+        }
+      },
+      "token_info": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra12ff3nhu239y6a5lh0rs8nwlntc9wulkm3c4x598hp5gjfeqk87xszxkrmp/smart/eyJ0b2tlbl9pbmZvIjp7fX0%3D",
+        "height": null,
+        "data": {
+          "data": {
+            "name": "UST1-ALPHA CL8YDEX LP",
+            "symbol": "UST1-ALPH-LP",
+            "decimals": 18,
+            "total_supply": "313558847300"
+          }
+        }
+      },
+      "minter": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra12ff3nhu239y6a5lh0rs8nwlntc9wulkm3c4x598hp5gjfeqk87xszxkrmp/smart/eyJtaW50ZXIiOnt9fQ%3D%3D",
+        "height": null,
+        "data": {
+          "data": {
+            "minter": "terra1rmdtckz5gd0usja36ydwat6prnmew639ry37yq72xh9ek4s3m83sehn5u6",
+            "cap": null
+          }
+        }
+      },
+      "additional_minters": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra12ff3nhu239y6a5lh0rs8nwlntc9wulkm3c4x598hp5gjfeqk87xszxkrmp/smart/eyJtaW50ZXJzIjp7ImxpbWl0IjozMH19",
+        "height": null,
+        "data": {
+          "data": {
+            "minters": []
+          }
+        }
+      },
+      "cw2": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra12ff3nhu239y6a5lh0rs8nwlntc9wulkm3c4x598hp5gjfeqk87xszxkrmp/raw/Y29udHJhY3RfaW5mbw%3D%3D",
+        "height": null,
+        "data": {
+          "data": "eyJjb250cmFjdCI6ImNyYXRlcy5pbzpjdzIwLWJhc2UiLCJ2ZXJzaW9uIjoiMC4xLjAifQ=="
+        }
+      }
+    },
+    {
+      "address": "terra12k67cvfs7y7g8lca3qr4g4py6s6j69fu24gze5pjfamfpckv8mps7cymme",
+      "known_symbol": "TOPAZ",
+      "contract": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra12k67cvfs7y7g8lca3qr4g4py6s6j69fu24gze5pjfamfpckv8mps7cymme",
+        "height": null,
+        "data": {
+          "address": "terra12k67cvfs7y7g8lca3qr4g4py6s6j69fu24gze5pjfamfpckv8mps7cymme",
+          "contract_info": {
+            "code_id": "10184",
+            "creator": "terra1hu4zggf3f8yw6jw3rxrjxn2drwad675gq5k2lv",
+            "admin": "terra1zlmv2xydxcusurtr6rl78wsvytdc6mfex6hep7",
+            "label": "soft-TOPAZ",
+            "created": {
+              "block_height": "29458466",
+              "tx_index": "10896693"
+            },
+            "ibc_port_id": "",
+            "extension": null,
+            "ibc2_port_id": "wasm212k67cvfs7y7g8lca3qr4g4py6s6j69fu24gze5pjfamfpckv8mps7cymme"
+          }
+        }
+      },
+      "token_info": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra12k67cvfs7y7g8lca3qr4g4py6s6j69fu24gze5pjfamfpckv8mps7cymme/smart/eyJ0b2tlbl9pbmZvIjp7fX0%3D",
+        "height": null,
+        "data": {
+          "data": {
+            "name": "Topaz",
+            "symbol": "TOPAZ",
+            "decimals": 6,
+            "total_supply": "10000400000000"
+          }
+        }
+      },
+      "minter": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra12k67cvfs7y7g8lca3qr4g4py6s6j69fu24gze5pjfamfpckv8mps7cymme/smart/eyJtaW50ZXIiOnt9fQ%3D%3D",
+        "height": null,
+        "data": {
+          "data": {
+            "minter": "terra1zlmv2xydxcusurtr6rl78wsvytdc6mfex6hep7",
+            "cap": null
+          }
+        }
+      },
+      "additional_minters": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra12k67cvfs7y7g8lca3qr4g4py6s6j69fu24gze5pjfamfpckv8mps7cymme/smart/eyJtaW50ZXJzIjp7ImxpbWl0IjozMH19",
+        "height": null,
+        "data": {
+          "data": {
+            "minters": [
+              "terra1388y0ppe2c3dy4nrmnpqp7e4ggukkrnmpzfjadfeu0pu2rm9cvkslfzcen"
+            ]
+          }
+        }
+      },
+      "cw2": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra12k67cvfs7y7g8lca3qr4g4py6s6j69fu24gze5pjfamfpckv8mps7cymme/raw/Y29udHJhY3RfaW5mbw%3D%3D",
+        "height": null,
+        "data": {
+          "data": "eyJjb250cmFjdCI6ImNyYXRlcy5pbzpjdzIwLWJhc2UiLCJ2ZXJzaW9uIjoiMC4xLjAifQ=="
+        }
+      }
+    },
+    {
+      "address": "terra132uuzdnjce0c8g5dalyvdgl47ny697udesk972cg05e5y7gn485qz6tdch",
+      "known_symbol": null,
+      "contract": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra132uuzdnjce0c8g5dalyvdgl47ny697udesk972cg05e5y7gn485qz6tdch",
+        "height": "31074526",
+        "data": {
+          "address": "terra132uuzdnjce0c8g5dalyvdgl47ny697udesk972cg05e5y7gn485qz6tdch",
+          "contract_info": {
+            "code_id": "10184",
+            "creator": "terra15rl8g308yzzt5kxu4skgwlahrvm8adyv0s2cupsmvte0akgs2ttsszau38",
+            "admin": "terra15rl8g308yzzt5kxu4skgwlahrvm8adyv0s2cupsmvte0akgs2ttsszau38",
+            "label": "CLUNC-CUSTC cl8ydex lp",
+            "created": {
+              "block_height": "30070150",
+              "tx_index": "113489"
+            },
+            "ibc_port_id": "",
+            "extension": null,
+            "ibc2_port_id": "wasm2132uuzdnjce0c8g5dalyvdgl47ny697udesk972cg05e5y7gn485qz6tdch"
+          }
+        }
+      },
+      "token_info": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra132uuzdnjce0c8g5dalyvdgl47ny697udesk972cg05e5y7gn485qz6tdch/smart/eyJ0b2tlbl9pbmZvIjp7fX0%3D",
+        "height": null,
+        "data": {
+          "data": {
+            "name": "CLUNC-CUSTC CL8YDEX LP",
+            "symbol": "CLUN-CUST-LP",
+            "decimals": 18,
+            "total_supply": "46794468281131"
+          }
+        }
+      },
+      "minter": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra132uuzdnjce0c8g5dalyvdgl47ny697udesk972cg05e5y7gn485qz6tdch/smart/eyJtaW50ZXIiOnt9fQ%3D%3D",
+        "height": null,
+        "data": {
+          "data": {
+            "minter": "terra15rl8g308yzzt5kxu4skgwlahrvm8adyv0s2cupsmvte0akgs2ttsszau38",
+            "cap": null
+          }
+        }
+      },
+      "additional_minters": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra132uuzdnjce0c8g5dalyvdgl47ny697udesk972cg05e5y7gn485qz6tdch/smart/eyJtaW50ZXJzIjp7ImxpbWl0IjozMH19",
+        "height": null,
+        "data": {
+          "data": {
+            "minters": []
+          }
+        }
+      },
+      "cw2": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra132uuzdnjce0c8g5dalyvdgl47ny697udesk972cg05e5y7gn485qz6tdch/raw/Y29udHJhY3RfaW5mbw%3D%3D",
+        "height": null,
+        "data": {
+          "data": "eyJjb250cmFjdCI6ImNyYXRlcy5pbzpjdzIwLWJhc2UiLCJ2ZXJzaW9uIjoiMC4xLjAifQ=="
+        }
+      }
+    },
+    {
+      "address": "terra13rfqc8qklg5whh33t55ceah8mwkl88c2tq5wjcvzkpr3jv65y5psz0jcwu",
+      "known_symbol": null,
+      "contract": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra13rfqc8qklg5whh33t55ceah8mwkl88c2tq5wjcvzkpr3jv65y5psz0jcwu",
+        "height": null,
+        "data": {
+          "address": "terra13rfqc8qklg5whh33t55ceah8mwkl88c2tq5wjcvzkpr3jv65y5psz0jcwu",
+          "contract_info": {
+            "code_id": "10184",
+            "creator": "terra1q5karg99p5hc0jvplgn2fd8akg39r4ss00cu5rwkm600yqvmssgqhwqvq0",
+            "admin": "terra1q5karg99p5hc0jvplgn2fd8akg39r4ss00cu5rwkm600yqvmssgqhwqvq0",
+            "label": "CL8Y-C-CLUNC cl8ydex lp",
+            "created": {
+              "block_height": "30025428",
+              "tx_index": "0"
+            },
+            "ibc_port_id": "",
+            "extension": null,
+            "ibc2_port_id": "wasm213rfqc8qklg5whh33t55ceah8mwkl88c2tq5wjcvzkpr3jv65y5psz0jcwu"
+          }
+        }
+      },
+      "token_info": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra13rfqc8qklg5whh33t55ceah8mwkl88c2tq5wjcvzkpr3jv65y5psz0jcwu/smart/eyJ0b2tlbl9pbmZvIjp7fX0%3D",
+        "height": null,
+        "data": {
+          "data": {
+            "name": "CL8Y-C-CLUNC CL8YDEX LP",
+            "symbol": "CL8Y-CLUN-LP",
+            "decimals": 18,
+            "total_supply": "478322296752555"
+          }
+        }
+      },
+      "minter": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra13rfqc8qklg5whh33t55ceah8mwkl88c2tq5wjcvzkpr3jv65y5psz0jcwu/smart/eyJtaW50ZXIiOnt9fQ%3D%3D",
+        "height": null,
+        "data": {
+          "data": {
+            "minter": "terra1q5karg99p5hc0jvplgn2fd8akg39r4ss00cu5rwkm600yqvmssgqhwqvq0",
+            "cap": null
+          }
+        }
+      },
+      "additional_minters": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra13rfqc8qklg5whh33t55ceah8mwkl88c2tq5wjcvzkpr3jv65y5psz0jcwu/smart/eyJtaW50ZXJzIjp7ImxpbWl0IjozMH19",
+        "height": null,
+        "data": {
+          "data": {
+            "minters": []
+          }
+        }
+      },
+      "cw2": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra13rfqc8qklg5whh33t55ceah8mwkl88c2tq5wjcvzkpr3jv65y5psz0jcwu/raw/Y29udHJhY3RfaW5mbw%3D%3D",
+        "height": null,
+        "data": {
+          "data": "eyJjb250cmFjdCI6ImNyYXRlcy5pbzpjdzIwLWJhc2UiLCJ2ZXJzaW9uIjoiMC4xLjAifQ=="
+        }
+      }
+    },
+    {
+      "address": "terra1437qslye72t7qmmahn4t5chz50r8a62g45phwkquwpyu2l62u6ksqssgdg",
+      "known_symbol": null,
+      "contract": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1437qslye72t7qmmahn4t5chz50r8a62g45phwkquwpyu2l62u6ksqssgdg",
+        "height": null,
+        "data": {
+          "address": "terra1437qslye72t7qmmahn4t5chz50r8a62g45phwkquwpyu2l62u6ksqssgdg",
+          "contract_info": {
+            "code_id": "10184",
+            "creator": "terra1xsecn4snv94ezcez0z3vq8an9j4h4kxxcydp8l",
+            "admin": "terra1xsecn4snv94ezcez0z3vq8an9j4h4kxxcydp8l",
+            "label": "cLUNC",
+            "created": {
+              "block_height": "29849146",
+              "tx_index": "9660938"
+            },
+            "ibc_port_id": "",
+            "extension": null,
+            "ibc2_port_id": "wasm21437qslye72t7qmmahn4t5chz50r8a62g45phwkquwpyu2l62u6ksqssgdg"
+          }
+        }
+      },
+      "token_info": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1437qslye72t7qmmahn4t5chz50r8a62g45phwkquwpyu2l62u6ksqssgdg/smart/eyJ0b2tlbl9pbmZvIjp7fX0%3D",
+        "height": null,
+        "data": {
+          "data": {
+            "name": "Wrapped LUNC",
+            "symbol": "cLUNC",
+            "decimals": 6,
+            "total_supply": "706138710382774"
+          }
+        }
+      },
+      "minter": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1437qslye72t7qmmahn4t5chz50r8a62g45phwkquwpyu2l62u6ksqssgdg/smart/eyJtaW50ZXIiOnt9fQ%3D%3D",
+        "height": "31074526",
+        "data": {
+          "data": {
+            "minter": "terra1xsecn4snv94ezcez0z3vq8an9j4h4kxxcydp8l",
+            "cap": null
+          }
+        }
+      },
+      "additional_minters": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1437qslye72t7qmmahn4t5chz50r8a62g45phwkquwpyu2l62u6ksqssgdg/smart/eyJtaW50ZXJzIjp7ImxpbWl0IjozMH19",
+        "height": null,
+        "data": {
+          "data": {
+            "minters": [
+              "terra1xuuuhpmyd5t29ry7mydg7ra2q2phrwhx7j28nx7x9sjw6zznkumsz0nmd2"
+            ]
+          }
+        }
+      },
+      "cw2": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1437qslye72t7qmmahn4t5chz50r8a62g45phwkquwpyu2l62u6ksqssgdg/raw/Y29udHJhY3RfaW5mbw%3D%3D",
+        "height": null,
+        "data": {
+          "data": "eyJjb250cmFjdCI6ImNyYXRlcy5pbzpjdzIwLWJhc2UiLCJ2ZXJzaW9uIjoiMC4xLjAifQ=="
+        }
+      }
+    },
+    {
+      "address": "terra14esahmssytksgamxnqsna2gmc9s6hzxhazsvtxvpm3k0hqatu6kqkvu4wv",
+      "known_symbol": null,
+      "contract": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra14esahmssytksgamxnqsna2gmc9s6hzxhazsvtxvpm3k0hqatu6kqkvu4wv",
+        "height": null,
+        "data": {
+          "address": "terra14esahmssytksgamxnqsna2gmc9s6hzxhazsvtxvpm3k0hqatu6kqkvu4wv",
+          "contract_info": {
+            "code_id": "10184",
+            "creator": "terra1njpnexcdnqm8cnl7g3fs5y60zm9l6xsflzpqv3",
+            "admin": "terra1xsecn4snv94ezcez0z3vq8an9j4h4kxxcydp8l",
+            "label": "testa-cw20",
+            "created": {
+              "block_height": "27400949",
+              "tx_index": "2034068"
+            },
+            "ibc_port_id": "",
+            "extension": null,
+            "ibc2_port_id": ""
+          }
+        }
+      },
+      "token_info": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra14esahmssytksgamxnqsna2gmc9s6hzxhazsvtxvpm3k0hqatu6kqkvu4wv/smart/eyJ0b2tlbl9pbmZvIjp7fX0%3D",
+        "height": null,
+        "data": {
+          "data": {
+            "name": "Test A",
+            "symbol": "testa",
+            "decimals": 18,
+            "total_supply": "0"
+          }
+        }
+      },
+      "minter": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra14esahmssytksgamxnqsna2gmc9s6hzxhazsvtxvpm3k0hqatu6kqkvu4wv/smart/eyJtaW50ZXIiOnt9fQ%3D%3D",
+        "height": null,
+        "data": {
+          "data": {
+            "minter": "terra1saxhfawhepuet3hraeue0gapnts679rkhxpf34q5rl8fncctxeusqgvjxs",
+            "cap": null
+          }
+        }
+      },
+      "additional_minters": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra14esahmssytksgamxnqsna2gmc9s6hzxhazsvtxvpm3k0hqatu6kqkvu4wv/smart/eyJtaW50ZXJzIjp7ImxpbWl0IjozMH19",
+        "height": null,
+        "data": {
+          "data": {
+            "minters": []
+          }
+        }
+      },
+      "cw2": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra14esahmssytksgamxnqsna2gmc9s6hzxhazsvtxvpm3k0hqatu6kqkvu4wv/raw/Y29udHJhY3RfaW5mbw%3D%3D",
+        "height": null,
+        "data": {
+          "data": "eyJjb250cmFjdCI6ImNyYXRlcy5pbzpjdzIwLWJhc2UiLCJ2ZXJzaW9uIjoiMC4xLjAifQ=="
+        }
+      }
+    },
+    {
+      "address": "terra16ahm9hn5teayt2as384zf3uudgqvmmwahqfh0v9e3kaslhu30l8q38ftvh",
+      "known_symbol": null,
+      "contract": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra16ahm9hn5teayt2as384zf3uudgqvmmwahqfh0v9e3kaslhu30l8q38ftvh",
+        "height": "31074526",
+        "data": {
+          "address": "terra16ahm9hn5teayt2as384zf3uudgqvmmwahqfh0v9e3kaslhu30l8q38ftvh",
+          "contract_info": {
+            "code_id": "10184",
+            "creator": "terra1njpnexcdnqm8cnl7g3fs5y60zm9l6xsflzpqv3",
+            "admin": "terra1xsecn4snv94ezcez0z3vq8an9j4h4kxxcydp8l",
+            "label": "testa-cw20",
+            "created": {
+              "block_height": "27401346",
+              "tx_index": "10224260"
+            },
+            "ibc_port_id": "",
+            "extension": null,
+            "ibc2_port_id": ""
+          }
+        }
+      },
+      "token_info": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra16ahm9hn5teayt2as384zf3uudgqvmmwahqfh0v9e3kaslhu30l8q38ftvh/smart/eyJ0b2tlbl9pbmZvIjp7fX0%3D",
+        "height": null,
+        "data": {
+          "data": {
+            "name": "Test A",
+            "symbol": "testa",
+            "decimals": 18,
+            "total_supply": "80986418010000000000"
+          }
+        }
+      },
+      "minter": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra16ahm9hn5teayt2as384zf3uudgqvmmwahqfh0v9e3kaslhu30l8q38ftvh/smart/eyJtaW50ZXIiOnt9fQ%3D%3D",
+        "height": null,
+        "data": {
+          "data": {
+            "minter": "terra1njpnexcdnqm8cnl7g3fs5y60zm9l6xsflzpqv3",
+            "cap": null
+          }
+        }
+      },
+      "additional_minters": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra16ahm9hn5teayt2as384zf3uudgqvmmwahqfh0v9e3kaslhu30l8q38ftvh/smart/eyJtaW50ZXJzIjp7ImxpbWl0IjozMH19",
+        "height": null,
+        "data": {
+          "data": {
+            "minters": [
+              "terra13p359fmv7zt7ll9cexmvns5qgu0tfqccwdeugl33pgtaku622rhszs3m9k",
+              "terra18m02l2f43c2dagqnz3kfccpgz9pzzz5hk9l5mh5wvr6dcvv47zfqdfs7la"
+            ]
+          }
+        }
+      },
+      "cw2": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra16ahm9hn5teayt2as384zf3uudgqvmmwahqfh0v9e3kaslhu30l8q38ftvh/raw/Y29udHJhY3RfaW5mbw%3D%3D",
+        "height": "31074527",
+        "data": {
+          "data": "eyJjb250cmFjdCI6ImNyYXRlcy5pbzpjdzIwLWJhc2UiLCJ2ZXJzaW9uIjoiMC4xLjAifQ=="
+        }
+      }
+    },
+    {
+      "address": "terra16wtml2q66g82fdkx66tap0qjkahqwp4lwq3ngtygacg5q0kzycgqvhpax3",
+      "known_symbol": null,
+      "contract": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra16wtml2q66g82fdkx66tap0qjkahqwp4lwq3ngtygacg5q0kzycgqvhpax3",
+        "height": null,
+        "data": {
+          "address": "terra16wtml2q66g82fdkx66tap0qjkahqwp4lwq3ngtygacg5q0kzycgqvhpax3",
+          "contract_info": {
+            "code_id": "10184",
+            "creator": "terra1hu4zggf3f8yw6jw3rxrjxn2drwad675gq5k2lv",
+            "admin": "terra1zlmv2xydxcusurtr6rl78wsvytdc6mfex6hep7",
+            "label": "CeramicLiberty.com CL8Y.com/bridge",
+            "created": {
+              "block_height": "24103161",
+              "tx_index": "10793178"
+            },
+            "ibc_port_id": "",
+            "extension": null,
+            "ibc2_port_id": ""
+          }
+        }
+      },
+      "token_info": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra16wtml2q66g82fdkx66tap0qjkahqwp4lwq3ngtygacg5q0kzycgqvhpax3/smart/eyJ0b2tlbl9pbmZvIjp7fX0%3D",
+        "height": null,
+        "data": {
+          "data": {
+            "name": "CeramicLiberty.com CL8Y.com/bridge",
+            "symbol": "CL8Y-cb",
+            "decimals": 18,
+            "total_supply": "517071511499499741546248"
+          }
+        }
+      },
+      "minter": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra16wtml2q66g82fdkx66tap0qjkahqwp4lwq3ngtygacg5q0kzycgqvhpax3/smart/eyJtaW50ZXIiOnt9fQ%3D%3D",
+        "height": null,
+        "data": {
+          "data": {
+            "minter": "terra1zlmv2xydxcusurtr6rl78wsvytdc6mfex6hep7",
+            "cap": null
+          }
+        }
+      },
+      "additional_minters": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra16wtml2q66g82fdkx66tap0qjkahqwp4lwq3ngtygacg5q0kzycgqvhpax3/smart/eyJtaW50ZXJzIjp7ImxpbWl0IjozMH19",
+        "height": null,
+        "data": {
+          "data": {
+            "minters": [
+              "terra18m02l2f43c2dagqnz3kfccpgz9pzzz5hk9l5mh5wvr6dcvv47zfqdfs7la"
+            ]
+          }
+        }
+      },
+      "cw2": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra16wtml2q66g82fdkx66tap0qjkahqwp4lwq3ngtygacg5q0kzycgqvhpax3/raw/Y29udHJhY3RfaW5mbw%3D%3D",
+        "height": null,
+        "data": {
+          "data": "eyJjb250cmFjdCI6ImNyYXRlcy5pbzpjdzIwLWJhc2UiLCJ2ZXJzaW9uIjoiMC4xLjAifQ=="
+        }
+      }
+    },
+    {
+      "address": "terra178fgrfzv7njtmdp9vghyf2dx77sah8u8jluzs7ym562chaxnmj2s6mn6m9",
+      "known_symbol": "ONYX",
+      "contract": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra178fgrfzv7njtmdp9vghyf2dx77sah8u8jluzs7ym562chaxnmj2s6mn6m9",
+        "height": null,
+        "data": {
+          "address": "terra178fgrfzv7njtmdp9vghyf2dx77sah8u8jluzs7ym562chaxnmj2s6mn6m9",
+          "contract_info": {
+            "code_id": "10184",
+            "creator": "terra1hu4zggf3f8yw6jw3rxrjxn2drwad675gq5k2lv",
+            "admin": "terra1zlmv2xydxcusurtr6rl78wsvytdc6mfex6hep7",
+            "label": "soft-ONYX",
+            "created": {
+              "block_height": "29458462",
+              "tx_index": "559827"
+            },
+            "ibc_port_id": "",
+            "extension": null,
+            "ibc2_port_id": "wasm2178fgrfzv7njtmdp9vghyf2dx77sah8u8jluzs7ym562chaxnmj2s6mn6m9"
+          }
+        }
+      },
+      "token_info": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra178fgrfzv7njtmdp9vghyf2dx77sah8u8jluzs7ym562chaxnmj2s6mn6m9/smart/eyJ0b2tlbl9pbmZvIjp7fX0%3D",
+        "height": null,
+        "data": {
+          "data": {
+            "name": "Onyx",
+            "symbol": "ONYX",
+            "decimals": 6,
+            "total_supply": "10000400000000"
+          }
+        }
+      },
+      "minter": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra178fgrfzv7njtmdp9vghyf2dx77sah8u8jluzs7ym562chaxnmj2s6mn6m9/smart/eyJtaW50ZXIiOnt9fQ%3D%3D",
+        "height": null,
+        "data": {
+          "data": {
+            "minter": "terra1zlmv2xydxcusurtr6rl78wsvytdc6mfex6hep7",
+            "cap": null
+          }
+        }
+      },
+      "additional_minters": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra178fgrfzv7njtmdp9vghyf2dx77sah8u8jluzs7ym562chaxnmj2s6mn6m9/smart/eyJtaW50ZXJzIjp7ImxpbWl0IjozMH19",
+        "height": null,
+        "data": {
+          "data": {
+            "minters": [
+              "terra1388y0ppe2c3dy4nrmnpqp7e4ggukkrnmpzfjadfeu0pu2rm9cvkslfzcen"
+            ]
+          }
+        }
+      },
+      "cw2": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra178fgrfzv7njtmdp9vghyf2dx77sah8u8jluzs7ym562chaxnmj2s6mn6m9/raw/Y29udHJhY3RfaW5mbw%3D%3D",
+        "height": null,
+        "data": {
+          "data": "eyJjb250cmFjdCI6ImNyYXRlcy5pbzpjdzIwLWJhc2UiLCJ2ZXJzaW9uIjoiMC4xLjAifQ=="
+        }
+      }
+    },
+    {
+      "address": "terra17nny5femmkq2nfu7ne9nxw0zjnpgwxl0zvfzqwg88vgskhldztxqytjtus",
+      "known_symbol": null,
+      "contract": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra17nny5femmkq2nfu7ne9nxw0zjnpgwxl0zvfzqwg88vgskhldztxqytjtus",
+        "height": null,
+        "data": {
+          "address": "terra17nny5femmkq2nfu7ne9nxw0zjnpgwxl0zvfzqwg88vgskhldztxqytjtus",
+          "contract_info": {
+            "code_id": "10184",
+            "creator": "terra1qfa8hn0tnu33mnpahl382ekyd4873gmp2vsvcm3apw526tnrh8aqtrknvf",
+            "admin": "terra1qfa8hn0tnu33mnpahl382ekyd4873gmp2vsvcm3apw526tnrh8aqtrknvf",
+            "label": "UST1-USDT cl8ydex lp",
+            "created": {
+              "block_height": "30670985",
+              "tx_index": "226644"
+            },
+            "ibc_port_id": "",
+            "extension": null,
+            "ibc2_port_id": "wasm217nny5femmkq2nfu7ne9nxw0zjnpgwxl0zvfzqwg88vgskhldztxqytjtus"
+          }
+        }
+      },
+      "token_info": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra17nny5femmkq2nfu7ne9nxw0zjnpgwxl0zvfzqwg88vgskhldztxqytjtus/smart/eyJ0b2tlbl9pbmZvIjp7fX0%3D",
+        "height": null,
+        "data": {
+          "data": {
+            "name": "UST1-USDT CL8YDEX LP",
+            "symbol": "UST1-USDT-LP",
+            "decimals": 18,
+            "total_supply": "9999999999999000"
+          }
+        }
+      },
+      "minter": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra17nny5femmkq2nfu7ne9nxw0zjnpgwxl0zvfzqwg88vgskhldztxqytjtus/smart/eyJtaW50ZXIiOnt9fQ%3D%3D",
+        "height": null,
+        "data": {
+          "data": {
+            "minter": "terra1qfa8hn0tnu33mnpahl382ekyd4873gmp2vsvcm3apw526tnrh8aqtrknvf",
+            "cap": null
+          }
+        }
+      },
+      "additional_minters": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra17nny5femmkq2nfu7ne9nxw0zjnpgwxl0zvfzqwg88vgskhldztxqytjtus/smart/eyJtaW50ZXJzIjp7ImxpbWl0IjozMH19",
+        "height": null,
+        "data": {
+          "data": {
+            "minters": []
+          }
+        }
+      },
+      "cw2": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra17nny5femmkq2nfu7ne9nxw0zjnpgwxl0zvfzqwg88vgskhldztxqytjtus/raw/Y29udHJhY3RfaW5mbw%3D%3D",
+        "height": null,
+        "data": {
+          "data": "eyJjb250cmFjdCI6ImNyYXRlcy5pbzpjdzIwLWJhc2UiLCJ2ZXJzaW9uIjoiMC4xLjAifQ=="
+        }
+      }
+    },
+    {
+      "address": "terra1ak8w9k34ex237h9pmquxqjevhzvflqaatuaj9pr8ym287n7atj6qw2ty4p",
+      "known_symbol": null,
+      "contract": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1ak8w9k34ex237h9pmquxqjevhzvflqaatuaj9pr8ym287n7atj6qw2ty4p",
+        "height": null,
+        "data": {
+          "address": "terra1ak8w9k34ex237h9pmquxqjevhzvflqaatuaj9pr8ym287n7atj6qw2ty4p",
+          "contract_info": {
+            "code_id": "10184",
+            "creator": "terra16vxrhpvpcucu05y0nr862vf9hnqeh274uaff4s7hz4n0ea74006qf5hgqy",
+            "admin": "terra16vxrhpvpcucu05y0nr862vf9hnqeh274uaff4s7hz4n0ea74006qf5hgqy",
+            "label": "UST1-USTR cl8ydex lp",
+            "created": {
+              "block_height": "29958496",
+              "tx_index": "9995119"
+            },
+            "ibc_port_id": "",
+            "extension": null,
+            "ibc2_port_id": "wasm21ak8w9k34ex237h9pmquxqjevhzvflqaatuaj9pr8ym287n7atj6qw2ty4p"
+          }
+        }
+      },
+      "token_info": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1ak8w9k34ex237h9pmquxqjevhzvflqaatuaj9pr8ym287n7atj6qw2ty4p/smart/eyJ0b2tlbl9pbmZvIjp7fX0%3D",
+        "height": null,
+        "data": {
+          "data": {
+            "name": "UST1-USTR CL8YDEX LP",
+            "symbol": "UST1-USTR-LP",
+            "decimals": 18,
+            "total_supply": "256086414142350466"
+          }
+        }
+      },
+      "minter": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1ak8w9k34ex237h9pmquxqjevhzvflqaatuaj9pr8ym287n7atj6qw2ty4p/smart/eyJtaW50ZXIiOnt9fQ%3D%3D",
+        "height": null,
+        "data": {
+          "data": {
+            "minter": "terra16vxrhpvpcucu05y0nr862vf9hnqeh274uaff4s7hz4n0ea74006qf5hgqy",
+            "cap": null
+          }
+        }
+      },
+      "additional_minters": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1ak8w9k34ex237h9pmquxqjevhzvflqaatuaj9pr8ym287n7atj6qw2ty4p/smart/eyJtaW50ZXJzIjp7ImxpbWl0IjozMH19",
+        "height": null,
+        "data": {
+          "data": {
+            "minters": []
+          }
+        }
+      },
+      "cw2": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1ak8w9k34ex237h9pmquxqjevhzvflqaatuaj9pr8ym287n7atj6qw2ty4p/raw/Y29udHJhY3RfaW5mbw%3D%3D",
+        "height": null,
+        "data": {
+          "data": "eyJjb250cmFjdCI6ImNyYXRlcy5pbzpjdzIwLWJhc2UiLCJ2ZXJzaW9uIjoiMC4xLjAifQ=="
+        }
+      }
+    },
+    {
+      "address": "terra1cr32lfrc6xedzr6pzczcwgrucfuu55jgmtwl5lwfupau8pg0ut0qzp6a4a",
+      "known_symbol": null,
+      "contract": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1cr32lfrc6xedzr6pzczcwgrucfuu55jgmtwl5lwfupau8pg0ut0qzp6a4a",
+        "height": null,
+        "data": {
+          "address": "terra1cr32lfrc6xedzr6pzczcwgrucfuu55jgmtwl5lwfupau8pg0ut0qzp6a4a",
+          "contract_info": {
+            "code_id": "10184",
+            "creator": "terra1njpnexcdnqm8cnl7g3fs5y60zm9l6xsflzpqv3",
+            "admin": "terra1xsecn4snv94ezcez0z3vq8an9j4h4kxxcydp8l",
+            "label": "testb-cw20",
+            "created": {
+              "block_height": "27400953",
+              "tx_index": "0"
+            },
+            "ibc_port_id": "",
+            "extension": null,
+            "ibc2_port_id": ""
+          }
+        }
+      },
+      "token_info": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1cr32lfrc6xedzr6pzczcwgrucfuu55jgmtwl5lwfupau8pg0ut0qzp6a4a/smart/eyJ0b2tlbl9pbmZvIjp7fX0%3D",
+        "height": null,
+        "data": {
+          "data": {
+            "name": "Test B",
+            "symbol": "testb",
+            "decimals": 18,
+            "total_supply": "0"
+          }
+        }
+      },
+      "minter": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1cr32lfrc6xedzr6pzczcwgrucfuu55jgmtwl5lwfupau8pg0ut0qzp6a4a/smart/eyJtaW50ZXIiOnt9fQ%3D%3D",
+        "height": null,
+        "data": {
+          "data": {
+            "minter": "terra1saxhfawhepuet3hraeue0gapnts679rkhxpf34q5rl8fncctxeusqgvjxs",
+            "cap": null
+          }
+        }
+      },
+      "additional_minters": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1cr32lfrc6xedzr6pzczcwgrucfuu55jgmtwl5lwfupau8pg0ut0qzp6a4a/smart/eyJtaW50ZXJzIjp7ImxpbWl0IjozMH19",
+        "height": "31074527",
+        "data": {
+          "data": {
+            "minters": []
+          }
+        }
+      },
+      "cw2": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1cr32lfrc6xedzr6pzczcwgrucfuu55jgmtwl5lwfupau8pg0ut0qzp6a4a/raw/Y29udHJhY3RfaW5mbw%3D%3D",
+        "height": null,
+        "data": {
+          "data": "eyJjb250cmFjdCI6ImNyYXRlcy5pbzpjdzIwLWJhc2UiLCJ2ZXJzaW9uIjoiMC4xLjAifQ=="
+        }
+      }
+    },
+    {
+      "address": "terra1dfmvdvcpwa2ycvy2zty8eh9q2q9xpkf7a9dqnyaa52fxxzlhqjnsfqkhku",
+      "known_symbol": null,
+      "contract": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1dfmvdvcpwa2ycvy2zty8eh9q2q9xpkf7a9dqnyaa52fxxzlhqjnsfqkhku",
+        "height": "31074527",
+        "data": {
+          "address": "terra1dfmvdvcpwa2ycvy2zty8eh9q2q9xpkf7a9dqnyaa52fxxzlhqjnsfqkhku",
+          "contract_info": {
+            "code_id": "10184",
+            "creator": "terra1njpnexcdnqm8cnl7g3fs5y60zm9l6xsflzpqv3",
+            "admin": "terra1xsecn4snv94ezcez0z3vq8an9j4h4kxxcydp8l",
+            "label": "tdec-cw20",
+            "created": {
+              "block_height": "27401027",
+              "tx_index": "0"
+            },
+            "ibc_port_id": "",
+            "extension": null,
+            "ibc2_port_id": ""
+          }
+        }
+      },
+      "token_info": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1dfmvdvcpwa2ycvy2zty8eh9q2q9xpkf7a9dqnyaa52fxxzlhqjnsfqkhku/smart/eyJ0b2tlbl9pbmZvIjp7fX0%3D",
+        "height": "31074527",
+        "data": {
+          "data": {
+            "name": "Test Dec",
+            "symbol": "tdec",
+            "decimals": 6,
+            "total_supply": "0"
+          }
+        }
+      },
+      "minter": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1dfmvdvcpwa2ycvy2zty8eh9q2q9xpkf7a9dqnyaa52fxxzlhqjnsfqkhku/smart/eyJtaW50ZXIiOnt9fQ%3D%3D",
+        "height": null,
+        "data": {
+          "data": {
+            "minter": "terra1njpnexcdnqm8cnl7g3fs5y60zm9l6xsflzpqv3",
+            "cap": null
+          }
+        }
+      },
+      "additional_minters": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1dfmvdvcpwa2ycvy2zty8eh9q2q9xpkf7a9dqnyaa52fxxzlhqjnsfqkhku/smart/eyJtaW50ZXJzIjp7ImxpbWl0IjozMH19",
+        "height": null,
+        "data": {
+          "data": {
+            "minters": [
+              "terra1saxhfawhepuet3hraeue0gapnts679rkhxpf34q5rl8fncctxeusqgvjxs",
+              "terra1wmavj7djsm8z4uv50l40jqya8kjtnhqax5wp6n6sd2asd6ac6nusht9uc2"
+            ]
+          }
+        }
+      },
+      "cw2": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1dfmvdvcpwa2ycvy2zty8eh9q2q9xpkf7a9dqnyaa52fxxzlhqjnsfqkhku/raw/Y29udHJhY3RfaW5mbw%3D%3D",
+        "height": null,
+        "data": {
+          "data": "eyJjb250cmFjdCI6ImNyYXRlcy5pbzpjdzIwLWJhc2UiLCJ2ZXJzaW9uIjoiMC4xLjAifQ=="
+        }
+      }
+    },
+    {
+      "address": "terra1dmuruhht32x8f47nvm73pwp6q7uf2jtfhdt3nxcql4mmqkyfsraqn2dt94",
+      "known_symbol": "EMBER",
+      "contract": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1dmuruhht32x8f47nvm73pwp6q7uf2jtfhdt3nxcql4mmqkyfsraqn2dt94",
+        "height": null,
+        "data": {
+          "address": "terra1dmuruhht32x8f47nvm73pwp6q7uf2jtfhdt3nxcql4mmqkyfsraqn2dt94",
+          "contract_info": {
+            "code_id": "10184",
+            "creator": "terra1hu4zggf3f8yw6jw3rxrjxn2drwad675gq5k2lv",
+            "admin": "terra1zlmv2xydxcusurtr6rl78wsvytdc6mfex6hep7",
+            "label": "soft-EMBER",
+            "created": {
+              "block_height": "29458455",
+              "tx_index": "226466"
+            },
+            "ibc_port_id": "",
+            "extension": null,
+            "ibc2_port_id": "wasm21dmuruhht32x8f47nvm73pwp6q7uf2jtfhdt3nxcql4mmqkyfsraqn2dt94"
+          }
+        }
+      },
+      "token_info": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1dmuruhht32x8f47nvm73pwp6q7uf2jtfhdt3nxcql4mmqkyfsraqn2dt94/smart/eyJ0b2tlbl9pbmZvIjp7fX0%3D",
+        "height": null,
+        "data": {
+          "data": {
+            "name": "Ember",
+            "symbol": "EMBER",
+            "decimals": 6,
+            "total_supply": "10004300000000"
+          }
+        }
+      },
+      "minter": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1dmuruhht32x8f47nvm73pwp6q7uf2jtfhdt3nxcql4mmqkyfsraqn2dt94/smart/eyJtaW50ZXIiOnt9fQ%3D%3D",
+        "height": null,
+        "data": {
+          "data": {
+            "minter": "terra1zlmv2xydxcusurtr6rl78wsvytdc6mfex6hep7",
+            "cap": null
+          }
+        }
+      },
+      "additional_minters": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1dmuruhht32x8f47nvm73pwp6q7uf2jtfhdt3nxcql4mmqkyfsraqn2dt94/smart/eyJtaW50ZXJzIjp7ImxpbWl0IjozMH19",
+        "height": null,
+        "data": {
+          "data": {
+            "minters": [
+              "terra1388y0ppe2c3dy4nrmnpqp7e4ggukkrnmpzfjadfeu0pu2rm9cvkslfzcen"
+            ]
+          }
+        }
+      },
+      "cw2": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1dmuruhht32x8f47nvm73pwp6q7uf2jtfhdt3nxcql4mmqkyfsraqn2dt94/raw/Y29udHJhY3RfaW5mbw%3D%3D",
+        "height": null,
+        "data": {
+          "data": "eyJjb250cmFjdCI6ImNyYXRlcy5pbzpjdzIwLWJhc2UiLCJ2ZXJzaW9uIjoiMC4xLjAifQ=="
+        }
+      }
+    },
+    {
+      "address": "terra1ejq3mjjgnklpa3pg4jterlfwsny055gpmcjf3fz0ev3ueajnzeysz6xxgr",
+      "known_symbol": "JADE",
+      "contract": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1ejq3mjjgnklpa3pg4jterlfwsny055gpmcjf3fz0ev3ueajnzeysz6xxgr",
+        "height": null,
+        "data": {
+          "address": "terra1ejq3mjjgnklpa3pg4jterlfwsny055gpmcjf3fz0ev3ueajnzeysz6xxgr",
+          "contract_info": {
+            "code_id": "10184",
+            "creator": "terra1hu4zggf3f8yw6jw3rxrjxn2drwad675gq5k2lv",
+            "admin": "terra1zlmv2xydxcusurtr6rl78wsvytdc6mfex6hep7",
+            "label": "soft-JADE",
+            "created": {
+              "block_height": "29458459",
+              "tx_index": "0"
+            },
+            "ibc_port_id": "",
+            "extension": null,
+            "ibc2_port_id": "wasm21ejq3mjjgnklpa3pg4jterlfwsny055gpmcjf3fz0ev3ueajnzeysz6xxgr"
+          }
+        }
+      },
+      "token_info": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1ejq3mjjgnklpa3pg4jterlfwsny055gpmcjf3fz0ev3ueajnzeysz6xxgr/smart/eyJ0b2tlbl9pbmZvIjp7fX0%3D",
+        "height": null,
+        "data": {
+          "data": {
+            "name": "Jade",
+            "symbol": "JADE",
+            "decimals": 6,
+            "total_supply": "10000300000000"
+          }
+        }
+      },
+      "minter": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1ejq3mjjgnklpa3pg4jterlfwsny055gpmcjf3fz0ev3ueajnzeysz6xxgr/smart/eyJtaW50ZXIiOnt9fQ%3D%3D",
+        "height": null,
+        "data": {
+          "data": {
+            "minter": "terra1zlmv2xydxcusurtr6rl78wsvytdc6mfex6hep7",
+            "cap": null
+          }
+        }
+      },
+      "additional_minters": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1ejq3mjjgnklpa3pg4jterlfwsny055gpmcjf3fz0ev3ueajnzeysz6xxgr/smart/eyJtaW50ZXJzIjp7ImxpbWl0IjozMH19",
+        "height": null,
+        "data": {
+          "data": {
+            "minters": [
+              "terra1388y0ppe2c3dy4nrmnpqp7e4ggukkrnmpzfjadfeu0pu2rm9cvkslfzcen"
+            ]
+          }
+        }
+      },
+      "cw2": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1ejq3mjjgnklpa3pg4jterlfwsny055gpmcjf3fz0ev3ueajnzeysz6xxgr/raw/Y29udHJhY3RfaW5mbw%3D%3D",
+        "height": "31074527",
+        "data": {
+          "data": "eyJjb250cmFjdCI6ImNyYXRlcy5pbzpjdzIwLWJhc2UiLCJ2ZXJzaW9uIjoiMC4xLjAifQ=="
+        }
+      }
+    },
+    {
+      "address": "terra1f0eqgy9w7e5e7up97vjudqwx38tesf8ylx75x2lv3nwm0clry0pqmgfy72",
+      "known_symbol": null,
+      "contract": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1f0eqgy9w7e5e7up97vjudqwx38tesf8ylx75x2lv3nwm0clry0pqmgfy72",
+        "height": "31074527",
+        "data": {
+          "address": "terra1f0eqgy9w7e5e7up97vjudqwx38tesf8ylx75x2lv3nwm0clry0pqmgfy72",
+          "contract_info": {
+            "code_id": "10184",
+            "creator": "terra1hu4zggf3f8yw6jw3rxrjxn2drwad675gq5k2lv",
+            "admin": "terra1xsecn4snv94ezcez0z3vq8an9j4h4kxxcydp8l",
+            "label": "ust1-cw20",
+            "created": {
+              "block_height": "29719845",
+              "tx_index": "5239941"
+            },
+            "ibc_port_id": "",
+            "extension": null,
+            "ibc2_port_id": "wasm21f0eqgy9w7e5e7up97vjudqwx38tesf8ylx75x2lv3nwm0clry0pqmgfy72"
+          }
+        }
+      },
+      "token_info": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1f0eqgy9w7e5e7up97vjudqwx38tesf8ylx75x2lv3nwm0clry0pqmgfy72/smart/eyJ0b2tlbl9pbmZvIjp7fX0%3D",
+        "height": null,
+        "data": {
+          "data": {
+            "name": "UST1",
+            "symbol": "UST1",
+            "decimals": 6,
+            "total_supply": "87862406295"
+          }
+        }
+      },
+      "minter": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1f0eqgy9w7e5e7up97vjudqwx38tesf8ylx75x2lv3nwm0clry0pqmgfy72/smart/eyJtaW50ZXIiOnt9fQ%3D%3D",
+        "height": null,
+        "data": {
+          "data": {
+            "minter": "terra1xsecn4snv94ezcez0z3vq8an9j4h4kxxcydp8l",
+            "cap": null
+          }
+        }
+      },
+      "additional_minters": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1f0eqgy9w7e5e7up97vjudqwx38tesf8ylx75x2lv3nwm0clry0pqmgfy72/smart/eyJtaW50ZXJzIjp7ImxpbWl0IjozMH19",
+        "height": "31074527",
+        "data": {
+          "data": {
+            "minters": [
+              "terra1zlmv2xydxcusurtr6rl78wsvytdc6mfex6hep7",
+              "terra1zxwpzpzpleatqn39r00grau4yt29sld8pw78s7ktvjafnj5nsaxq0h3rh2"
+            ]
+          }
+        }
+      },
+      "cw2": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1f0eqgy9w7e5e7up97vjudqwx38tesf8ylx75x2lv3nwm0clry0pqmgfy72/raw/Y29udHJhY3RfaW5mbw%3D%3D",
+        "height": "31074527",
+        "data": {
+          "data": "eyJjb250cmFjdCI6ImNyYXRlcy5pbzpjdzIwLWJhc2UiLCJ2ZXJzaW9uIjoiMC4xLjAifQ=="
+        }
+      }
+    },
+    {
+      "address": "terra1f0xcljcamzgqerw5rl2ag2wj42tm6d3u5dvtrjl8gychzd52c7sslhdmlt",
+      "known_symbol": null,
+      "contract": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1f0xcljcamzgqerw5rl2ag2wj42tm6d3u5dvtrjl8gychzd52c7sslhdmlt",
+        "height": "31074527",
+        "data": {
+          "address": "terra1f0xcljcamzgqerw5rl2ag2wj42tm6d3u5dvtrjl8gychzd52c7sslhdmlt",
+          "contract_info": {
+            "code_id": "10184",
+            "creator": "terra1njpnexcdnqm8cnl7g3fs5y60zm9l6xsflzpqv3",
+            "admin": "terra1xsecn4snv94ezcez0z3vq8an9j4h4kxxcydp8l",
+            "label": "tdec-cw20",
+            "created": {
+              "block_height": "27400956",
+              "tx_index": "10223880"
+            },
+            "ibc_port_id": "",
+            "extension": null,
+            "ibc2_port_id": ""
+          }
+        }
+      },
+      "token_info": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1f0xcljcamzgqerw5rl2ag2wj42tm6d3u5dvtrjl8gychzd52c7sslhdmlt/smart/eyJ0b2tlbl9pbmZvIjp7fX0%3D",
+        "height": null,
+        "data": {
+          "data": {
+            "name": "Test Dec",
+            "symbol": "tdec",
+            "decimals": 6,
+            "total_supply": "0"
+          }
+        }
+      },
+      "minter": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1f0xcljcamzgqerw5rl2ag2wj42tm6d3u5dvtrjl8gychzd52c7sslhdmlt/smart/eyJtaW50ZXIiOnt9fQ%3D%3D",
+        "height": null,
+        "data": {
+          "data": {
+            "minter": "terra1saxhfawhepuet3hraeue0gapnts679rkhxpf34q5rl8fncctxeusqgvjxs",
+            "cap": null
+          }
+        }
+      },
+      "additional_minters": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1f0xcljcamzgqerw5rl2ag2wj42tm6d3u5dvtrjl8gychzd52c7sslhdmlt/smart/eyJtaW50ZXJzIjp7ImxpbWl0IjozMH19",
+        "height": null,
+        "data": {
+          "data": {
+            "minters": []
+          }
+        }
+      },
+      "cw2": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1f0xcljcamzgqerw5rl2ag2wj42tm6d3u5dvtrjl8gychzd52c7sslhdmlt/raw/Y29udHJhY3RfaW5mbw%3D%3D",
+        "height": null,
+        "data": {
+          "data": "eyJjb250cmFjdCI6ImNyYXRlcy5pbzpjdzIwLWJhc2UiLCJ2ZXJzaW9uIjoiMC4xLjAifQ=="
+        }
+      }
+    },
+    {
+      "address": "terra1fcmvnf7rseg5jqq8774nwwwtzkre9nvu4dkqv9g0se9pmsdruyds7akmlz",
+      "known_symbol": null,
+      "contract": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1fcmvnf7rseg5jqq8774nwwwtzkre9nvu4dkqv9g0se9pmsdruyds7akmlz",
+        "height": null,
+        "data": {
+          "address": "terra1fcmvnf7rseg5jqq8774nwwwtzkre9nvu4dkqv9g0se9pmsdruyds7akmlz",
+          "contract_info": {
+            "code_id": "10184",
+            "creator": "terra1864d9fvq6hmuddkyxnr5fcf60prfc2lnujl5kstjnu8lvstxqkyqhg4x9g",
+            "admin": "terra1864d9fvq6hmuddkyxnr5fcf60prfc2lnujl5kstjnu8lvstxqkyqhg4x9g",
+            "label": "USTR-USDT cl8ydex lp",
+            "created": {
+              "block_height": "30873822",
+              "tx_index": "394628"
+            },
+            "ibc_port_id": "",
+            "extension": null,
+            "ibc2_port_id": "wasm21fcmvnf7rseg5jqq8774nwwwtzkre9nvu4dkqv9g0se9pmsdruyds7akmlz"
+          }
+        }
+      },
+      "token_info": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1fcmvnf7rseg5jqq8774nwwwtzkre9nvu4dkqv9g0se9pmsdruyds7akmlz/smart/eyJ0b2tlbl9pbmZvIjp7fX0%3D",
+        "height": null,
+        "data": {
+          "data": {
+            "name": "USTR-USDT CL8YDEX LP",
+            "symbol": "USTR-USDT-LP",
+            "decimals": 18,
+            "total_supply": "0"
+          }
+        }
+      },
+      "minter": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1fcmvnf7rseg5jqq8774nwwwtzkre9nvu4dkqv9g0se9pmsdruyds7akmlz/smart/eyJtaW50ZXIiOnt9fQ%3D%3D",
+        "height": null,
+        "data": {
+          "data": {
+            "minter": "terra1864d9fvq6hmuddkyxnr5fcf60prfc2lnujl5kstjnu8lvstxqkyqhg4x9g",
+            "cap": null
+          }
+        }
+      },
+      "additional_minters": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1fcmvnf7rseg5jqq8774nwwwtzkre9nvu4dkqv9g0se9pmsdruyds7akmlz/smart/eyJtaW50ZXJzIjp7ImxpbWl0IjozMH19",
+        "height": null,
+        "data": {
+          "data": {
+            "minters": []
+          }
+        }
+      },
+      "cw2": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1fcmvnf7rseg5jqq8774nwwwtzkre9nvu4dkqv9g0se9pmsdruyds7akmlz/raw/Y29udHJhY3RfaW5mbw%3D%3D",
+        "height": null,
+        "data": {
+          "data": "eyJjb250cmFjdCI6ImNyYXRlcy5pbzpjdzIwLWJhc2UiLCJ2ZXJzaW9uIjoiMC4xLjAifQ=="
+        }
+      }
+    },
+    {
+      "address": "terra1fga508hzx8dd7x8q4uhm6mdhkqv6fxrtsea3r27smdqmv5k2jgxq5zk9fc",
+      "known_symbol": "RUBY",
+      "contract": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1fga508hzx8dd7x8q4uhm6mdhkqv6fxrtsea3r27smdqmv5k2jgxq5zk9fc",
+        "height": null,
+        "data": {
+          "address": "terra1fga508hzx8dd7x8q4uhm6mdhkqv6fxrtsea3r27smdqmv5k2jgxq5zk9fc",
+          "contract_info": {
+            "code_id": "10184",
+            "creator": "terra1hu4zggf3f8yw6jw3rxrjxn2drwad675gq5k2lv",
+            "admin": "terra1zlmv2xydxcusurtr6rl78wsvytdc6mfex6hep7",
+            "label": "soft-RUBY",
+            "created": {
+              "block_height": "29458464",
+              "tx_index": "0"
+            },
+            "ibc_port_id": "",
+            "extension": null,
+            "ibc2_port_id": "wasm21fga508hzx8dd7x8q4uhm6mdhkqv6fxrtsea3r27smdqmv5k2jgxq5zk9fc"
+          }
+        }
+      },
+      "token_info": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1fga508hzx8dd7x8q4uhm6mdhkqv6fxrtsea3r27smdqmv5k2jgxq5zk9fc/smart/eyJ0b2tlbl9pbmZvIjp7fX0%3D",
+        "height": null,
+        "data": {
+          "data": {
+            "name": "Ruby",
+            "symbol": "RUBY",
+            "decimals": 6,
+            "total_supply": "10000200000000"
+          }
+        }
+      },
+      "minter": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1fga508hzx8dd7x8q4uhm6mdhkqv6fxrtsea3r27smdqmv5k2jgxq5zk9fc/smart/eyJtaW50ZXIiOnt9fQ%3D%3D",
+        "height": null,
+        "data": {
+          "data": {
+            "minter": "terra1zlmv2xydxcusurtr6rl78wsvytdc6mfex6hep7",
+            "cap": null
+          }
+        }
+      },
+      "additional_minters": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1fga508hzx8dd7x8q4uhm6mdhkqv6fxrtsea3r27smdqmv5k2jgxq5zk9fc/smart/eyJtaW50ZXJzIjp7ImxpbWl0IjozMH19",
+        "height": "31074527",
+        "data": {
+          "data": {
+            "minters": [
+              "terra1388y0ppe2c3dy4nrmnpqp7e4ggukkrnmpzfjadfeu0pu2rm9cvkslfzcen"
+            ]
+          }
+        }
+      },
+      "cw2": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1fga508hzx8dd7x8q4uhm6mdhkqv6fxrtsea3r27smdqmv5k2jgxq5zk9fc/raw/Y29udHJhY3RfaW5mbw%3D%3D",
+        "height": null,
+        "data": {
+          "data": "eyJjb250cmFjdCI6ImNyYXRlcy5pbzpjdzIwLWJhc2UiLCJ2ZXJzaW9uIjoiMC4xLjAifQ=="
+        }
+      }
+    },
+    {
+      "address": "terra1hymuueuu43750rzut69hxmefl3m5gg27uxnu9fytcvlah27l5rtsrg87rc",
+      "known_symbol": null,
+      "contract": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1hymuueuu43750rzut69hxmefl3m5gg27uxnu9fytcvlah27l5rtsrg87rc",
+        "height": null,
+        "data": {
+          "address": "terra1hymuueuu43750rzut69hxmefl3m5gg27uxnu9fytcvlah27l5rtsrg87rc",
+          "contract_info": {
+            "code_id": "10184",
+            "creator": "terra163qm8z5rjgp8av6c6sg673lq2v4kfa0we5uhtzj8alfwhddfhjfs27k40z",
+            "admin": "terra163qm8z5rjgp8av6c6sg673lq2v4kfa0we5uhtzj8alfwhddfhjfs27k40z",
+            "label": "CL8Y-C-ALPHA cl8ydex lp",
+            "created": {
+              "block_height": "30117208",
+              "tx_index": "123640"
+            },
+            "ibc_port_id": "",
+            "extension": null,
+            "ibc2_port_id": "wasm21hymuueuu43750rzut69hxmefl3m5gg27uxnu9fytcvlah27l5rtsrg87rc"
+          }
+        }
+      },
+      "token_info": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1hymuueuu43750rzut69hxmefl3m5gg27uxnu9fytcvlah27l5rtsrg87rc/smart/eyJ0b2tlbl9pbmZvIjp7fX0%3D",
+        "height": null,
+        "data": {
+          "data": {
+            "name": "CL8Y-C-ALPHA CL8YDEX LP",
+            "symbol": "CL8Y-ALPH-LP",
+            "decimals": 18,
+            "total_supply": "456193389812784420"
+          }
+        }
+      },
+      "minter": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1hymuueuu43750rzut69hxmefl3m5gg27uxnu9fytcvlah27l5rtsrg87rc/smart/eyJtaW50ZXIiOnt9fQ%3D%3D",
+        "height": "31074527",
+        "data": {
+          "data": {
+            "minter": "terra163qm8z5rjgp8av6c6sg673lq2v4kfa0we5uhtzj8alfwhddfhjfs27k40z",
+            "cap": null
+          }
+        }
+      },
+      "additional_minters": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1hymuueuu43750rzut69hxmefl3m5gg27uxnu9fytcvlah27l5rtsrg87rc/smart/eyJtaW50ZXJzIjp7ImxpbWl0IjozMH19",
+        "height": null,
+        "data": {
+          "data": {
+            "minters": []
+          }
+        }
+      },
+      "cw2": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1hymuueuu43750rzut69hxmefl3m5gg27uxnu9fytcvlah27l5rtsrg87rc/raw/Y29udHJhY3RfaW5mbw%3D%3D",
+        "height": null,
+        "data": {
+          "data": "eyJjb250cmFjdCI6ImNyYXRlcy5pbzpjdzIwLWJhc2UiLCJ2ZXJzaW9uIjoiMC4xLjAifQ=="
+        }
+      }
+    },
+    {
+      "address": "terra1jv6y058w6qx0xzcspcuv0du4qj95amwhvy4lftlf7mlyjj24v9ms8dzdgy",
+      "known_symbol": null,
+      "contract": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1jv6y058w6qx0xzcspcuv0du4qj95amwhvy4lftlf7mlyjj24v9ms8dzdgy",
+        "height": null,
+        "data": {
+          "address": "terra1jv6y058w6qx0xzcspcuv0du4qj95amwhvy4lftlf7mlyjj24v9ms8dzdgy",
+          "contract_info": {
+            "code_id": "10184",
+            "creator": "terra1ceprjsxp86ggftf5e38wwt34l83e5gq7penkdnv4wsatkwcs8v6qccw55f",
+            "admin": "terra1ceprjsxp86ggftf5e38wwt34l83e5gq7penkdnv4wsatkwcs8v6qccw55f",
+            "label": "UST1-CUSTC cl8ydex lp",
+            "created": {
+              "block_height": "29958470",
+              "tx_index": "113499"
+            },
+            "ibc_port_id": "",
+            "extension": null,
+            "ibc2_port_id": "wasm21jv6y058w6qx0xzcspcuv0du4qj95amwhvy4lftlf7mlyjj24v9ms8dzdgy"
+          }
+        }
+      },
+      "token_info": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1jv6y058w6qx0xzcspcuv0du4qj95amwhvy4lftlf7mlyjj24v9ms8dzdgy/smart/eyJ0b2tlbl9pbmZvIjp7fX0%3D",
+        "height": null,
+        "data": {
+          "data": {
+            "name": "UST1-CUSTC CL8YDEX LP",
+            "symbol": "UST1-CUST-LP",
+            "decimals": 18,
+            "total_supply": "672848767981"
+          }
+        }
+      },
+      "minter": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1jv6y058w6qx0xzcspcuv0du4qj95amwhvy4lftlf7mlyjj24v9ms8dzdgy/smart/eyJtaW50ZXIiOnt9fQ%3D%3D",
+        "height": "31074527",
+        "data": {
+          "data": {
+            "minter": "terra1ceprjsxp86ggftf5e38wwt34l83e5gq7penkdnv4wsatkwcs8v6qccw55f",
+            "cap": null
+          }
+        }
+      },
+      "additional_minters": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1jv6y058w6qx0xzcspcuv0du4qj95amwhvy4lftlf7mlyjj24v9ms8dzdgy/smart/eyJtaW50ZXJzIjp7ImxpbWl0IjozMH19",
+        "height": null,
+        "data": {
+          "data": {
+            "minters": []
+          }
+        }
+      },
+      "cw2": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1jv6y058w6qx0xzcspcuv0du4qj95amwhvy4lftlf7mlyjj24v9ms8dzdgy/raw/Y29udHJhY3RfaW5mbw%3D%3D",
+        "height": null,
+        "data": {
+          "data": "eyJjb250cmFjdCI6ImNyYXRlcy5pbzpjdzIwLWJhc2UiLCJ2ZXJzaW9uIjoiMC4xLjAifQ=="
+        }
+      }
+    },
+    {
+      "address": "terra1k6cqupylk0wp4pj273pntwhv9py0q5guyqye8ssvukn9xq7mes7sdlmena",
+      "known_symbol": "CORAL",
+      "contract": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1k6cqupylk0wp4pj273pntwhv9py0q5guyqye8ssvukn9xq7mes7sdlmena",
+        "height": null,
+        "data": {
+          "address": "terra1k6cqupylk0wp4pj273pntwhv9py0q5guyqye8ssvukn9xq7mes7sdlmena",
+          "contract_info": {
+            "code_id": "10184",
+            "creator": "terra1hu4zggf3f8yw6jw3rxrjxn2drwad675gq5k2lv",
+            "admin": "terra1zlmv2xydxcusurtr6rl78wsvytdc6mfex6hep7",
+            "label": "soft-CORAL",
+            "created": {
+              "block_height": "29458457",
+              "tx_index": "559927"
+            },
+            "ibc_port_id": "",
+            "extension": null,
+            "ibc2_port_id": "wasm21k6cqupylk0wp4pj273pntwhv9py0q5guyqye8ssvukn9xq7mes7sdlmena"
+          }
+        }
+      },
+      "token_info": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1k6cqupylk0wp4pj273pntwhv9py0q5guyqye8ssvukn9xq7mes7sdlmena/smart/eyJ0b2tlbl9pbmZvIjp7fX0%3D",
+        "height": null,
+        "data": {
+          "data": {
+            "name": "Coral",
+            "symbol": "CORAL",
+            "decimals": 6,
+            "total_supply": "10000300000000"
+          }
+        }
+      },
+      "minter": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1k6cqupylk0wp4pj273pntwhv9py0q5guyqye8ssvukn9xq7mes7sdlmena/smart/eyJtaW50ZXIiOnt9fQ%3D%3D",
+        "height": null,
+        "data": {
+          "data": {
+            "minter": "terra1zlmv2xydxcusurtr6rl78wsvytdc6mfex6hep7",
+            "cap": null
+          }
+        }
+      },
+      "additional_minters": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1k6cqupylk0wp4pj273pntwhv9py0q5guyqye8ssvukn9xq7mes7sdlmena/smart/eyJtaW50ZXJzIjp7ImxpbWl0IjozMH19",
+        "height": null,
+        "data": {
+          "data": {
+            "minters": [
+              "terra1388y0ppe2c3dy4nrmnpqp7e4ggukkrnmpzfjadfeu0pu2rm9cvkslfzcen"
+            ]
+          }
+        }
+      },
+      "cw2": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1k6cqupylk0wp4pj273pntwhv9py0q5guyqye8ssvukn9xq7mes7sdlmena/raw/Y29udHJhY3RfaW5mbw%3D%3D",
+        "height": null,
+        "data": {
+          "data": "eyJjb250cmFjdCI6ImNyYXRlcy5pbzpjdzIwLWJhc2UiLCJ2ZXJzaW9uIjoiMC4xLjAifQ=="
+        }
+      }
+    },
+    {
+      "address": "terra1mk3krh8pk9wslqhasessk8rydqs4y9krprfgtnssfxr3l23pvgqsp2cagk",
+      "known_symbol": null,
+      "contract": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1mk3krh8pk9wslqhasessk8rydqs4y9krprfgtnssfxr3l23pvgqsp2cagk",
+        "height": null,
+        "data": {
+          "address": "terra1mk3krh8pk9wslqhasessk8rydqs4y9krprfgtnssfxr3l23pvgqsp2cagk",
+          "contract_info": {
+            "code_id": "10184",
+            "creator": "terra1su5363453fj326u4t0kqar30f35cm3n0dc9yksg379u6875z350s4mm7h4",
+            "admin": "terra1su5363453fj326u4t0kqar30f35cm3n0dc9yksg379u6875z350s4mm7h4",
+            "label": "CLUNC-UST1 cl8ydex lp",
+            "created": {
+              "block_height": "29963929",
+              "tx_index": "0"
+            },
+            "ibc_port_id": "",
+            "extension": null,
+            "ibc2_port_id": "wasm21mk3krh8pk9wslqhasessk8rydqs4y9krprfgtnssfxr3l23pvgqsp2cagk"
+          }
+        }
+      },
+      "token_info": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1mk3krh8pk9wslqhasessk8rydqs4y9krprfgtnssfxr3l23pvgqsp2cagk/smart/eyJ0b2tlbl9pbmZvIjp7fX0%3D",
+        "height": null,
+        "data": {
+          "data": {
+            "name": "CLUNC-UST1 CL8YDEX LP",
+            "symbol": "CLUN-UST1-LP",
+            "decimals": 18,
+            "total_supply": "64798135"
+          }
+        }
+      },
+      "minter": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1mk3krh8pk9wslqhasessk8rydqs4y9krprfgtnssfxr3l23pvgqsp2cagk/smart/eyJtaW50ZXIiOnt9fQ%3D%3D",
+        "height": null,
+        "data": {
+          "data": {
+            "minter": "terra1su5363453fj326u4t0kqar30f35cm3n0dc9yksg379u6875z350s4mm7h4",
+            "cap": null
+          }
+        }
+      },
+      "additional_minters": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1mk3krh8pk9wslqhasessk8rydqs4y9krprfgtnssfxr3l23pvgqsp2cagk/smart/eyJtaW50ZXJzIjp7ImxpbWl0IjozMH19",
+        "height": "31074527",
+        "data": {
+          "data": {
+            "minters": []
+          }
+        }
+      },
+      "cw2": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1mk3krh8pk9wslqhasessk8rydqs4y9krprfgtnssfxr3l23pvgqsp2cagk/raw/Y29udHJhY3RfaW5mbw%3D%3D",
+        "height": null,
+        "data": {
+          "data": "eyJjb250cmFjdCI6ImNyYXRlcy5pbzpjdzIwLWJhc2UiLCJ2ZXJzaW9uIjoiMC4xLjAifQ=="
+        }
+      }
+    },
+    {
+      "address": "terra1mnl9azefrqpmu888ar2u6zrcwr80hxlt3avf4300r576cw5ar7esvxsvj3",
+      "known_symbol": null,
+      "contract": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1mnl9azefrqpmu888ar2u6zrcwr80hxlt3avf4300r576cw5ar7esvxsvj3",
+        "height": null,
+        "data": {
+          "address": "terra1mnl9azefrqpmu888ar2u6zrcwr80hxlt3avf4300r576cw5ar7esvxsvj3",
+          "contract_info": {
+            "code_id": "10184",
+            "creator": "terra1hu4zggf3f8yw6jw3rxrjxn2drwad675gq5k2lv",
+            "admin": "terra1xsecn4snv94ezcez0z3vq8an9j4h4kxxcydp8l",
+            "label": "vfdusd-cw20",
+            "created": {
+              "block_height": "29719831",
+              "tx_index": "11257990"
+            },
+            "ibc_port_id": "",
+            "extension": null,
+            "ibc2_port_id": "wasm21mnl9azefrqpmu888ar2u6zrcwr80hxlt3avf4300r576cw5ar7esvxsvj3"
+          }
+        }
+      },
+      "token_info": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1mnl9azefrqpmu888ar2u6zrcwr80hxlt3avf4300r576cw5ar7esvxsvj3/smart/eyJ0b2tlbl9pbmZvIjp7fX0%3D",
+        "height": "31074527",
+        "data": {
+          "data": {
+            "name": "Venus FDUSD (bridged)",
+            "symbol": "vFDUSD",
+            "decimals": 6,
+            "total_supply": "54621539"
+          }
+        }
+      },
+      "minter": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1mnl9azefrqpmu888ar2u6zrcwr80hxlt3avf4300r576cw5ar7esvxsvj3/smart/eyJtaW50ZXIiOnt9fQ%3D%3D",
+        "height": null,
+        "data": {
+          "data": {
+            "minter": "terra18m02l2f43c2dagqnz3kfccpgz9pzzz5hk9l5mh5wvr6dcvv47zfqdfs7la",
+            "cap": null
+          }
+        }
+      },
+      "additional_minters": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1mnl9azefrqpmu888ar2u6zrcwr80hxlt3avf4300r576cw5ar7esvxsvj3/smart/eyJtaW50ZXJzIjp7ImxpbWl0IjozMH19",
+        "height": null,
+        "data": {
+          "data": {
+            "minters": []
+          }
+        }
+      },
+      "cw2": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1mnl9azefrqpmu888ar2u6zrcwr80hxlt3avf4300r576cw5ar7esvxsvj3/raw/Y29udHJhY3RfaW5mbw%3D%3D",
+        "height": null,
+        "data": {
+          "data": "eyJjb250cmFjdCI6ImNyYXRlcy5pbzpjdzIwLWJhc2UiLCJ2ZXJzaW9uIjoiMC4xLjAifQ=="
+        }
+      }
+    },
+    {
+      "address": "terra1nap4dxh9tv35v0ynd9m4k6zt6c0dq6weszc4j5m564kjls56hu7qcr56ch",
+      "known_symbol": null,
+      "contract": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1nap4dxh9tv35v0ynd9m4k6zt6c0dq6weszc4j5m564kjls56hu7qcr56ch",
+        "height": null,
+        "data": {
+          "address": "terra1nap4dxh9tv35v0ynd9m4k6zt6c0dq6weszc4j5m564kjls56hu7qcr56ch",
+          "contract_info": {
+            "code_id": "10184",
+            "creator": "terra1xsecn4snv94ezcez0z3vq8an9j4h4kxxcydp8l",
+            "admin": "terra1xsecn4snv94ezcez0z3vq8an9j4h4kxxcydp8l",
+            "label": "cUSTC",
+            "created": {
+              "block_height": "29849147",
+              "tx_index": "1573022"
+            },
+            "ibc_port_id": "",
+            "extension": null,
+            "ibc2_port_id": "wasm21nap4dxh9tv35v0ynd9m4k6zt6c0dq6weszc4j5m564kjls56hu7qcr56ch"
+          }
+        }
+      },
+      "token_info": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1nap4dxh9tv35v0ynd9m4k6zt6c0dq6weszc4j5m564kjls56hu7qcr56ch/smart/eyJ0b2tlbl9pbmZvIjp7fX0%3D",
+        "height": null,
+        "data": {
+          "data": {
+            "name": "Wrapped USTC",
+            "symbol": "cUSTC",
+            "decimals": 6,
+            "total_supply": "16449608339564"
+          }
+        }
+      },
+      "minter": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1nap4dxh9tv35v0ynd9m4k6zt6c0dq6weszc4j5m564kjls56hu7qcr56ch/smart/eyJtaW50ZXIiOnt9fQ%3D%3D",
+        "height": null,
+        "data": {
+          "data": {
+            "minter": "terra1xsecn4snv94ezcez0z3vq8an9j4h4kxxcydp8l",
+            "cap": null
+          }
+        }
+      },
+      "additional_minters": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1nap4dxh9tv35v0ynd9m4k6zt6c0dq6weszc4j5m564kjls56hu7qcr56ch/smart/eyJtaW50ZXJzIjp7ImxpbWl0IjozMH19",
+        "height": null,
+        "data": {
+          "data": {
+            "minters": [
+              "terra1xuuuhpmyd5t29ry7mydg7ra2q2phrwhx7j28nx7x9sjw6zznkumsz0nmd2",
+              "terra1zlmv2xydxcusurtr6rl78wsvytdc6mfex6hep7"
+            ]
+          }
+        }
+      },
+      "cw2": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1nap4dxh9tv35v0ynd9m4k6zt6c0dq6weszc4j5m564kjls56hu7qcr56ch/raw/Y29udHJhY3RfaW5mbw%3D%3D",
+        "height": null,
+        "data": {
+          "data": "eyJjb250cmFjdCI6ImNyYXRlcy5pbzpjdzIwLWJhc2UiLCJ2ZXJzaW9uIjoiMC4xLjAifQ=="
+        }
+      }
+    },
+    {
+      "address": "terra1pa7jxtjcu3clmv0v8n2tfrtlfepneyv8pxa7zmhz50kj8unuv0zq37apvv",
+      "known_symbol": null,
+      "contract": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1pa7jxtjcu3clmv0v8n2tfrtlfepneyv8pxa7zmhz50kj8unuv0zq37apvv",
+        "height": null,
+        "data": {
+          "address": "terra1pa7jxtjcu3clmv0v8n2tfrtlfepneyv8pxa7zmhz50kj8unuv0zq37apvv",
+          "contract_info": {
+            "code_id": "10184",
+            "creator": "terra1njpnexcdnqm8cnl7g3fs5y60zm9l6xsflzpqv3",
+            "admin": "terra1xsecn4snv94ezcez0z3vq8an9j4h4kxxcydp8l",
+            "label": "tdec-cw20",
+            "created": {
+              "block_height": "27401352",
+              "tx_index": "0"
+            },
+            "ibc_port_id": "",
+            "extension": null,
+            "ibc2_port_id": ""
+          }
+        }
+      },
+      "token_info": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1pa7jxtjcu3clmv0v8n2tfrtlfepneyv8pxa7zmhz50kj8unuv0zq37apvv/smart/eyJ0b2tlbl9pbmZvIjp7fX0%3D",
+        "height": null,
+        "data": {
+          "data": {
+            "name": "Test Dec",
+            "symbol": "tdec",
+            "decimals": 6,
+            "total_supply": "31029986"
+          }
+        }
+      },
+      "minter": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1pa7jxtjcu3clmv0v8n2tfrtlfepneyv8pxa7zmhz50kj8unuv0zq37apvv/smart/eyJtaW50ZXIiOnt9fQ%3D%3D",
+        "height": null,
+        "data": {
+          "data": {
+            "minter": "terra1njpnexcdnqm8cnl7g3fs5y60zm9l6xsflzpqv3",
+            "cap": null
+          }
+        }
+      },
+      "additional_minters": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1pa7jxtjcu3clmv0v8n2tfrtlfepneyv8pxa7zmhz50kj8unuv0zq37apvv/smart/eyJtaW50ZXJzIjp7ImxpbWl0IjozMH19",
+        "height": null,
+        "data": {
+          "data": {
+            "minters": [
+              "terra13p359fmv7zt7ll9cexmvns5qgu0tfqccwdeugl33pgtaku622rhszs3m9k",
+              "terra18m02l2f43c2dagqnz3kfccpgz9pzzz5hk9l5mh5wvr6dcvv47zfqdfs7la"
+            ]
+          }
+        }
+      },
+      "cw2": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1pa7jxtjcu3clmv0v8n2tfrtlfepneyv8pxa7zmhz50kj8unuv0zq37apvv/raw/Y29udHJhY3RfaW5mbw%3D%3D",
+        "height": null,
+        "data": {
+          "data": "eyJjb250cmFjdCI6ImNyYXRlcy5pbzpjdzIwLWJhc2UiLCJ2ZXJzaW9uIjoiMC4xLjAifQ=="
+        }
+      }
+    },
+    {
+      "address": "terra1s3jk92zeslgxxaux5nj8gtcqxafwsufglw2rhkazv4rrt7sg3wfsqj7twz",
+      "known_symbol": null,
+      "contract": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1s3jk92zeslgxxaux5nj8gtcqxafwsufglw2rhkazv4rrt7sg3wfsqj7twz",
+        "height": null,
+        "data": {
+          "address": "terra1s3jk92zeslgxxaux5nj8gtcqxafwsufglw2rhkazv4rrt7sg3wfsqj7twz",
+          "contract_info": {
+            "code_id": "10184",
+            "creator": "terra1xx5t5em3aza3lst0s5yc7rjgx9psapa3345v2vzfqkrprhw3vv6q3hahxy",
+            "admin": "terra1xx5t5em3aza3lst0s5yc7rjgx9psapa3345v2vzfqkrprhw3vv6q3hahxy",
+            "label": "UST1-SPACEU cl8ydex lp",
+            "created": {
+              "block_height": "30070476",
+              "tx_index": "9770455"
+            },
+            "ibc_port_id": "",
+            "extension": null,
+            "ibc2_port_id": "wasm21s3jk92zeslgxxaux5nj8gtcqxafwsufglw2rhkazv4rrt7sg3wfsqj7twz"
+          }
+        }
+      },
+      "token_info": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1s3jk92zeslgxxaux5nj8gtcqxafwsufglw2rhkazv4rrt7sg3wfsqj7twz/smart/eyJ0b2tlbl9pbmZvIjp7fX0%3D",
+        "height": null,
+        "data": {
+          "data": {
+            "name": "UST1-SPACEU CL8YDEX LP",
+            "symbol": "UST1-SPAC-LP",
+            "decimals": 18,
+            "total_supply": "999999000"
+          }
+        }
+      },
+      "minter": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1s3jk92zeslgxxaux5nj8gtcqxafwsufglw2rhkazv4rrt7sg3wfsqj7twz/smart/eyJtaW50ZXIiOnt9fQ%3D%3D",
+        "height": null,
+        "data": {
+          "data": {
+            "minter": "terra1xx5t5em3aza3lst0s5yc7rjgx9psapa3345v2vzfqkrprhw3vv6q3hahxy",
+            "cap": null
+          }
+        }
+      },
+      "additional_minters": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1s3jk92zeslgxxaux5nj8gtcqxafwsufglw2rhkazv4rrt7sg3wfsqj7twz/smart/eyJtaW50ZXJzIjp7ImxpbWl0IjozMH19",
+        "height": null,
+        "data": {
+          "data": {
+            "minters": []
+          }
+        }
+      },
+      "cw2": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1s3jk92zeslgxxaux5nj8gtcqxafwsufglw2rhkazv4rrt7sg3wfsqj7twz/raw/Y29udHJhY3RfaW5mbw%3D%3D",
+        "height": null,
+        "data": {
+          "data": "eyJjb250cmFjdCI6ImNyYXRlcy5pbzpjdzIwLWJhc2UiLCJ2ZXJzaW9uIjoiMC4xLjAifQ=="
+        }
+      }
+    },
+    {
+      "address": "terra1u277xxcknv2r37d7xa5mnyxu3q26fyu9e9uexmyu2u99g3qfx62q2jen2c",
+      "known_symbol": null,
+      "contract": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1u277xxcknv2r37d7xa5mnyxu3q26fyu9e9uexmyu2u99g3qfx62q2jen2c",
+        "height": "31074527",
+        "data": {
+          "address": "terra1u277xxcknv2r37d7xa5mnyxu3q26fyu9e9uexmyu2u99g3qfx62q2jen2c",
+          "contract_info": {
+            "code_id": "10184",
+            "creator": "terra1tz5vwrungh6drd9nt95qym3k892vs3as8nqmu7sg4ypek7wxvv4qm89upc",
+            "admin": "terra1tz5vwrungh6drd9nt95qym3k892vs3as8nqmu7sg4ypek7wxvv4qm89upc",
+            "label": "CL8Y-C-CUSTC cl8ydex lp",
+            "created": {
+              "block_height": "30114199",
+              "tx_index": "0"
+            },
+            "ibc_port_id": "",
+            "extension": null,
+            "ibc2_port_id": "wasm21u277xxcknv2r37d7xa5mnyxu3q26fyu9e9uexmyu2u99g3qfx62q2jen2c"
+          }
+        }
+      },
+      "token_info": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1u277xxcknv2r37d7xa5mnyxu3q26fyu9e9uexmyu2u99g3qfx62q2jen2c/smart/eyJ0b2tlbl9pbmZvIjp7fX0%3D",
+        "height": null,
+        "data": {
+          "data": {
+            "name": "CL8Y-C-CUSTC CL8YDEX LP",
+            "symbol": "CL8Y-CUST-LP",
+            "decimals": 18,
+            "total_supply": "27269103075920389"
+          }
+        }
+      },
+      "minter": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1u277xxcknv2r37d7xa5mnyxu3q26fyu9e9uexmyu2u99g3qfx62q2jen2c/smart/eyJtaW50ZXIiOnt9fQ%3D%3D",
+        "height": null,
+        "data": {
+          "data": {
+            "minter": "terra1tz5vwrungh6drd9nt95qym3k892vs3as8nqmu7sg4ypek7wxvv4qm89upc",
+            "cap": null
+          }
+        }
+      },
+      "additional_minters": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1u277xxcknv2r37d7xa5mnyxu3q26fyu9e9uexmyu2u99g3qfx62q2jen2c/smart/eyJtaW50ZXJzIjp7ImxpbWl0IjozMH19",
+        "height": null,
+        "data": {
+          "data": {
+            "minters": []
+          }
+        }
+      },
+      "cw2": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1u277xxcknv2r37d7xa5mnyxu3q26fyu9e9uexmyu2u99g3qfx62q2jen2c/raw/Y29udHJhY3RfaW5mbw%3D%3D",
+        "height": null,
+        "data": {
+          "data": "eyJjb250cmFjdCI6ImNyYXRlcy5pbzpjdzIwLWJhc2UiLCJ2ZXJzaW9uIjoiMC4xLjAifQ=="
+        }
+      }
+    },
+    {
+      "address": "terra1vll5ekvxvxq092gv5fvq0vhk8vd3z5a7d57mjt4ksf9v2qk2k86s8snvwe",
+      "known_symbol": null,
+      "contract": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1vll5ekvxvxq092gv5fvq0vhk8vd3z5a7d57mjt4ksf9v2qk2k86s8snvwe",
+        "height": null,
+        "data": {
+          "address": "terra1vll5ekvxvxq092gv5fvq0vhk8vd3z5a7d57mjt4ksf9v2qk2k86s8snvwe",
+          "contract_info": {
+            "code_id": "10184",
+            "creator": "terra1vwsq6jd2kxkt4d5w6435fajla3qxgr2vvhjvvufxvlerp3pfjsesm9gpds",
+            "admin": "terra1vwsq6jd2kxkt4d5w6435fajla3qxgr2vvhjvvufxvlerp3pfjsesm9gpds",
+            "label": "KENA-CLUNC cl8ydex lp",
+            "created": {
+              "block_height": "30116861",
+              "tx_index": "10129991"
+            },
+            "ibc_port_id": "",
+            "extension": null,
+            "ibc2_port_id": "wasm21vll5ekvxvxq092gv5fvq0vhk8vd3z5a7d57mjt4ksf9v2qk2k86s8snvwe"
+          }
+        }
+      },
+      "token_info": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1vll5ekvxvxq092gv5fvq0vhk8vd3z5a7d57mjt4ksf9v2qk2k86s8snvwe/smart/eyJ0b2tlbl9pbmZvIjp7fX0%3D",
+        "height": null,
+        "data": {
+          "data": {
+            "name": "KENA-CLUNC CL8YDEX LP",
+            "symbol": "KENA-CLUN-LP",
+            "decimals": 18,
+            "total_supply": "6158171121114"
+          }
+        }
+      },
+      "minter": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1vll5ekvxvxq092gv5fvq0vhk8vd3z5a7d57mjt4ksf9v2qk2k86s8snvwe/smart/eyJtaW50ZXIiOnt9fQ%3D%3D",
+        "height": null,
+        "data": {
+          "data": {
+            "minter": "terra1vwsq6jd2kxkt4d5w6435fajla3qxgr2vvhjvvufxvlerp3pfjsesm9gpds",
+            "cap": null
+          }
+        }
+      },
+      "additional_minters": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1vll5ekvxvxq092gv5fvq0vhk8vd3z5a7d57mjt4ksf9v2qk2k86s8snvwe/smart/eyJtaW50ZXJzIjp7ImxpbWl0IjozMH19",
+        "height": null,
+        "data": {
+          "data": {
+            "minters": []
+          }
+        }
+      },
+      "cw2": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1vll5ekvxvxq092gv5fvq0vhk8vd3z5a7d57mjt4ksf9v2qk2k86s8snvwe/raw/Y29udHJhY3RfaW5mbw%3D%3D",
+        "height": null,
+        "data": {
+          "data": "eyJjb250cmFjdCI6ImNyYXRlcy5pbzpjdzIwLWJhc2UiLCJ2ZXJzaW9uIjoiMC4xLjAifQ=="
+        }
+      }
+    },
+    {
+      "address": "terra1vqfe2ake427depchntwwl6dvyfgxpu5qdlqzfjuznxvw6pqza0hqalc9g3",
+      "known_symbol": null,
+      "contract": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1vqfe2ake427depchntwwl6dvyfgxpu5qdlqzfjuznxvw6pqza0hqalc9g3",
+        "height": null,
+        "data": {
+          "address": "terra1vqfe2ake427depchntwwl6dvyfgxpu5qdlqzfjuznxvw6pqza0hqalc9g3",
+          "contract_info": {
+            "code_id": "10184",
+            "creator": "terra1njpnexcdnqm8cnl7g3fs5y60zm9l6xsflzpqv3",
+            "admin": "terra1xsecn4snv94ezcez0z3vq8an9j4h4kxxcydp8l",
+            "label": "testb-cw20",
+            "created": {
+              "block_height": "27401349",
+              "tx_index": "835500"
+            },
+            "ibc_port_id": "",
+            "extension": null,
+            "ibc2_port_id": ""
+          }
+        }
+      },
+      "token_info": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1vqfe2ake427depchntwwl6dvyfgxpu5qdlqzfjuznxvw6pqza0hqalc9g3/smart/eyJ0b2tlbl9pbmZvIjp7fX0%3D",
+        "height": null,
+        "data": {
+          "data": {
+            "name": "Test B",
+            "symbol": "testb",
+            "decimals": 18,
+            "total_supply": "46088745000000000000"
+          }
+        }
+      },
+      "minter": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1vqfe2ake427depchntwwl6dvyfgxpu5qdlqzfjuznxvw6pqza0hqalc9g3/smart/eyJtaW50ZXIiOnt9fQ%3D%3D",
+        "height": null,
+        "data": {
+          "data": {
+            "minter": "terra1njpnexcdnqm8cnl7g3fs5y60zm9l6xsflzpqv3",
+            "cap": null
+          }
+        }
+      },
+      "additional_minters": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1vqfe2ake427depchntwwl6dvyfgxpu5qdlqzfjuznxvw6pqza0hqalc9g3/smart/eyJtaW50ZXJzIjp7ImxpbWl0IjozMH19",
+        "height": null,
+        "data": {
+          "data": {
+            "minters": [
+              "terra13p359fmv7zt7ll9cexmvns5qgu0tfqccwdeugl33pgtaku622rhszs3m9k",
+              "terra18m02l2f43c2dagqnz3kfccpgz9pzzz5hk9l5mh5wvr6dcvv47zfqdfs7la"
+            ]
+          }
+        }
+      },
+      "cw2": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1vqfe2ake427depchntwwl6dvyfgxpu5qdlqzfjuznxvw6pqza0hqalc9g3/raw/Y29udHJhY3RfaW5mbw%3D%3D",
+        "height": null,
+        "data": {
+          "data": "eyJjb250cmFjdCI6ImNyYXRlcy5pbzpjdzIwLWJhc2UiLCJ2ZXJzaW9uIjoiMC4xLjAifQ=="
+        }
+      }
+    },
+    {
+      "address": "terra1vy3kc0swag2rhn7jz6n72jp0l2ns0p6r6ez5grxq5uhj2rvs97fqfsetxv",
+      "known_symbol": null,
+      "contract": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1vy3kc0swag2rhn7jz6n72jp0l2ns0p6r6ez5grxq5uhj2rvs97fqfsetxv",
+        "height": null,
+        "data": {
+          "address": "terra1vy3kc0swag2rhn7jz6n72jp0l2ns0p6r6ez5grxq5uhj2rvs97fqfsetxv",
+          "contract_info": {
+            "code_id": "10184",
+            "creator": "terra1hu4zggf3f8yw6jw3rxrjxn2drwad675gq5k2lv",
+            "admin": "terra1xsecn4snv94ezcez0z3vq8an9j4h4kxxcydp8l",
+            "label": "USTC Repeg Token",
+            "created": {
+              "block_height": "26687150",
+              "tx_index": "435670"
+            },
+            "ibc_port_id": "",
+            "extension": null,
+            "ibc2_port_id": ""
+          }
+        }
+      },
+      "token_info": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1vy3kc0swag2rhn7jz6n72jp0l2ns0p6r6ez5grxq5uhj2rvs97fqfsetxv/smart/eyJ0b2tlbl9pbmZvIjp7fX0%3D",
+        "height": null,
+        "data": {
+          "data": {
+            "name": "USTC Repeg",
+            "symbol": "USTR",
+            "decimals": 18,
+            "total_supply": "39845609729561349720540616"
+          }
+        }
+      },
+      "minter": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1vy3kc0swag2rhn7jz6n72jp0l2ns0p6r6ez5grxq5uhj2rvs97fqfsetxv/smart/eyJtaW50ZXIiOnt9fQ%3D%3D",
+        "height": null,
+        "data": {
+          "data": {
+            "minter": "terra1xsecn4snv94ezcez0z3vq8an9j4h4kxxcydp8l",
+            "cap": null
+          }
+        }
+      },
+      "additional_minters": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1vy3kc0swag2rhn7jz6n72jp0l2ns0p6r6ez5grxq5uhj2rvs97fqfsetxv/smart/eyJtaW50ZXJzIjp7ImxpbWl0IjozMH19",
+        "height": null,
+        "data": {
+          "data": {
+            "minters": [
+              "terra16ytnkhw53elefz2rhulcr4vq8fs83nd97ht3wt05wtcq7ypcmpqqv37lel",
+              "terra1zlmv2xydxcusurtr6rl78wsvytdc6mfex6hep7"
+            ]
+          }
+        }
+      },
+      "cw2": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1vy3kc0swag2rhn7jz6n72jp0l2ns0p6r6ez5grxq5uhj2rvs97fqfsetxv/raw/Y29udHJhY3RfaW5mbw%3D%3D",
+        "height": null,
+        "data": {
+          "data": "eyJjb250cmFjdCI6ImNyYXRlcy5pbzpjdzIwLWJhc2UiLCJ2ZXJzaW9uIjoiMC4xLjAifQ=="
+        }
+      }
+    },
+    {
+      "address": "terra1y8yggsu8gt7lrndtx7rf0ky3ya3vept059kz50rzz4r6s848wl2qw27y35",
+      "known_symbol": null,
+      "contract": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1y8yggsu8gt7lrndtx7rf0ky3ya3vept059kz50rzz4r6s848wl2qw27y35",
+        "height": "31074528",
+        "data": {
+          "address": "terra1y8yggsu8gt7lrndtx7rf0ky3ya3vept059kz50rzz4r6s848wl2qw27y35",
+          "contract_info": {
+            "code_id": "10184",
+            "creator": "terra1njpnexcdnqm8cnl7g3fs5y60zm9l6xsflzpqv3",
+            "admin": "terra1xsecn4snv94ezcez0z3vq8an9j4h4kxxcydp8l",
+            "label": "testb-cw20",
+            "created": {
+              "block_height": "27401023",
+              "tx_index": "0"
+            },
+            "ibc_port_id": "",
+            "extension": null,
+            "ibc2_port_id": ""
+          }
+        }
+      },
+      "token_info": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1y8yggsu8gt7lrndtx7rf0ky3ya3vept059kz50rzz4r6s848wl2qw27y35/smart/eyJ0b2tlbl9pbmZvIjp7fX0%3D",
+        "height": null,
+        "data": {
+          "data": {
+            "name": "Test B",
+            "symbol": "testb",
+            "decimals": 18,
+            "total_supply": "0"
+          }
+        }
+      },
+      "minter": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1y8yggsu8gt7lrndtx7rf0ky3ya3vept059kz50rzz4r6s848wl2qw27y35/smart/eyJtaW50ZXIiOnt9fQ%3D%3D",
+        "height": null,
+        "data": {
+          "data": {
+            "minter": "terra1njpnexcdnqm8cnl7g3fs5y60zm9l6xsflzpqv3",
+            "cap": null
+          }
+        }
+      },
+      "additional_minters": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1y8yggsu8gt7lrndtx7rf0ky3ya3vept059kz50rzz4r6s848wl2qw27y35/smart/eyJtaW50ZXJzIjp7ImxpbWl0IjozMH19",
+        "height": null,
+        "data": {
+          "data": {
+            "minters": [
+              "terra1saxhfawhepuet3hraeue0gapnts679rkhxpf34q5rl8fncctxeusqgvjxs",
+              "terra1wmavj7djsm8z4uv50l40jqya8kjtnhqax5wp6n6sd2asd6ac6nusht9uc2"
+            ]
+          }
+        }
+      },
+      "cw2": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1y8yggsu8gt7lrndtx7rf0ky3ya3vept059kz50rzz4r6s848wl2qw27y35/raw/Y29udHJhY3RfaW5mbw%3D%3D",
+        "height": null,
+        "data": {
+          "data": "eyJjb250cmFjdCI6ImNyYXRlcy5pbzpjdzIwLWJhc2UiLCJ2ZXJzaW9uIjoiMC4xLjAifQ=="
+        }
+      }
+    },
+    {
+      "address": "terra1z0xe7t5ymmltg4vju8tghkq0pewy4et548ta23nlu9zxtl950uyqkv8mv4",
+      "known_symbol": null,
+      "contract": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1z0xe7t5ymmltg4vju8tghkq0pewy4et548ta23nlu9zxtl950uyqkv8mv4",
+        "height": "31074528",
+        "data": {
+          "address": "terra1z0xe7t5ymmltg4vju8tghkq0pewy4et548ta23nlu9zxtl950uyqkv8mv4",
+          "contract_info": {
+            "code_id": "10184",
+            "creator": "terra1xsecn4snv94ezcez0z3vq8an9j4h4kxxcydp8l",
+            "admin": "terra1zlmv2xydxcusurtr6rl78wsvytdc6mfex6hep7",
+            "label": "usdt-cw20",
+            "created": {
+              "block_height": "30364854",
+              "tx_index": "0"
+            },
+            "ibc_port_id": "",
+            "extension": null,
+            "ibc2_port_id": "wasm21z0xe7t5ymmltg4vju8tghkq0pewy4et548ta23nlu9zxtl950uyqkv8mv4"
+          }
+        }
+      },
+      "token_info": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1z0xe7t5ymmltg4vju8tghkq0pewy4et548ta23nlu9zxtl950uyqkv8mv4/smart/eyJ0b2tlbl9pbmZvIjp7fX0%3D",
+        "height": null,
+        "data": {
+          "data": {
+            "name": "Tether USD",
+            "symbol": "USDT",
+            "decimals": 18,
+            "total_supply": "12252366370698519348072"
+          }
+        }
+      },
+      "minter": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1z0xe7t5ymmltg4vju8tghkq0pewy4et548ta23nlu9zxtl950uyqkv8mv4/smart/eyJtaW50ZXIiOnt9fQ%3D%3D",
+        "height": "31074528",
+        "data": {
+          "data": {
+            "minter": "terra1zlmv2xydxcusurtr6rl78wsvytdc6mfex6hep7",
+            "cap": null
+          }
+        }
+      },
+      "additional_minters": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1z0xe7t5ymmltg4vju8tghkq0pewy4et548ta23nlu9zxtl950uyqkv8mv4/smart/eyJtaW50ZXJzIjp7ImxpbWl0IjozMH19",
+        "height": null,
+        "data": {
+          "data": {
+            "minters": [
+              "terra12c6hyez8fvvcrfhvq04xc8t63y7kmmdrkktlwefx4txrgf6peuxqk5x6rq",
+              "terra18m02l2f43c2dagqnz3kfccpgz9pzzz5hk9l5mh5wvr6dcvv47zfqdfs7la"
+            ]
+          }
+        }
+      },
+      "cw2": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1z0xe7t5ymmltg4vju8tghkq0pewy4et548ta23nlu9zxtl950uyqkv8mv4/raw/Y29udHJhY3RfaW5mbw%3D%3D",
+        "height": null,
+        "data": {
+          "data": "eyJjb250cmFjdCI6ImNyYXRlcy5pbzpjdzIwLWJhc2UiLCJ2ZXJzaW9uIjoiMC4xLjAifQ=="
+        }
+      }
+    },
+    {
+      "address": "terra1z5r33y2fv70vdvdww3uu05rakqxwxc68ua5n0wcadzk5u5kl44qs7clk85",
+      "known_symbol": null,
+      "contract": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1z5r33y2fv70vdvdww3uu05rakqxwxc68ua5n0wcadzk5u5kl44qs7clk85",
+        "height": null,
+        "data": {
+          "address": "terra1z5r33y2fv70vdvdww3uu05rakqxwxc68ua5n0wcadzk5u5kl44qs7clk85",
+          "contract_info": {
+            "code_id": "10184",
+            "creator": "terra1njpnexcdnqm8cnl7g3fs5y60zm9l6xsflzpqv3",
+            "admin": "terra1xsecn4snv94ezcez0z3vq8an9j4h4kxxcydp8l",
+            "label": "testa-cw20",
+            "created": {
+              "block_height": "27401020",
+              "tx_index": "435690"
+            },
+            "ibc_port_id": "",
+            "extension": null,
+            "ibc2_port_id": ""
+          }
+        }
+      },
+      "token_info": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1z5r33y2fv70vdvdww3uu05rakqxwxc68ua5n0wcadzk5u5kl44qs7clk85/smart/eyJ0b2tlbl9pbmZvIjp7fX0%3D",
+        "height": null,
+        "data": {
+          "data": {
+            "name": "Test A",
+            "symbol": "testa",
+            "decimals": 18,
+            "total_supply": "0"
+          }
+        }
+      },
+      "minter": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1z5r33y2fv70vdvdww3uu05rakqxwxc68ua5n0wcadzk5u5kl44qs7clk85/smart/eyJtaW50ZXIiOnt9fQ%3D%3D",
+        "height": null,
+        "data": {
+          "data": {
+            "minter": "terra1njpnexcdnqm8cnl7g3fs5y60zm9l6xsflzpqv3",
+            "cap": null
+          }
+        }
+      },
+      "additional_minters": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1z5r33y2fv70vdvdww3uu05rakqxwxc68ua5n0wcadzk5u5kl44qs7clk85/smart/eyJtaW50ZXJzIjp7ImxpbWl0IjozMH19",
+        "height": null,
+        "data": {
+          "data": {
+            "minters": [
+              "terra1saxhfawhepuet3hraeue0gapnts679rkhxpf34q5rl8fncctxeusqgvjxs",
+              "terra1wmavj7djsm8z4uv50l40jqya8kjtnhqax5wp6n6sd2asd6ac6nusht9uc2"
+            ]
+          }
+        }
+      },
+      "cw2": {
+        "ok": true,
+        "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/contract/terra1z5r33y2fv70vdvdww3uu05rakqxwxc68ua5n0wcadzk5u5kl44qs7clk85/raw/Y29udHJhY3RfaW5mbw%3D%3D",
+        "height": null,
+        "data": {
+          "data": "eyJjb250cmFjdCI6ImNyYXRlcy5pbzpjdzIwLWJhc2UiLCJ2ZXJzaW9uIjoiMC4xLjAifQ=="
+        }
+      }
+    }
+  ],
+  "historical_governance_account": {
+    "ok": true,
+    "url": "https://terra-classic-lcd.publicnode.com/cosmos/auth/v1beta1/accounts/terra1zlmv2xydxcusurtr6rl78wsvytdc6mfex6hep7",
+    "height": null,
+    "data": {
+      "account": {
+        "@type": "/cosmos.auth.v1beta1.BaseAccount",
+        "address": "terra1zlmv2xydxcusurtr6rl78wsvytdc6mfex6hep7",
+        "pub_key": {
+          "@type": "/cosmos.crypto.multisig.LegacyAminoPubKey",
+          "threshold": 2,
+          "public_keys": [
+            {
+              "@type": "/cosmos.crypto.secp256k1.PubKey",
+              "key": "A+7iz2WaOj/1BQb1H71NddOiPjYygfHVImHz4nOEFWmk"
+            },
+            {
+              "@type": "/cosmos.crypto.secp256k1.PubKey",
+              "key": "AnoHI0WAvhg4mx3B4hVIdeiRjRVZvTLbRXk8SiEIPLx/"
+            },
+            {
+              "@type": "/cosmos.crypto.secp256k1.PubKey",
+              "key": "AmS14yFlZT8Z68M3IkeQyfBk0KoI1dm9pLR6KIin8tEq"
+            }
+          ]
+        },
+        "account_number": "5508506",
+        "sequence": "533"
+      }
+    }
+  },
+  "code_info": {
+    "ok": true,
+    "url": "https://terra-classic-lcd.publicnode.com/cosmwasm/wasm/v1/code/10184",
+    "height": null,
+    "data": {
+      "code_info": {
+        "code_id": "10184",
+        "creator": "terra1hu4zggf3f8yw6jw3rxrjxn2drwad675gq5k2lv",
+        "data_hash": "C77FFCDB0039041FBD071C76EFB547232314CE8CCF219C3BF5B7FABD4CF7D4A4",
+        "instantiate_permission": {
+          "permission": "Everybody",
+          "addresses": []
+        }
+      }
+    }
+  },
+  "coverage": "No upgraded/enrolled contracts deployed by this program; inventory is not deployment proof"
+}

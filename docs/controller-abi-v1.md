@@ -32,3 +32,8 @@ containment tightening is immediate. Nonces are GLOBAL to each emitting contract
 including wallet, recovery and assignment timers. No wallet-scoped nonce collision.
 Authority epoch changes invalidate recovery execution but leave reservations in place.
 Source-key objections cannot release reservations or restart a recovery timer.
+
+A proposal snapshots the configured delay when it starts. Increasing the controller
+rotation delay later does not retroactively alter already pending role or blacklist
+clear deadlines; each still satisfies its old-delay snapshot. An immediate delay
+increase cancels a pending delay-shortening request. Replacement always restarts.

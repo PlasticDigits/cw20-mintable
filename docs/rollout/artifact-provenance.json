@@ -1,0 +1,69 @@
+{
+  "recorded_at": "2026-10-31T02:27:00.690138+00:00",
+  "status": "reviewed-source-and-local-artifacts; no live deployment",
+  "token_source_pin": "2d70d43c651ecd4491c0736c89ae2975ee825686",
+  "controller_source_pin": "3333807148f096cc5894c2b74442655bc5f4ad93",
+  "token_independent_review": "https://git.cl8y.com/code/cw20-mintable/issues/7#issuecomment-65389",
+  "controller_independent_review": "https://git.cl8y.com/code/cw20-mintable/issues/4#issuecomment-65368",
+  "native_tests": {
+    "legacy": 56,
+    "cross_contract_adversarial": 21,
+    "controller": 14,
+    "total": 91,
+    "command": "cargo test --workspace --locked"
+  },
+  "strict_lint": "cargo clippy --workspace --all-targets --locked -- -D warnings",
+  "schema_reproducibility": "both schema generators match committed files",
+  "build": {
+    "rust": "1.81.0 (eeb90cda1 2024-09-04)",
+    "cargo": "1.81.0 (2dbb1af80 2024-08-20)",
+    "target": "wasm32-unknown-unknown",
+    "command": "cargo +1.81.0 build -p cw20-mintable -p cw20-security-controller --lib --release --target wasm32-unknown-unknown --locked",
+    "optimizer_image": "cosmwasm/workspace-optimizer@sha256:b9c92b2900b7ebaab3499203615c1b8589592bc557355ed3432e48851ffde69e",
+    "optimizer": "wasm-opt version116",
+    "optimizer_flags": [
+      "-Os",
+      "--signext-lowering"
+    ],
+    "structural_validator": "wasm-tools1.200.0",
+    "cosmwasm_checker": "cosmwasm-check1.5.11 (both pass)",
+    "reproduction_script": "scripts/rollout-build.sh",
+    "repeat_build_hashes_identical": true
+  },
+  "files": {
+    "Cargo.lock": {
+      "sha256": "e13e622121dac8d305949507310312cb03eacb81193833646922066c03003d66",
+      "bytes": 21217
+    },
+    "schema/cw20-mintable.json": {
+      "sha256": "c07172ac252aa90cd43b0486e9976049bfa82e22440ea41fe512ee988975181a",
+      "bytes": 72674
+    },
+    "contracts/security-controller/schema/cw20-security-controller.json": {
+      "sha256": "975e0e32db0de5d19ac4d3bcfd3062d137aff8f472d822ad2243ec77ac845544",
+      "bytes": 17012
+    },
+    "artifacts/cw20_mintable.wasm": {
+      "sha256": "b90a837ed929ef638377ca7e9a72091c7a7c6730f1d291001fe580355e01a33f",
+      "bytes": 520791
+    },
+    "artifacts/cw20_security_controller.wasm": {
+      "sha256": "f78c0175267aed0f70ab4054be5c6fa8303efc37937ed65f92e908494ebe6de6",
+      "bytes": 236443
+    }
+  },
+  "deployment": {
+    "controller_count": 0,
+    "migrated_enrolled_tokens": 0,
+    "code10184_inventory_count": 35,
+    "signing_capability": "Existing file keyring is encrypted; noninteractive access requires unavailable passphrase/unlocked authorized quorum. Test keyring empty. No live broadcast.",
+    "governance_identity": "Registered on-chain2-of-3 LegacyAminoPubKey verified separately from custody.",
+    "scope_limitations": [
+      "No full holder backup yet",
+      "Latest inventory reads non-atomic",
+      "Other code IDs/immutable/third-party-admin/BSC/native assets uncovered",
+      "Protocol assignments and DEX code-id approvals not executed",
+      "No live chain deployment or migration receipts"
+    ]
+  }
+}

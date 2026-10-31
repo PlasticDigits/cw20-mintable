@@ -1,0 +1,6 @@
+Available capabilities: {"cosmwasm_1_3", "cosmwasm_1_1", "cosmwasm_1_4", "stargate", "staking", "cosmwasm_1_2", "iterator"}
+
+artifacts/cw20_mintable.wasm: pass
+artifacts/cw20_security_controller.wasm: pass
+
+All contracts (2) passed checks!
