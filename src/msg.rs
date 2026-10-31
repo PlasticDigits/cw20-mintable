@@ -1,11 +1,57 @@
 use cosmwasm_schema::QueryResponses;
-use cosmwasm_std::{StdError, StdResult, Uint128, Binary};
-use cw20::{Cw20Coin, Logo, MinterResponse, Expiration};
+use cosmwasm_std::{Binary, StdError, StdResult, Uint128};
+use cw20::{Cw20Coin, Expiration, Logo, MinterResponse};
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 pub enum ExecuteMsg {
+    #[serde(rename = "propose_recovery")]
+    ProposeRecovery {
+        source: String,
+        destination: String,
+        amount: Uint128,
+        evidence_hash: String,
+        replace: Option<u64>,
+    },
+    #[serde(rename = "accept_recovery")]
+    AcceptRecovery { nonce: u64 },
+    #[serde(rename = "revoke_recovery_acceptance")]
+    RevokeRecoveryAcceptance { nonce: u64 },
+    #[serde(rename = "object_recovery")]
+    ObjectRecovery { nonce: u64 },
+    #[serde(rename = "resolve_recovery_objection")]
+    ResolveRecoveryObjection { nonce: u64, evidence_hash: String },
+    #[serde(rename = "veto_recovery")]
+    VetoRecovery { nonce: u64 },
+    #[serde(rename = "cancel_recovery")]
+    CancelRecovery { nonce: u64 },
+    #[serde(rename = "execute_recovery")]
+    ExecuteRecovery { nonce: u64 },
+    #[serde(rename = "set_wallet_policy")]
+    SetWalletPolicy {
+        policy: crate::security::WalletPolicy,
+    },
+    #[serde(rename = "rebase_protection")]
+    RebaseProtection {},
+    #[serde(rename = "lock_wallet")]
+    LockWallet {},
+    #[serde(rename = "request_unlock")]
+    RequestUnlock {},
+    #[serde(rename = "execute_wallet_change")]
+    ExecuteWalletChange { nonce: u64 },
+    #[serde(rename = "cancel_wallet_change")]
+    CancelWalletChange {},
+    #[serde(rename = "set_assignment")]
+    SetAssignment {
+        address: String,
+        assignment: crate::security::Assignment,
+    },
+    #[serde(rename = "execute_assignment")]
+    ExecuteAssignment { address: String, nonce: u64 },
+    #[serde(rename = "cancel_assignment")]
+    CancelAssignment { address: String },
+
     /// Transfer is a base message to move tokens to another account without triggering actions
     #[serde(alias = "transfer")]
     Transfer { recipient: String, amount: Uint128 },
@@ -102,6 +148,7 @@ pub struct InstantiateMarketingInfo {
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[cfg_attr(test, derive(Default))]
 pub struct InstantiateMsg {
+    pub security: Option<crate::security::SecurityInit>,
     pub name: String,
     pub symbol: String,
     pub decimals: u8,
@@ -147,7 +194,11 @@ impl InstantiateMsg {
             return false;
         }
         for byte in bytes.iter() {
-            if (*byte != 45) && (*byte < 48 || *byte > 57) && (*byte < 65 || *byte > 90) && (*byte < 97 || *byte > 122) {
+            if (*byte != 45)
+                && (*byte < 48 || *byte > 57)
+                && (*byte < 65 || *byte > 90)
+                && (*byte < 97 || *byte > 122)
+            {
                 return false;
             }
         }
@@ -157,6 +208,16 @@ impl InstantiateMsg {
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema, QueryResponses)]
 pub enum QueryMsg {
+    #[returns(crate::recovery::Recovery)]
+    #[serde(rename = "recovery")]
+    Recovery { nonce: u64 },
+    #[returns(crate::security::WalletResponse)]
+    #[serde(rename = "wallet_security")]
+    WalletSecurity { address: String },
+    #[returns(crate::security::SecurityConfig)]
+    #[serde(rename = "security_config")]
+    SecurityConfig {},
+
     /// Returns the current balance of the given address, 0 if unset.
     #[returns(cw20::BalanceResponse)]
     #[serde(alias = "balance")]
@@ -223,7 +284,9 @@ pub enum QueryMsg {
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-pub struct MigrateMsg {}
+pub struct MigrateMsg {
+    pub security: crate::security::SecurityInit,
+}
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 pub struct MintersResponse {

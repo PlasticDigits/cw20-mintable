@@ -82,7 +82,8 @@ pub fn query_all_accounts(
 mod tests {
     use super::*;
 
-    use cosmwasm_std::testing::{mock_dependencies_with_balance, mock_env, mock_info};
+    use crate::test_support::mock_dependencies_with_balance;
+    use cosmwasm_std::testing::{mock_env, mock_info};
     use cosmwasm_std::{coins, from_json, DepsMut, Uint128};
     use cw20::{Cw20Coin, Expiration, TokenInfoResponse};
 
@@ -91,7 +92,16 @@ mod tests {
 
     // this will set up the instantiation for other tests
     fn do_instantiate(mut deps: DepsMut, addr: &str, amount: Uint128) -> TokenInfoResponse {
+        if crate::security::CONFIG.may_load(deps.storage).unwrap().is_some() {
+            // Add another fixture holder without re-instantiating the protected token.
+            crate::contract::create_accounts(&mut deps, &[Cw20Coin{address:addr.into(),amount}]).unwrap();
+            return query_token_info(deps.as_ref()).unwrap();
+        }
         let instantiate_msg = InstantiateMsg {
+            security: Some(crate::security::SecurityInit {
+                controller: "controller".into(),
+                governance: "governance".into(),
+            }),
             name: "Auto Gen".to_string(),
             symbol: "AUTO".to_string(),
             decimals: 3,

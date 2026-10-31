@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MigrateMsg",
+  "type": "object",
+  "required": [
+    "security"
+  ],
+  "properties": {
+    "security": {
+      "$ref": "#/definitions/SecurityInit"
+    }
+  },
+  "definitions": {
+    "SecurityInit": {
+      "type": "object",
+      "required": [
+        "controller",
+        "governance"
+      ],
+      "properties": {
+        "controller": {
+          "type": "string"
+        },
+        "governance": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

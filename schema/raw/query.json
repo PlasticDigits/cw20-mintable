@@ -3,13 +3,34 @@
   "title": "QueryMsg",
   "oneOf": [
     {
-      "description": "Returns the current balance of the given address, 0 if unset.",
       "type": "object",
       "required": [
-        "balance"
+        "recovery"
       ],
       "properties": {
-        "balance": {
+        "recovery": {
+          "type": "object",
+          "required": [
+            "nonce"
+          ],
+          "properties": {
+            "nonce": {
+              "type": "integer",
+              "format": "uint64",
+              "minimum": 0.0
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "wallet_security"
+      ],
+      "properties": {
+        "wallet_security": {
           "type": "object",
           "required": [
             "address"
@@ -18,8 +39,40 @@
             "address": {
               "type": "string"
             }
-          },
-          "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "security_config"
+      ],
+      "properties": {
+        "security_config": {
+          "type": "object"
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "description": "Returns the current balance of the given address, 0 if unset.",
+      "type": "object",
+      "required": [
+        "Balance"
+      ],
+      "properties": {
+        "Balance": {
+          "type": "object",
+          "required": [
+            "address"
+          ],
+          "properties": {
+            "address": {
+              "type": "string"
+            }
+          }
         }
       },
       "additionalProperties": false
@@ -28,12 +81,11 @@
       "description": "Returns metadata on the contract - name, decimals, supply, etc.",
       "type": "object",
       "required": [
-        "token_info"
+        "TokenInfo"
       ],
       "properties": {
-        "token_info": {
-          "type": "object",
-          "additionalProperties": false
+        "TokenInfo": {
+          "type": "object"
         }
       },
       "additionalProperties": false
@@ -42,12 +94,11 @@
       "description": "Only with \"mintable\" extension. Returns who can mint and the hard cap on maximum tokens after minting.",
       "type": "object",
       "required": [
-        "minter"
+        "Minter"
       ],
       "properties": {
-        "minter": {
-          "type": "object",
-          "additionalProperties": false
+        "Minter": {
+          "type": "object"
         }
       },
       "additionalProperties": false
@@ -56,10 +107,10 @@
       "description": "Only with \"allowance\" extension. Returns how much spender can use from owner account, 0 if unset.",
       "type": "object",
       "required": [
-        "allowance"
+        "Allowance"
       ],
       "properties": {
-        "allowance": {
+        "Allowance": {
           "type": "object",
           "required": [
             "owner",
@@ -72,8 +123,7 @@
             "spender": {
               "type": "string"
             }
-          },
-          "additionalProperties": false
+          }
         }
       },
       "additionalProperties": false
@@ -82,10 +132,10 @@
       "description": "Only with \"enumerable\" extension (and \"allowances\") Returns all allowances this owner has approved. Supports pagination.",
       "type": "object",
       "required": [
-        "all_allowances"
+        "AllAllowances"
       ],
       "properties": {
-        "all_allowances": {
+        "AllAllowances": {
           "type": "object",
           "required": [
             "owner"
@@ -108,8 +158,7 @@
                 "null"
               ]
             }
-          },
-          "additionalProperties": false
+          }
         }
       },
       "additionalProperties": false
@@ -118,10 +167,10 @@
       "description": "Only with \"enumerable\" extension (and \"allowances\") Returns all allowances this spender has been granted. Supports pagination.",
       "type": "object",
       "required": [
-        "all_spender_allowances"
+        "AllSpenderAllowances"
       ],
       "properties": {
-        "all_spender_allowances": {
+        "AllSpenderAllowances": {
           "type": "object",
           "required": [
             "spender"
@@ -144,8 +193,7 @@
                 "null"
               ]
             }
-          },
-          "additionalProperties": false
+          }
         }
       },
       "additionalProperties": false
@@ -154,10 +202,10 @@
       "description": "Only with \"enumerable\" extension Returns all accounts that have balances. Supports pagination.",
       "type": "object",
       "required": [
-        "all_accounts"
+        "AllAccounts"
       ],
       "properties": {
-        "all_accounts": {
+        "AllAccounts": {
           "type": "object",
           "properties": {
             "limit": {
@@ -174,8 +222,7 @@
                 "null"
               ]
             }
-          },
-          "additionalProperties": false
+          }
         }
       },
       "additionalProperties": false
@@ -184,12 +231,11 @@
       "description": "Only with \"marketing\" extension Returns more metadata on the contract to display in the client: - description, logo, project url, etc.",
       "type": "object",
       "required": [
-        "marketing_info"
+        "MarketingInfo"
       ],
       "properties": {
-        "marketing_info": {
-          "type": "object",
-          "additionalProperties": false
+        "MarketingInfo": {
+          "type": "object"
         }
       },
       "additionalProperties": false
@@ -198,12 +244,11 @@
       "description": "Only with \"marketing\" extension Downloads the embedded logo data (if stored on chain). Errors if no logo data is stored for this contract.",
       "type": "object",
       "required": [
-        "download_logo"
+        "DownloadLogo"
       ],
       "properties": {
-        "download_logo": {
-          "type": "object",
-          "additionalProperties": false
+        "DownloadLogo": {
+          "type": "object"
         }
       },
       "additionalProperties": false
@@ -212,10 +257,10 @@
       "description": "Returns all addresses in the minters list. Supports pagination.",
       "type": "object",
       "required": [
-        "minters"
+        "Minters"
       ],
       "properties": {
-        "minters": {
+        "Minters": {
           "type": "object",
           "properties": {
             "limit": {
@@ -232,8 +277,7 @@
                 "null"
               ]
             }
-          },
-          "additionalProperties": false
+          }
         }
       },
       "additionalProperties": false

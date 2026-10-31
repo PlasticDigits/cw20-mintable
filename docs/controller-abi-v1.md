@@ -22,3 +22,13 @@ same nonce. Events signal timers; queries remain authoritative. No PII in events
 Controller actions: pause, unpause, set_blacklist, set_enrollment, revoke_responder,
 propose_role, accept_role, cancel_role, propose_rotation_delay,
 execute_rotation_delay, cancel_rotation_delay. Guard and config expose epochs/version.
+
+Governance follows the controller's current governance role; bootstrap validates the
+explicit governance field against controller config. There is no token controller
+pointer replacement API. Chain admin migration can replace all policy and therefore
+requires verified multisig custody and monitored upgrade transactions. Unenrollment
+fails closed. Privilege assignments/exemptions and blacklist clearing are delayed;
+containment tightening is immediate. Nonces are GLOBAL to each emitting contract,
+including wallet, recovery and assignment timers. No wallet-scoped nonce collision.
+Authority epoch changes invalidate recovery execution but leave reservations in place.
+Source-key objections cannot release reservations or restart a recovery timer.
