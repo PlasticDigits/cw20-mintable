@@ -217,3 +217,10 @@ all this token functionality and combine it with custom logic.
 
 Recommended: `cargo install cargo-tarpaulin`
 You can then run `cargo tarpaulin -o html`
+
+## Security research
+
+[Issue #8 incident review and recovery adjudication](docs/research/issue-8/README.md)
+records the October 2026 incident evidence, current primary-source comparison,
+proposed recovery policy and actionable defense issues. Research publication
+does not establish deployed protection or final asset delivery.
