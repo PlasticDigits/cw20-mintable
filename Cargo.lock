@@ -303,6 +303,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "cw20-security-controller"
+version = "1.0.0"
+dependencies = [
+ "cosmwasm-schema",
+ "cosmwasm-std",
+ "cw-storage-plus",
+ "cw2",
+ "cw20-security-interface",
+ "thiserror",
+]
+
+[[package]]
 name = "cw20-security-interface"
 version = "1.0.0"
 dependencies = [

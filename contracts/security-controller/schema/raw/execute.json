@@ -1,0 +1,276 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ExecuteMsg",
+  "oneOf": [
+    {
+      "type": "object",
+      "required": [
+        "pause"
+      ],
+      "properties": {
+        "pause": {
+          "type": "object",
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "unpause"
+      ],
+      "properties": {
+        "unpause": {
+          "type": "object",
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "description": "Blocking is immediate; false proposes a governance-only delayed clear.",
+      "type": "object",
+      "required": [
+        "set_blacklist"
+      ],
+      "properties": {
+        "set_blacklist": {
+          "type": "object",
+          "required": [
+            "address",
+            "blocked"
+          ],
+          "properties": {
+            "address": {
+              "type": "string"
+            },
+            "blocked": {
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "execute_blacklist_clear"
+      ],
+      "properties": {
+        "execute_blacklist_clear": {
+          "type": "object",
+          "required": [
+            "address",
+            "nonce"
+          ],
+          "properties": {
+            "address": {
+              "type": "string"
+            },
+            "nonce": {
+              "type": "integer",
+              "format": "uint64",
+              "minimum": 0.0
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "cancel_blacklist_clear"
+      ],
+      "properties": {
+        "cancel_blacklist_clear": {
+          "type": "object",
+          "required": [
+            "address"
+          ],
+          "properties": {
+            "address": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "set_enrollment"
+      ],
+      "properties": {
+        "set_enrollment": {
+          "type": "object",
+          "required": [
+            "enrolled",
+            "token"
+          ],
+          "properties": {
+            "enrolled": {
+              "type": "boolean"
+            },
+            "token": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "revoke_responder"
+      ],
+      "properties": {
+        "revoke_responder": {
+          "type": "object",
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "propose_role"
+      ],
+      "properties": {
+        "propose_role": {
+          "type": "object",
+          "required": [
+            "candidate",
+            "role"
+          ],
+          "properties": {
+            "candidate": {
+              "type": "string"
+            },
+            "role": {
+              "$ref": "#/definitions/Role"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "accept_role"
+      ],
+      "properties": {
+        "accept_role": {
+          "type": "object",
+          "required": [
+            "nonce"
+          ],
+          "properties": {
+            "nonce": {
+              "type": "integer",
+              "format": "uint64",
+              "minimum": 0.0
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "cancel_role"
+      ],
+      "properties": {
+        "cancel_role": {
+          "type": "object",
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "propose_rotation_delay"
+      ],
+      "properties": {
+        "propose_rotation_delay": {
+          "type": "object",
+          "required": [
+            "seconds"
+          ],
+          "properties": {
+            "seconds": {
+              "type": "integer",
+              "format": "uint64",
+              "minimum": 0.0
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "execute_rotation_delay"
+      ],
+      "properties": {
+        "execute_rotation_delay": {
+          "type": "object",
+          "required": [
+            "nonce"
+          ],
+          "properties": {
+            "nonce": {
+              "type": "integer",
+              "format": "uint64",
+              "minimum": 0.0
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "cancel_rotation_delay"
+      ],
+      "properties": {
+        "cancel_rotation_delay": {
+          "type": "object",
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  ],
+  "definitions": {
+    "Role": {
+      "type": "string",
+      "enum": [
+        "governance",
+        "responder",
+        "blacklist",
+        "recovery",
+        "dispute"
+      ]
+    }
+  }
+}

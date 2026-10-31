@@ -17,7 +17,7 @@ crate-type = ["cdylib", "rlib"]
 library = []
 
 [workspace]
-members = ["packages/security-interface"]
+members = ["packages/security-interface", "contracts/security-controller"]
 
 [dependencies]
 cw20-security-interface = { path = "packages/security-interface" }

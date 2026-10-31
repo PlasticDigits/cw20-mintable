@@ -1,0 +1,737 @@
+{
+  "contract_name": "cw20-security-controller",
+  "contract_version": "1.0.0",
+  "idl_version": "1.0.0",
+  "instantiate": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "InstantiateMsg",
+    "type": "object",
+    "required": [
+      "roles",
+      "rotation_delay"
+    ],
+    "properties": {
+      "roles": {
+        "$ref": "#/definitions/Roles"
+      },
+      "rotation_delay": {
+        "type": "integer",
+        "format": "uint64",
+        "minimum": 0.0
+      }
+    },
+    "additionalProperties": false,
+    "definitions": {
+      "Roles": {
+        "type": "object",
+        "required": [
+          "blacklist",
+          "dispute",
+          "governance",
+          "recovery"
+        ],
+        "properties": {
+          "blacklist": {
+            "type": "string"
+          },
+          "dispute": {
+            "type": "string"
+          },
+          "governance": {
+            "type": "string"
+          },
+          "recovery": {
+            "type": "string"
+          },
+          "responder": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "execute": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "ExecuteMsg",
+    "oneOf": [
+      {
+        "type": "object",
+        "required": [
+          "pause"
+        ],
+        "properties": {
+          "pause": {
+            "type": "object",
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      },
+      {
+        "type": "object",
+        "required": [
+          "unpause"
+        ],
+        "properties": {
+          "unpause": {
+            "type": "object",
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      },
+      {
+        "description": "Blocking is immediate; false proposes a governance-only delayed clear.",
+        "type": "object",
+        "required": [
+          "set_blacklist"
+        ],
+        "properties": {
+          "set_blacklist": {
+            "type": "object",
+            "required": [
+              "address",
+              "blocked"
+            ],
+            "properties": {
+              "address": {
+                "type": "string"
+              },
+              "blocked": {
+                "type": "boolean"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      },
+      {
+        "type": "object",
+        "required": [
+          "execute_blacklist_clear"
+        ],
+        "properties": {
+          "execute_blacklist_clear": {
+            "type": "object",
+            "required": [
+              "address",
+              "nonce"
+            ],
+            "properties": {
+              "address": {
+                "type": "string"
+              },
+              "nonce": {
+                "type": "integer",
+                "format": "uint64",
+                "minimum": 0.0
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      },
+      {
+        "type": "object",
+        "required": [
+          "cancel_blacklist_clear"
+        ],
+        "properties": {
+          "cancel_blacklist_clear": {
+            "type": "object",
+            "required": [
+              "address"
+            ],
+            "properties": {
+              "address": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      },
+      {
+        "type": "object",
+        "required": [
+          "set_enrollment"
+        ],
+        "properties": {
+          "set_enrollment": {
+            "type": "object",
+            "required": [
+              "enrolled",
+              "token"
+            ],
+            "properties": {
+              "enrolled": {
+                "type": "boolean"
+              },
+              "token": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      },
+      {
+        "type": "object",
+        "required": [
+          "revoke_responder"
+        ],
+        "properties": {
+          "revoke_responder": {
+            "type": "object",
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      },
+      {
+        "type": "object",
+        "required": [
+          "propose_role"
+        ],
+        "properties": {
+          "propose_role": {
+            "type": "object",
+            "required": [
+              "candidate",
+              "role"
+            ],
+            "properties": {
+              "candidate": {
+                "type": "string"
+              },
+              "role": {
+                "$ref": "#/definitions/Role"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      },
+      {
+        "type": "object",
+        "required": [
+          "accept_role"
+        ],
+        "properties": {
+          "accept_role": {
+            "type": "object",
+            "required": [
+              "nonce"
+            ],
+            "properties": {
+              "nonce": {
+                "type": "integer",
+                "format": "uint64",
+                "minimum": 0.0
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      },
+      {
+        "type": "object",
+        "required": [
+          "cancel_role"
+        ],
+        "properties": {
+          "cancel_role": {
+            "type": "object",
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      },
+      {
+        "type": "object",
+        "required": [
+          "propose_rotation_delay"
+        ],
+        "properties": {
+          "propose_rotation_delay": {
+            "type": "object",
+            "required": [
+              "seconds"
+            ],
+            "properties": {
+              "seconds": {
+                "type": "integer",
+                "format": "uint64",
+                "minimum": 0.0
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      },
+      {
+        "type": "object",
+        "required": [
+          "execute_rotation_delay"
+        ],
+        "properties": {
+          "execute_rotation_delay": {
+            "type": "object",
+            "required": [
+              "nonce"
+            ],
+            "properties": {
+              "nonce": {
+                "type": "integer",
+                "format": "uint64",
+                "minimum": 0.0
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      },
+      {
+        "type": "object",
+        "required": [
+          "cancel_rotation_delay"
+        ],
+        "properties": {
+          "cancel_rotation_delay": {
+            "type": "object",
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      }
+    ],
+    "definitions": {
+      "Role": {
+        "type": "string",
+        "enum": [
+          "governance",
+          "responder",
+          "blacklist",
+          "recovery",
+          "dispute"
+        ]
+      }
+    }
+  },
+  "query": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "QueryMsg",
+    "oneOf": [
+      {
+        "type": "object",
+        "required": [
+          "guard"
+        ],
+        "properties": {
+          "guard": {
+            "type": "object",
+            "required": [
+              "addresses",
+              "token"
+            ],
+            "properties": {
+              "addresses": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "token": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      },
+      {
+        "type": "object",
+        "required": [
+          "config"
+        ],
+        "properties": {
+          "config": {
+            "type": "object",
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      },
+      {
+        "type": "object",
+        "required": [
+          "blacklist"
+        ],
+        "properties": {
+          "blacklist": {
+            "type": "object",
+            "required": [
+              "address"
+            ],
+            "properties": {
+              "address": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      }
+    ]
+  },
+  "migrate": null,
+  "sudo": null,
+  "responses": {
+    "blacklist": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "BlacklistResponse",
+      "type": "object",
+      "required": [
+        "authority_epoch",
+        "blocked",
+        "epoch",
+        "interface_version"
+      ],
+      "properties": {
+        "authority_epoch": {
+          "type": "integer",
+          "format": "uint64",
+          "minimum": 0.0
+        },
+        "blocked": {
+          "type": "boolean"
+        },
+        "epoch": {
+          "type": "integer",
+          "format": "uint64",
+          "minimum": 0.0
+        },
+        "interface_version": {
+          "type": "integer",
+          "format": "uint32",
+          "minimum": 0.0
+        },
+        "pending_clear": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/PendingClear"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "definitions": {
+        "PendingClear": {
+          "type": "object",
+          "required": [
+            "executable_at",
+            "initiator",
+            "nonce",
+            "proposed_at"
+          ],
+          "properties": {
+            "executable_at": {
+              "type": "integer",
+              "format": "uint64",
+              "minimum": 0.0
+            },
+            "initiator": {
+              "type": "string"
+            },
+            "nonce": {
+              "type": "integer",
+              "format": "uint64",
+              "minimum": 0.0
+            },
+            "proposed_at": {
+              "type": "integer",
+              "format": "uint64",
+              "minimum": 0.0
+            }
+          },
+          "additionalProperties": false
+        }
+      }
+    },
+    "config": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "ConfigResponse",
+      "type": "object",
+      "required": [
+        "authority_epoch",
+        "epoch",
+        "interface_version",
+        "paused",
+        "roles",
+        "rotation_delay"
+      ],
+      "properties": {
+        "authority_epoch": {
+          "type": "integer",
+          "format": "uint64",
+          "minimum": 0.0
+        },
+        "epoch": {
+          "type": "integer",
+          "format": "uint64",
+          "minimum": 0.0
+        },
+        "interface_version": {
+          "type": "integer",
+          "format": "uint32",
+          "minimum": 0.0
+        },
+        "paused": {
+          "type": "boolean"
+        },
+        "pending_delay": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/PendingDelay"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "pending_role": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/PendingRole"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "roles": {
+          "$ref": "#/definitions/Roles"
+        },
+        "rotation_delay": {
+          "type": "integer",
+          "format": "uint64",
+          "minimum": 0.0
+        }
+      },
+      "additionalProperties": false,
+      "definitions": {
+        "PendingDelay": {
+          "type": "object",
+          "required": [
+            "executable_at",
+            "initiator",
+            "nonce",
+            "proposed_at",
+            "seconds"
+          ],
+          "properties": {
+            "executable_at": {
+              "type": "integer",
+              "format": "uint64",
+              "minimum": 0.0
+            },
+            "initiator": {
+              "type": "string"
+            },
+            "nonce": {
+              "type": "integer",
+              "format": "uint64",
+              "minimum": 0.0
+            },
+            "proposed_at": {
+              "type": "integer",
+              "format": "uint64",
+              "minimum": 0.0
+            },
+            "seconds": {
+              "type": "integer",
+              "format": "uint64",
+              "minimum": 0.0
+            }
+          },
+          "additionalProperties": false
+        },
+        "PendingRole": {
+          "type": "object",
+          "required": [
+            "candidate",
+            "executable_at",
+            "initiator",
+            "nonce",
+            "proposed_at",
+            "role"
+          ],
+          "properties": {
+            "candidate": {
+              "type": "string"
+            },
+            "executable_at": {
+              "type": "integer",
+              "format": "uint64",
+              "minimum": 0.0
+            },
+            "initiator": {
+              "type": "string"
+            },
+            "nonce": {
+              "type": "integer",
+              "format": "uint64",
+              "minimum": 0.0
+            },
+            "proposed_at": {
+              "type": "integer",
+              "format": "uint64",
+              "minimum": 0.0
+            },
+            "role": {
+              "$ref": "#/definitions/Role"
+            }
+          },
+          "additionalProperties": false
+        },
+        "Role": {
+          "type": "string",
+          "enum": [
+            "governance",
+            "responder",
+            "blacklist",
+            "recovery",
+            "dispute"
+          ]
+        },
+        "Roles": {
+          "type": "object",
+          "required": [
+            "blacklist",
+            "dispute",
+            "governance",
+            "recovery"
+          ],
+          "properties": {
+            "blacklist": {
+              "type": "string"
+            },
+            "dispute": {
+              "type": "string"
+            },
+            "governance": {
+              "type": "string"
+            },
+            "recovery": {
+              "type": "string"
+            },
+            "responder": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "additionalProperties": false
+        }
+      }
+    },
+    "guard": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "GuardResponse",
+      "type": "object",
+      "required": [
+        "authority_epoch",
+        "blocked",
+        "enrolled",
+        "epoch",
+        "interface_version",
+        "paused",
+        "roles"
+      ],
+      "properties": {
+        "authority_epoch": {
+          "type": "integer",
+          "format": "uint64",
+          "minimum": 0.0
+        },
+        "blocked": {
+          "description": "In the same order as the bounded query's addresses (maximum 3).",
+          "type": "array",
+          "items": {
+            "type": "boolean"
+          }
+        },
+        "enrolled": {
+          "type": "boolean"
+        },
+        "epoch": {
+          "type": "integer",
+          "format": "uint64",
+          "minimum": 0.0
+        },
+        "interface_version": {
+          "type": "integer",
+          "format": "uint32",
+          "minimum": 0.0
+        },
+        "paused": {
+          "type": "boolean"
+        },
+        "roles": {
+          "$ref": "#/definitions/Roles"
+        }
+      },
+      "additionalProperties": false,
+      "definitions": {
+        "Roles": {
+          "type": "object",
+          "required": [
+            "blacklist",
+            "dispute",
+            "governance",
+            "recovery"
+          ],
+          "properties": {
+            "blacklist": {
+              "type": "string"
+            },
+            "dispute": {
+              "type": "string"
+            },
+            "governance": {
+              "type": "string"
+            },
+            "recovery": {
+              "type": "string"
+            },
+            "responder": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "additionalProperties": false
+        }
+      }
+    }
+  }
+}

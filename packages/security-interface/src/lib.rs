@@ -20,7 +20,10 @@ pub struct InstantiateMsg { pub roles: Roles, pub rotation_delay: u64 }
 pub enum ExecuteMsg {
     Pause {},
     Unpause {},
+    /// Blocking is immediate; false proposes a governance-only delayed clear.
     SetBlacklist { address: String, blocked: bool },
+    ExecuteBlacklistClear { address: String, nonce: u64 },
+    CancelBlacklistClear { address: String },
     SetEnrollment { token: String, enrolled: bool },
     RevokeResponder {},
     ProposeRole { role: Role, candidate: String },
@@ -37,6 +40,8 @@ pub enum QueryMsg {
     Guard { token: String, addresses: Vec<String> },
     #[returns(ConfigResponse)]
     Config {},
+    #[returns(BlacklistResponse)]
+    Blacklist { address: String },
 }
 #[cw_serde]
 pub struct GuardResponse {
@@ -58,6 +63,16 @@ pub struct PendingRole {
 pub struct PendingDelay {
     pub seconds: u64, pub nonce: u64, pub initiator: String,
     pub proposed_at: u64, pub executable_at: u64,
+}
+#[cw_serde]
+pub struct PendingClear {
+    pub nonce: u64, pub initiator: String,
+    pub proposed_at: u64, pub executable_at: u64,
+}
+#[cw_serde]
+pub struct BlacklistResponse {
+    pub interface_version: u32, pub epoch: u64, pub authority_epoch: u64,
+    pub blocked: bool, pub pending_clear: Option<PendingClear>,
 }
 #[cw_serde]
 pub struct ConfigResponse {

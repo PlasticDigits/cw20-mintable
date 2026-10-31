@@ -1,0 +1,80 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "GuardResponse",
+  "type": "object",
+  "required": [
+    "authority_epoch",
+    "blocked",
+    "enrolled",
+    "epoch",
+    "interface_version",
+    "paused",
+    "roles"
+  ],
+  "properties": {
+    "authority_epoch": {
+      "type": "integer",
+      "format": "uint64",
+      "minimum": 0.0
+    },
+    "blocked": {
+      "description": "In the same order as the bounded query's addresses (maximum 3).",
+      "type": "array",
+      "items": {
+        "type": "boolean"
+      }
+    },
+    "enrolled": {
+      "type": "boolean"
+    },
+    "epoch": {
+      "type": "integer",
+      "format": "uint64",
+      "minimum": 0.0
+    },
+    "interface_version": {
+      "type": "integer",
+      "format": "uint32",
+      "minimum": 0.0
+    },
+    "paused": {
+      "type": "boolean"
+    },
+    "roles": {
+      "$ref": "#/definitions/Roles"
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "Roles": {
+      "type": "object",
+      "required": [
+        "blacklist",
+        "dispute",
+        "governance",
+        "recovery"
+      ],
+      "properties": {
+        "blacklist": {
+          "type": "string"
+        },
+        "dispute": {
+          "type": "string"
+        },
+        "governance": {
+          "type": "string"
+        },
+        "recovery": {
+          "type": "string"
+        },
+        "responder": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
