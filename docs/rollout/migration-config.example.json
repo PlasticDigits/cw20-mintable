@@ -1,0 +1,44 @@
+{
+  "chain_id": "columbus-5",
+  "lcd": "https://terra-classic-lcd.publicnode.com",
+  "rpc": null,
+  "deployer": null,
+  "artifacts": {
+    "token": "artifacts/cw20_mintable.wasm",
+    "controller": "artifacts/cw20_security_controller.wasm"
+  },
+  "code_ids": {
+    "token": null,
+    "controller": null
+  },
+  "controller": null,
+  "controller_admin": null,
+  "rotation_delay": 172800,
+  "roles": {
+    "governance": null,
+    "blacklist": null,
+    "recovery": null,
+    "dispute": null,
+    "responder": null
+  },
+  "identity_keys": {},
+  "fees": "10000000uluna",
+  "gas": 5000000,
+  "dex_policy": {
+    "contract": null,
+    "query": null,
+    "response_sha256": null,
+    "review_sha256": null,
+    "approval_path": [],
+    "token_code_id": null
+  },
+  "token": {
+    "address": null,
+    "admin": null,
+    "minter": null,
+    "additional_minters": [],
+    "baseline": null,
+    "assignments": []
+  },
+  "cohort": []
+}

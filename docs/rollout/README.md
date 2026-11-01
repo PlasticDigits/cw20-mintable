@@ -88,3 +88,10 @@ independent review. Later CI/docs commits do not change those source trees.
 There are 91 passing native tests, strict workspace clippy and deterministic
 schema generation. Optimized Wasm passes structural validation and the matching
 CosmWasm checker. These checks do not establish target-chain custody or deployment.
+
+## Deferred migration tooling
+
+The [one-action migration tool and execution contract](migration-tool.md) defaults
+to an offline plan and unsigned preparation. Terra Classic whitelist availability
+remains the current deployment blocker; live coverage remains0/35. Track deferred
+execution in [issue #16](https://git.cl8y.com/code/cw20-mintable/issues/16).
